@@ -410,16 +410,16 @@ function handleClick(event: MouseEvent) {
               <span :class="{ 'text-fg-muted': orgName }">
                 {{ orgName ? pkg.name.replace(`@${orgName}/`, '') : pkg.name }}
               </span>
-              <AnnounceTooltip :text="$t('common.copied')" :isVisible="copiedPkgName">
+              <TooltipAnnounce :text="$t('common.copied')" :isVisible="copiedPkgName">
                 <button
                   type="button"
                   @click="() => copyPkgName()"
-                  class="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity p-1 rounded text-fg-muted hover:text-fg hover:bg-bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg/50 align-middle ms-1"
+                  class="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 transition-opacity p-2 rounded text-fg-muted hover:text-fg hover:bg-bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg/50 align-middle ms-1"
                   :aria-label="$t('package.copy_name')"
                 >
                   <span class="i-carbon:copy w-5 h-5 block" aria-hidden="true" />
                 </button>
-              </AnnounceTooltip>
+              </TooltipAnnounce>
             </h1>
             <span
               v-if="displayVersion"
@@ -876,7 +876,7 @@ function handleClick(event: MouseEvent) {
           :id="`pm-panel-${activePmId}`"
           :aria-labelledby="`pm-tab-${activePmId}`"
         >
-          <ExecuteCommandTerminal
+          <TerminalExecute
             :package-name="pkg.name"
             :jsr-info="jsrInfo"
             :is-create-package="isCreatePkg"
@@ -910,7 +910,7 @@ function handleClick(event: MouseEvent) {
           :id="`pm-panel-${activePmId}`"
           :aria-labelledby="`pm-tab-${activePmId}`"
         >
-          <InstallCommandTerminal
+          <TerminalInstall
             :package-name="pkg.name"
             :requested-version="requestedVersion"
             :jsr-info="jsrInfo"
@@ -955,7 +955,7 @@ function handleClick(event: MouseEvent) {
           </a>
         </h2>
         <!-- eslint-disable vue/no-v-html -- HTML is sanitized server-side -->
-        <Readme v-if="readmeData?.html" v-html="readmeData.html" @click="handleClick" />
+        <Readme v-if="readmeData?.html" :html="readmeData.html" @click="handleClick" />
         <p v-else class="text-fg-subtle italic">
           {{ $t('package.readme.no_readme') }}
           <a v-if="repositoryUrl" :href="repositoryUrl" rel="noopener noreferrer" class="link">{{
