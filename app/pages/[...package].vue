@@ -5,6 +5,7 @@ import { assertValidPackageName } from '#shared/utils/npm'
 import { joinURL } from 'ufo'
 import { areUrlsEquivalent } from '#shared/utils/url'
 import { isEditableElement } from '~/utils/input'
+import { formatBytes } from '~/utils/formatters'
 
 definePageMeta({
   name: 'package',
@@ -243,12 +244,6 @@ function normalizeGitUrl(url: string): string {
     .replace(/^git@github\.com:/, 'https://github.com/')
 }
 
-function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} kB`
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-}
-
 function getDependencyCount(version: PackumentVersion | null): number {
   if (!version?.dependencies) return 0
   return Object.keys(version.dependencies).length
@@ -318,41 +313,38 @@ useSeoMeta({
 })
 
 onKeyStroke(
-  '.',
+  e => isKeyWithoutModifiers(e, '.') && !isEditableElement(e.target),
   e => {
-    if (isEditableElement(e.target)) return
-    if (pkg.value && displayVersion.value) {
-      e.preventDefault()
-      navigateTo({
-        name: 'code',
-        params: {
-          path: [pkg.value.name, 'v', displayVersion.value.version],
-        },
-      })
-    }
+    if (pkg.value == null || displayVersion.value == null) return
+    e.preventDefault()
+    navigateTo({
+      name: 'code',
+      params: {
+        path: [pkg.value.name, 'v', displayVersion.value.version],
+      },
+    })
   },
   { dedupe: true },
 )
 
 onKeyStroke(
-  'd',
+  e => isKeyWithoutModifiers(e, 'd') && !isEditableElement(e.target),
   e => {
-    if (isEditableElement(e.target)) return
-    if (docsLink.value) {
-      e.preventDefault()
-      navigateTo(docsLink.value)
-    }
+    if (!docsLink.value) return
+    e.preventDefault()
+    navigateTo(docsLink.value)
   },
   { dedupe: true },
 )
 
-onKeyStroke('c', e => {
-  if (isEditableElement(e.target)) return
-  if (pkg.value) {
+onKeyStroke(
+  e => isKeyWithoutModifiers(e, 'c') && !isEditableElement(e.target),
+  e => {
+    if (!pkg.value) return
     e.preventDefault()
     router.push({ path: '/compare', query: { packages: pkg.value.name } })
-  }
-})
+  },
+)
 
 defineOgImageComponent('Package', {
   name: () => pkg.value?.name ?? 'Package',
