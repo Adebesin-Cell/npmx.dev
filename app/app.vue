@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Directions } from '@nuxtjs/i18n'
 import { useEventListener } from '@vueuse/core'
+import { isEditableElement } from '~/utils/input'
 
 const route = useRoute()
 const router = useRouter()
@@ -39,12 +40,7 @@ if (import.meta.server) {
 // "/" focuses search or navigates to search page
 // "?" highlights all keyboard shortcut elements
 function handleGlobalKeydown(e: KeyboardEvent) {
-  const target = e.target as HTMLElement
-
-  const isEditableTarget =
-    target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable
-
-  if (isEditableTarget) return
+  if (isEditableElement(e.target)) return
 
   if (e.key === '/') {
     e.preventDefault()
@@ -94,6 +90,29 @@ if (import.meta.client) {
     <ScrollToTop />
   </div>
 </template>
+
+<style scoped>
+/* Skip link */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  inset-inline-start: 0;
+  padding: 0.5rem 1rem;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 0.875rem;
+  z-index: 100;
+  transition: top 0.2s ease;
+}
+
+.skip-link:hover {
+  color: var(--bg);
+  text-decoration: underline;
+}
+.skip-link:focus {
+  top: 0;
+}
+</style>
 
 <style>
 /* Keyboard shortcut highlight on "?" key press */
