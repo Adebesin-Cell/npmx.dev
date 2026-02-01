@@ -386,14 +386,6 @@ function handleClick(event: MouseEvent) {
     router.push(route)
   }
 }
-
-function handleCopy() {
-  const selection = window.getSelection()
-  if (selection && selection.toString().length > 0) {
-    return
-  }
-  copyPkgName()
-}
 </script>
 
 <template>
@@ -406,7 +398,7 @@ function handleCopy() {
         <div class="mb-4">
           <div class="flex items-baseline gap-2 mb-1.5 sm:gap-3 sm:mb-2 flex-wrap min-w-0">
             <h1
-              class="font-mono text-2xl sm:text-3xl font-medium min-w-0 break-words"
+              class="group font-mono text-2xl sm:text-3xl font-medium min-w-0 break-words"
               :title="pkg.name"
             >
               <NuxtLink
@@ -415,18 +407,20 @@ function handleCopy() {
                 class="text-fg-muted hover:text-fg transition-colors duration-200"
                 >@{{ orgName }}</NuxtLink
               ><span v-if="orgName">/</span>
+              <span :class="{ 'text-fg-muted': orgName }">
+                {{ orgName ? pkg.name.replace(`@${orgName}/`, '') : pkg.name }}
+              </span>
               <AnnounceTooltip :text="$t('common.copied')" :isVisible="copiedPkgName">
-                <span
-                  @click="handleCopy"
-                  class="cursor-copy hover:text-fg transition-colors duration-200"
-                  :class="{ 'text-fg-muted': orgName }"
+                <button
+                  type="button"
+                  @click="() => copyPkgName()"
+                  class="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity p-1 rounded text-fg-muted hover:text-fg hover:bg-bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg/50 align-middle ms-1"
+                  :aria-label="$t('package.copy_name')"
                 >
-                  {{ orgName ? pkg.name.replace(`@${orgName}/`, '') : pkg.name }}
-                </span>
+                  <span class="i-carbon:copy w-5 h-5 block" aria-hidden="true" />
+                </button>
               </AnnounceTooltip>
             </h1>
-
-            <span id="copy-pkg-name" class="sr-only">{{ $t('package.copy_name') }}</span>
             <span
               v-if="displayVersion"
               class="inline-flex items-baseline gap-1.5 font-mono text-base sm:text-lg text-fg-muted shrink-0"
