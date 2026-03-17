@@ -222,6 +222,33 @@ export function useAlgoliaSearch() {
     }
   }
 
+  /** Fetch metadata for a single batch of packages (max 1000) by exact name. */
+  async function getPackagesByNameSlice(names: string[]): Promise<NpmSearchResult[]> {
+    if (names.length === 0) return []
+
+    const response = await $fetch<{ results: (AlgoliaHit | null)[] }>(
+      `https://${algolia.appId}-dsn.algolia.net/1/indexes/*/objects`,
+      {
+        method: 'POST',
+        headers: {
+          'x-algolia-api-key': algolia.apiKey,
+          'x-algolia-application-id': algolia.appId,
+        },
+        body: {
+          requests: names.map(name => ({
+            indexName,
+            objectID: name,
+            attributesToRetrieve: ATTRIBUTES_TO_RETRIEVE,
+          })),
+        },
+      },
+    )
+
+    return response.results
+      .filter((r): r is AlgoliaHit => r !== null && 'name' in r)
+      .map(hitToSearchResult)
+  }
+
   /** Fetch metadata for specific packages by exact name using Algolia's getObjects API. */
   async function getPackagesByName(packageNames: string[]): Promise<NpmSearchResponse> {
     if (packageNames.length === 0) {
@@ -230,36 +257,18 @@ export function useAlgoliaSearch() {
 
     // Algolia getObjects has a limit of 1000 objects per request, so batch if needed
     const BATCH_SIZE = 1000
-    const allHits: AlgoliaHit[] = []
-
+    const batches: string[][] = []
     for (let i = 0; i < packageNames.length; i += BATCH_SIZE) {
-      const batch = packageNames.slice(i, i + BATCH_SIZE)
-      const response = await $fetch<{ results: (AlgoliaHit | null)[] }>(
-        `https://${algolia.appId}-dsn.algolia.net/1/indexes/*/objects`,
-        {
-          method: 'POST',
-          headers: {
-            'x-algolia-api-key': algolia.apiKey,
-            'x-algolia-application-id': algolia.appId,
-          },
-          body: {
-            requests: batch.map(name => ({
-              indexName,
-              objectID: name,
-              attributesToRetrieve: ATTRIBUTES_TO_RETRIEVE,
-            })),
-          },
-        },
-      )
-
-      const hits = response.results.filter((r): r is AlgoliaHit => r !== null && 'name' in r)
-      allHits.push(...hits)
+      batches.push(packageNames.slice(i, i + BATCH_SIZE))
     }
+
+    const results = await Promise.all(batches.map(batch => getPackagesByNameSlice(batch)))
+    const allObjects = results.flat()
 
     return {
       isStale: false,
-      objects: allHits.map(hitToSearchResult),
-      total: allHits.length,
+      objects: allObjects,
+      total: allObjects.length,
       time: new Date().toISOString(),
     }
   }
@@ -366,5 +375,6 @@ export function useAlgoliaSearch() {
     searchWithSuggestions,
     searchByOwner,
     getPackagesByName,
+    getPackagesByNameSlice,
   }
 }
