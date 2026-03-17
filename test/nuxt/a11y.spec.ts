@@ -3332,6 +3332,12 @@ describe('component accessibility audits', () => {
           hunks: [],
           type: 'modify',
           fileName: 'empty.ts',
+        },
+      })
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+  })
 
   describe('DiffSidebarPanel', () => {
     const mockCompare = {

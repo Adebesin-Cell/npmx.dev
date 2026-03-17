@@ -22,10 +22,17 @@ const dropdownPosition = shallowRef<{ top: number; right: number } | null>(null)
 
 const { t } = useI18n()
 const menuId = useId()
-const menuItems = computed(() => [
-  { id: 'package', label: t('package.download.package'), icon: 'i-lucide:package' },
-  { id: 'dependencies', label: t('package.download.dependencies'), icon: 'i-lucide:list-tree' },
-])
+const menuItems = computed(() => {
+  const items = [{ id: 'package', label: t('package.download.package'), icon: 'i-lucide:package' }]
+  if (props.installSize) {
+    items.push({
+      id: 'dependencies',
+      label: t('package.download.dependencies'),
+      icon: 'i-lucide:list-tree',
+    })
+  }
+  return items
+})
 
 function getDropdownStyle(): Record<string, string> {
   if (!dropdownPosition.value) return {}
@@ -108,6 +115,9 @@ async function downloadPackage() {
 
   try {
     const response = await fetch(tarballUrl)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch tarball (${response.status})`)
+    }
     const blob = await response.blob()
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -117,8 +127,7 @@ async function downloadPackage() {
     link.click()
     document.body.removeChild(link)
     URL.revokeObjectURL(url)
-  } catch (error) {
-    console.error('Failed to download package:', error)
+  } catch {
     // Fallback to direct link for non-CORS or other issues, though download attribute may be ignored
     const link = document.createElement('a')
     link.href = tarballUrl
@@ -183,7 +192,7 @@ defineOptions({
     v-bind="$attrs"
     type="button"
     :variant="size === 'small' ? 'subtle' : 'secondary'"
-    :size="size"
+    :size
     classicon="i-lucide:download"
     :aria-expanded="isOpen"
     aria-haspopup="menu"
