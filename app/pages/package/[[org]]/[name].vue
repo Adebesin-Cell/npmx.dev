@@ -773,15 +773,13 @@ const showSkeleton = shallowRef(false)
             </h2>
             <!-- Package manager dropdown + Download button -->
             <div class="flex items-center gap-2">
-              <ClientOnly>
-                <PackageDownloadButton
-                  v-if="displayVersion"
-                  :package-name="pkg.name"
-                  :version="displayVersion"
-                  :install-size="installSize ?? null"
-                  size="small"
-                />
-              </ClientOnly>
+              <PackageDownloadButton
+                v-if="displayVersion"
+                :package-name="pkg.name"
+                :version="displayVersion"
+                :install-size="installSize ?? null"
+                size="small"
+              />
               <PackageManagerSelect />
             </div>
           </div>

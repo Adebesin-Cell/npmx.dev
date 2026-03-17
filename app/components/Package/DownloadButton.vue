@@ -21,7 +21,7 @@ const highlightedIndex = shallowRef(-1)
 const dropdownPosition = shallowRef<{ top: number; right: number } | null>(null)
 
 const { t } = useI18n()
-const menuId = useId()
+const menuId = 'download-menu'
 const menuItems = computed(() => {
   const items = [{ id: 'package', label: t('package.download.package'), icon: 'i-lucide:package' }]
   if (props.installSize) {
