@@ -100,12 +100,7 @@ const postUrl = computed(() => data.value?.postUrl)
           </LinkBase>
         </div>
 
-        <BlueskyComment
-          v-for="reply in thread.replies"
-          :key="reply.uri"
-          :comment="reply"
-          :depth="0"
-        />
+        <BlueskyCommentThread v-for="reply in thread.replies" :key="reply.uri" :comment="reply" />
 
         <LinkBase v-if="postUrl" variant="button-primary" :to="postUrl">
           {{ $t('blog.atproto.like_or_reply_on_bluesky') }}
