@@ -106,7 +106,8 @@
       "updating": "Yenilənir...",
       "reply_count": "{count} cavab",
       "like_count": "{count} bəyənmə",
-      "repost_count": "{count} yenidən paylaşım"
+      "repost_count": "{count} yenidən paylaşım",
+      "more_replies": "daha {count} cavab... | daha {count} cavab..."
     }
   },
   "settings": {

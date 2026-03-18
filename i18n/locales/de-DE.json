@@ -106,7 +106,8 @@
       "updating": "(wird aktualisiert...)",
       "reply_count": "{count} Antwort | {count} Antworten",
       "like_count": "{count} Like | {count} Likes",
-      "repost_count": "{count} Repost | {count} Reposts"
+      "repost_count": "{count} Repost | {count} Reposts",
+      "more_replies": "noch {count} Antwort… | noch {count} Antworten…"
     }
   },
   "settings": {

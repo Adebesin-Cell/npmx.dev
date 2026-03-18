@@ -106,7 +106,8 @@
       "updating": "Обновление…",
       "reply_count": "{count} ответ | {count} ответа | {count} ответов",
       "like_count": "{count} лайк | {count} лайка | {count} лайков",
-      "repost_count": "{count} репост | {count} репоста | {count} репостов"
+      "repost_count": "{count} репост | {count} репоста | {count} репостов",
+      "more_replies": "ещё {count} ответ... | ещё {count} ответа... | ещё {count} ответов..."
     }
   },
   "settings": {

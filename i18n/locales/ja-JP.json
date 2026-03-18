@@ -106,7 +106,8 @@
       "updating": "更新中...",
       "reply_count": "{count} 件の返信",
       "like_count": "{count} 件のいいね",
-      "repost_count": "{count} 件のリポスト"
+      "repost_count": "{count} 件のリポスト",
+      "more_replies": "さらに{count}件の返信…"
     }
   },
   "settings": {

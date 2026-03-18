@@ -13,9 +13,10 @@ function getCommentUrl(comment: Comment): string {
 }
 const props = defineProps<{
   comment: Comment
-  isReply?: boolean
-  replyingTo?: string
+  depth: number
 }>()
+
+const MaxDepth = 4
 
 function getFeatureUrl(feature: RichtextFeature): string | undefined {
   if (feature.$type === 'app.bsky.richtext.facet#link') return feature.uri
@@ -40,19 +41,23 @@ function getHostname(uri: string): string {
 </script>
 
 <template>
-  <div class="flex gap-3">
-    <!-- Avatar -->
+  <!--
+    Depth 0: classic avatar-column layout (all screens)
+    Depth 1+: Medium-style inline avatar on mobile, avatar-column on desktop
+  -->
+  <div :class="depth === 0 ? 'flex gap-3' : 'sm:flex sm:gap-3'">
+    <!-- Column avatar: always shown at depth 0, desktop-only at depth 1+ -->
     <a
       :href="`https://bsky.app/profile/${comment.author.handle}`"
       target="_blank"
       rel="noopener noreferrer"
-      class="shrink-0"
+      :class="['shrink-0', depth > 0 ? 'hidden sm:block' : '']"
     >
       <img
         v-if="comment.author.avatar"
         :src="comment.author.avatar"
         :alt="comment.author.displayName || comment.author.handle"
-        :class="['rounded-full', isReply ? 'w-8 h-8' : 'w-10 h-10']"
+        :class="['rounded-full', depth === 0 ? 'w-10 h-10' : 'w-8 h-8']"
         width="40"
         height="40"
         loading="lazy"
@@ -61,7 +66,7 @@ function getHostname(uri: string): string {
         v-else
         :class="[
           'rounded-full bg-border flex items-center justify-center text-fg-muted',
-          isReply ? 'w-8 h-8 text-sm' : 'w-10 h-10',
+          depth === 0 ? 'w-10 h-10' : 'w-8 h-8 text-sm',
         ]"
       >
         {{ (comment.author.displayName || comment.author.handle).charAt(0).toUpperCase() }}
@@ -69,22 +74,40 @@ function getHostname(uri: string): string {
     </a>
 
     <div class="flex-1 min-w-0">
-      <!-- Replying to label -->
-      <div v-if="replyingTo" class="text-xs text-fg-subtle mb-0.5">
-        {{ $t('blog.atproto.replying_to', { name: replyingTo }) }}
-      </div>
-
       <!-- Author info + timestamp -->
-      <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0">
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-0">
+        <!-- Inline avatar: mobile-only for nested comments -->
+        <a
+          v-if="depth > 0"
+          :href="`https://bsky.app/profile/${comment.author.handle}`"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="shrink-0 sm:hidden"
+        >
+          <img
+            v-if="comment.author.avatar"
+            :src="comment.author.avatar"
+            :alt="comment.author.displayName || comment.author.handle"
+            class="w-6 h-6 rounded-full"
+            width="24"
+            height="24"
+            loading="lazy"
+          />
+          <div
+            v-else
+            class="w-6 h-6 rounded-full bg-border flex items-center justify-center text-fg-muted text-xs"
+          >
+            {{ (comment.author.displayName || comment.author.handle).charAt(0).toUpperCase() }}
+          </div>
+        </a>
         <a
           :href="`https://bsky.app/profile/${comment.author.handle}`"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-medium text-fg hover:underline"
+          :class="['font-medium text-fg hover:underline', depth > 0 ? 'text-sm' : '']"
         >
           {{ comment.author.displayName || comment.author.handle }}
         </a>
-        <span class="text-fg-subtle text-sm">@{{ comment.author.handle }}</span>
         <span class="text-fg-subtle text-sm">·</span>
         <a
           :href="getCommentUrl(props.comment)"
@@ -175,6 +198,33 @@ function getHostname(uri: string): string {
           {{ $t('blog.atproto.repost_count', { count: comment.repostCount }, comment.repostCount) }}
         </span>
       </div>
+
+      <!-- Nested replies -->
+      <template v-if="comment.replies.length > 0">
+        <div v-if="depth < MaxDepth" class="mt-3 ps-3 border-is-2 border-border flex flex-col gap-3">
+          <BlueskyComment
+            v-for="reply in comment.replies"
+            :key="reply.uri"
+            :comment="reply"
+            :depth="depth + 1"
+          />
+        </div>
+        <a
+          v-else
+          :href="getCommentUrl(comment.replies[0]!)"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-2 block text-sm link"
+        >
+          {{
+            $t(
+              'blog.atproto.more_replies',
+              { count: comment.replies.length },
+              comment.replies.length,
+            )
+          }}
+        </a>
+      </template>
     </div>
   </div>
 </template>

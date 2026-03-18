@@ -108,7 +108,8 @@
       "updating": "Оновлення...",
       "reply_count": "{count} відповідь | {count} відповіді | {count} відповідей",
       "like_count": "{count} вподобайка | {count} вподобайки | {count} вподобайок",
-      "repost_count": "{count} репост | {count} репости | {count} репостів"
+      "repost_count": "{count} репост | {count} репости | {count} репостів",
+      "more_replies": "ще {count} відповідь... | ще {count} відповіді... | ще {count} відповідей..."
     }
   },
   "settings": {

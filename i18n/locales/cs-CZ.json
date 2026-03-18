@@ -106,7 +106,8 @@
       "updating": "Aktualizace ...",
       "reply_count": "{count} odpověď | {count} odpovědi | {count} odpovědí",
       "like_count": "{count} lajk | {count} lajky | {count} lajků",
-      "repost_count": "{count} repost | {count} reposty | {count} repostů"
+      "repost_count": "{count} repost | {count} reposty | {count} repostů",
+      "more_replies": "ještě {count} odpověď… | ještě {count} odpovědi… | ještě {count} odpovědí…"
     }
   },
   "settings": {
