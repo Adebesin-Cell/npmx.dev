@@ -201,7 +201,10 @@ function getHostname(uri: string): string {
 
       <!-- Nested replies -->
       <template v-if="comment.replies.length > 0">
-        <div v-if="depth < MaxDepth" class="mt-3 ps-3 border-is-2 border-border flex flex-col gap-3">
+        <div
+          v-if="depth < MaxDepth"
+          class="mt-3 ps-3 border-is-2 border-border flex flex-col gap-3"
+        >
           <BlueskyComment
             v-for="reply in comment.replies"
             :key="reply.uri"
