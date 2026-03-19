@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { SlimPackumentVersion, InstallSizeResult } from '#shared/types'
+import type { SlimPackumentVersion, DependencySize } from '#shared/types'
 import { onClickOutside, useEventListener, useMediaQuery } from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
     packageName: string
     version: SlimPackumentVersion
-    installSize: InstallSizeResult | null
+    dependencies: DependencySize[] | null
     size?: 'small' | 'medium'
   }>(),
   {
@@ -23,7 +23,7 @@ const dropdownPosition = shallowRef<{ top: number; left: number } | null>(null)
 const menuId = 'download-menu'
 const menuItems = computed(() => {
   const items = [{ id: 'package', label: t('package.download.package'), icon: 'i-lucide:package' }]
-  if (props.installSize) {
+  if (props.dependencies?.length) {
     items.push({
       id: 'dependencies',
       label: t('package.download.dependencies'),
@@ -140,7 +140,7 @@ async function downloadPackage() {
 }
 
 function downloadDependenciesScript() {
-  if (!props.installSize) return
+  if (!props.dependencies?.length) return
 
   const lines = [
     '#!/bin/bash',
@@ -159,7 +159,7 @@ function downloadDependenciesScript() {
   }
 
   // Add dependencies
-  props.installSize.dependencies.forEach(dep => {
+  props.dependencies.forEach(dep => {
     if (!dep.tarballUrl) return
     lines.push(`# ${dep.name}@${dep.version}`)
     lines.push(

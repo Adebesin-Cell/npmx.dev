@@ -2947,7 +2947,7 @@ describe('component accessibility audits', () => {
             version: '3.5.0',
             dist: { tarball: 'https://registry.npmjs.org/vue/-/vue-3.5.0.tgz' },
           } as any,
-          installSize: null,
+          dependencies: null,
         },
       })
       const results = await runAxe(component)
