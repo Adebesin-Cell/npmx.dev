@@ -201,10 +201,7 @@ defineOptions({
     {{ $t('package.download.button') }}
     <span
       class="i-lucide:chevron-down ms-1 transition-transform duration-200 motion-reduce:transition-none"
-      :class="[
-        size === 'small' ? 'w-3 h-3' : 'w-3.5 h-3.5',
-        { 'rotate-180': isOpen },
-      ]"
+      :class="[size === 'small' ? 'w-3 h-3' : 'w-3.5 h-3.5', { 'rotate-180': isOpen }]"
       aria-hidden="true"
     />
   </ButtonBase>
