@@ -20,6 +20,7 @@ const isOpen = shallowRef(false)
 const highlightedIndex = shallowRef(-1)
 const dropdownPosition = shallowRef<{ top: number; left: number } | null>(null)
 
+const { t } = useI18n()
 const menuId = 'download-menu'
 const menuItems = computed(() => {
   const items = [{ id: 'package', label: t('package.download.package'), icon: 'i-lucide:package' }]
