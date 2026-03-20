@@ -38,11 +38,6 @@ function getHostname(uri: string): string {
     return uri
   }
 }
-
-function firstChar(str: string): string {
-  const segmenter = new Intl.Segmenter({ granularity: 'grapheme' })
-  return Array.from(segmenter.segment(str))[0]?.segment ?? ''
-}
 </script>
 
 <template>
@@ -70,7 +65,7 @@ function firstChar(str: string): string {
           depth === 0 ? 'w-10 h-10' : 'w-8 h-8 text-sm',
         ]"
       >
-        {{ firstChar(comment.author.displayName || comment.author.handle).toUpperCase() }}
+        {{ (comment.author.displayName || comment.author.handle).charAt(0).toUpperCase() }}
       </div>
     </a>
 
