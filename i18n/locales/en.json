@@ -599,7 +599,7 @@
     "download": {
       "button": "Download",
       "package": "Download Package (.tgz)",
-      "dependencies": "Download Dependencies (.sh)"
+      "dependencies": "Download Dependencies (.js)"
     }
   },
   "connector": {
