@@ -38,6 +38,11 @@ function getHostname(uri: string): string {
     return uri
   }
 }
+
+function firstChar(str: string): string {
+  const segmenter = new Intl.Segmenter({ granularity: 'grapheme' })
+  return Array.from(segmenter.segment(str))[0]?.segment ?? ''
+}
 </script>
 
 <template>
@@ -70,7 +75,7 @@ function getHostname(uri: string): string {
           depth === 0 ? 'w-10 h-10' : 'w-8 h-8 text-sm',
         ]"
       >
-        {{ (comment.author.displayName || comment.author.handle).charAt(0).toUpperCase() }}
+        {{ firstChar(comment.author.displayName || comment.author.handle).toUpperCase() }}
       </div>
     </a>
 
@@ -98,7 +103,7 @@ function getHostname(uri: string): string {
             v-else
             class="w-6 h-6 rounded-full bg-border flex items-center justify-center text-fg-muted text-xs"
           >
-            {{ (comment.author.displayName || comment.author.handle).charAt(0).toUpperCase() }}
+            {{ firstChar(comment.author.displayName || comment.author.handle).toUpperCase() }}
           </div>
         </a>
         <a
