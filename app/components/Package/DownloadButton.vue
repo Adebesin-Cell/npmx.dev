@@ -8,6 +8,21 @@ const props = defineProps<{
 
 const loading = shallowRef(false)
 
+async function getDownloadUrl(tarballUrl: string) {
+  try {
+    const response = await fetch(tarballUrl)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch tarball (${response.status})`)
+    }
+    const blob = await response.blob()
+    return URL.createObjectURL(blob)
+  } catch (error) {
+    // oxlint-disable-next-line no-console -- error logging
+    console.error('failed to fetch tarball', { cause: error })
+    return null
+  }
+}
+
 async function downloadPackage() {
   const tarballUrl = props.version.dist.tarball
   if (!tarballUrl) return
@@ -15,29 +30,17 @@ async function downloadPackage() {
   if (loading.value) return
   loading.value = true
 
-  try {
-    const response = await fetch(tarballUrl)
-    if (!response.ok) {
-      loading.value = false
-      throw new Error(`Failed to fetch tarball (${response.status})`)
-    }
-    const blob = await response.blob()
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `${props.packageName.replace(/\//g, '__')}-${props.version.version}.tgz`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    URL.revokeObjectURL(url)
-  } catch {
-    // Fallback to direct link for non-CORS or other issues, though download attribute may be ignored
-    const link = document.createElement('a')
-    link.href = tarballUrl
-    link.download = `${props.packageName.replace(/\//g, '__')}-${props.version.version}.tgz`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+  const downloadUrl = await getDownloadUrl(tarballUrl)
+
+  const link = document.createElement('a')
+  link.href = downloadUrl ?? tarballUrl
+  link.download = `${props.packageName.replace(/\//g, '__')}-${props.version.version}.tgz`
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl)
   }
 
   loading.value = false
