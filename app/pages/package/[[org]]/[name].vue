@@ -777,7 +777,6 @@ const showSkeleton = shallowRef(false)
                 v-if="displayVersion"
                 :package-name="pkg.name"
                 :version="displayVersion"
-                size="small"
               />
               <PackageManagerSelect />
             </div>

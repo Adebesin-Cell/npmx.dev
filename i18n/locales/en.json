@@ -632,7 +632,7 @@
     },
     "download": {
       "button": "Download",
-      "package": "Download Package (.tgz)"
+      "tarball": "Download Tarball as .tar.gz"
     }
   },
   "connector": {
