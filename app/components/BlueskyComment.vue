@@ -39,8 +39,9 @@ function getHostname(uri: string): string {
   }
 }
 
+let segmenter: Intl.Segmenter | null = null
 function firstChar(str: string): string {
-  const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
+  segmenter ??= new Intl.Segmenter(undefined, { granularity: 'grapheme' })
   return Array.from(segmenter.segment(str))[0]?.segment ?? ''
 }
 </script>
