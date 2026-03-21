@@ -1830,9 +1830,6 @@
             },
             "package": {
               "type": "string"
-            },
-            "dependencies": {
-              "type": "string"
             }
           },
           "additionalProperties": false

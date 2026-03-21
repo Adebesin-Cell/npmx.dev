@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import type { SlimPackumentVersion, DependencySize } from '#shared/types'
+import type { SlimPackumentVersion } from '#shared/types'
 import { onClickOutside, useEventListener, useMediaQuery } from '@vueuse/core'
 
 const props = withDefaults(
   defineProps<{
     packageName: string
     version: SlimPackumentVersion
-    dependencies: DependencySize[] | null
-    dependenciesLoading?: boolean
     size?: 'small' | 'medium'
   }>(),
   {
-    dependenciesLoading: false,
     size: 'medium',
   },
 )
@@ -27,19 +24,6 @@ const menuItems = computed(() => {
   const items: { id: string; icon: string; disabled: boolean }[] = [
     { id: 'package', icon: 'i-lucide:package', disabled: false },
   ]
-  if (props.dependenciesLoading) {
-    items.push({
-      id: 'dependencies',
-      icon: 'i-lucide:loader-circle',
-      disabled: true,
-    })
-  } else if (props.dependencies?.length) {
-    items.push({
-      id: 'dependencies',
-      icon: 'i-lucide:list-tree',
-      disabled: false,
-    })
-  }
   return items
 })
 
@@ -115,8 +99,6 @@ function handleAction(item: (typeof menuItems.value)[number] | undefined) {
   if (!item || item.disabled) return
   if (item.id === 'package') {
     downloadPackage()
-  } else if (item.id === 'dependencies') {
-    downloadDependenciesScript()
   }
   close()
 }
@@ -148,79 +130,6 @@ async function downloadPackage() {
     link.click()
     document.body.removeChild(link)
   }
-}
-
-function downloadDependenciesScript() {
-  if (!props.dependencies?.length) return
-
-  const tarballs: { name: string; version: string; url: string }[] = []
-
-  const rootTarball = props.version.dist.tarball
-  if (rootTarball) {
-    tarballs.push({ name: props.packageName, version: props.version.version, url: rootTarball })
-  }
-
-  props.dependencies.forEach(dep => {
-    if (!dep.tarballUrl) return
-    tarballs.push({ name: dep.name, version: dep.version, url: dep.tarballUrl })
-  })
-
-  const sanitize = (name: string) => name.replace(/\//g, '__')
-
-  // Node.js script — works on all platforms
-  const lines = [
-    '#!/usr/bin/env node',
-    `// Download dependencies for ${props.packageName}@${props.version.version}`,
-    '// Run: node <filename>',
-    '',
-    "const { mkdirSync, createWriteStream } = require('fs');",
-    "const https = require('https');",
-    "const http = require('http');",
-    "const { basename } = require('path');",
-    '',
-    "const dir = 'tarballs';",
-    'mkdirSync(dir, { recursive: true });',
-    '',
-    'const tarballs = [',
-    ...tarballs.map(t => `  { name: '${t.name}', version: '${t.version}', url: '${t.url}' },`),
-    '];',
-    '',
-    'function download(url, dest) {',
-    '  return new Promise((resolve, reject) => {',
-    "    const client = url.startsWith('https') ? https : http;",
-    '    client.get(url, (res) => {',
-    '      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {',
-    '        return download(res.headers.location, dest).then(resolve, reject);',
-    '      }',
-    '      if (res.statusCode !== 200) {',
-    '        return reject(new Error(`HTTP ${res.statusCode} for ${url}`));',
-    '      }',
-    '      const file = createWriteStream(dest);',
-    "      res.pipe(file).on('finish', () => file.close(resolve));",
-    '    }).on("error", reject);',
-    '  });',
-    '}',
-    '',
-    '(async () => {',
-    '  for (const t of tarballs) {',
-    "    const filename = `${t.name.replace(/\\//g, '__')}-${t.version}.tgz`;",
-    '    const dest = `${dir}/${filename}`;',
-    '    console.log(`Downloading ${t.name}@${t.version}...`);',
-    '    await download(t.url, dest);',
-    '  }',
-    '  console.log(`Done! ${tarballs.length} tarball(s) saved to ${dir}/`);',
-    '})();',
-  ]
-
-  const blob = new Blob([lines.join('\n')], { type: 'application/javascript' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = `download-${sanitize(props.packageName)}-deps.js`
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-  URL.revokeObjectURL(url)
 }
 
 useEventListener('scroll', () => isOpen.value && close(), { passive: true })
@@ -292,18 +201,11 @@ defineOptions({
           @mouseenter="highlightedIndex = index"
         >
           <span
-            :class="[
-              item.icon,
-              { 'animate-spin': item.id === 'dependencies' && dependenciesLoading },
-            ]"
+            :class="item.icon"
             class="w-4 h-4"
             aria-hidden="true"
           />
-          {{
-            item.id === 'package'
-              ? $t('package.download.package')
-              : $t('package.download.dependencies')
-          }}
+          {{ $t('package.download.package') }}
         </li>
       </ul>
     </Transition>

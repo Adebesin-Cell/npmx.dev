@@ -608,8 +608,7 @@
     },
     "download": {
       "button": "Download",
-      "package": "Download Package (.tgz)",
-      "dependencies": "Download Dependencies (.js)"
+      "package": "Download Package (.tgz)"
     }
   },
   "connector": {
