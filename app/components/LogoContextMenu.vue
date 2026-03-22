@@ -37,7 +37,7 @@ async function copySvg() {
   const res = await fetch('/logo.svg')
   const svg = await res.text()
   await copy(svg)
-  setTimeout(close, 800)
+  setTimeout(close, 1000)
 }
 
 function goToBrand() {
