@@ -73,7 +73,7 @@ onKeyStroke('Escape', () => {
           ref="menuRef"
           role="menu"
           tabindex="-1"
-          class="fixed z-[999] bg-bg-elevated border border-border rounded-lg shadow-lg py-1 origin-top-left focus:outline-none motion-reduce:transition-none"
+          class="fixed z-[999] flex flex-col bg-bg-elevated border border-border rounded-lg shadow-lg py-1 origin-top-left focus:outline-none motion-reduce:transition-none"
           :style="{ left: `${x}px`, top: `${y}px` }"
           @keydown.escape="close"
         >
