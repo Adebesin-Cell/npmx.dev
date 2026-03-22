@@ -12,7 +12,9 @@ const customLogoRef = useTemplateRef('customLogoRef')
 const activeAccentId = computed(() => customAccent.value ?? selectedAccentColor.value ?? 'sky')
 
 // Use the palette matching the preview background, not the site theme
-const previewPalette = computed(() => customBgDark.value ? ACCENT_COLORS.dark : ACCENT_COLORS.light)
+const previewPalette = computed(() =>
+  customBgDark.value ? ACCENT_COLORS.dark : ACCENT_COLORS.light,
+)
 
 const activeAccentColor = computed(() => {
   return previewPalette.value[activeAccentId.value as AccentColorId] ?? previewPalette.value.sky
