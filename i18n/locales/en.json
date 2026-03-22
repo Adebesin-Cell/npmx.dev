@@ -1511,8 +1511,8 @@
       "numbers": "0123456789"
     },
     "guidelines": {
-      "title": "guidelines",
-      "message": "Please leave sufficient contrast with the background and a large enough logo size (more than 24px). This is important for our users' accessibility, and we hope you'll help us uphold these values."
+      "title": "just a note",
+      "message": "When using the npmx logo, we kindly ask that you keep it legible — ensure there's enough contrast against the background and don't go smaller than 24px. Accessibility matters to us, and we appreciate you keeping that in mind."
     }
   }
 }
