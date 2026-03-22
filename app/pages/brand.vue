@@ -10,8 +10,8 @@ useSeoMeta({
 
 defineOgImageComponent('Default', {
   primaryColor: '#51c8fc',
-  title: 'npmx brand',
-  description: 'logos, colors, typography, and usage guidelines',
+  title: $t('brand.title'),
+  description: $t('brand.meta_description'),
 })
 
 const { convert, download: downloadPng } = useSvgToPng()
@@ -71,16 +71,17 @@ const dontsItems = [
   () => $t('brand.usage.dont_rotate'),
 ]
 
-const pngLoading = ref<string | null>(null)
+const pngLoading = ref(new Set<string>())
 
 async function handlePngDownload(logo: (typeof logos)[number]) {
-  pngLoading.value = logo.src
+  if (pngLoading.value.has(logo.src)) return
+  pngLoading.value.add(logo.src)
   try {
     const blob = await convert(logo.src, logo.width, logo.height)
     const filename = logo.src.replace(/^\//, '').replace('.svg', '.png')
     downloadPng(blob, filename)
   } finally {
-    pngLoading.value = null
+    pngLoading.value.delete(logo.src)
   }
 }
 </script>
@@ -167,7 +168,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                     size="sm"
                     classicon="i-lucide:download"
                     :aria-label="$t('brand.logos.download_png_aria', { name: logo.name() })"
-                    :disabled="pngLoading === logo.src"
+                    :disabled="pngLoading.has(logo.src)"
                     @click="handlePngDownload(logo)"
                   >
                     {{ $t('brand.logos.download_png') }}

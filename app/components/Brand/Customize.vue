@@ -9,7 +9,8 @@ const customLogoRef = useTemplateRef('customLogoRef')
 const activeAccentId = computed(() => customAccent.value ?? selectedAccentColor.value ?? 'sky')
 const activeAccentColor = computed(() => {
   const match = accentColors.value.find(c => c.id === activeAccentId.value)
-  return match?.value ?? accentColors.value[0]!.value
+  const fallback = accentColors.value[0]?.value ?? 'oklch(0.787 0.128 230.318)'
+  return match?.value ?? fallback
 })
 
 function getCustomSvgString(): string {
