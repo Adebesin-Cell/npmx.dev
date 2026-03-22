@@ -114,18 +114,17 @@ async function downloadCustomPng() {
             $t('brand.customize.accent_label')
           }}</span>
           <div class="flex items-center gap-1.5" role="radiogroup">
-            <button
+            <ButtonBase
               v-for="color in accentColors"
               :key="color.id"
-              type="button"
               role="radio"
               :aria-checked="activeAccentId === color.id"
               :aria-label="color.label"
-              class="w-6 h-6 rounded-full border-2 cursor-pointer transition-all duration-150 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg motion-reduce:transition-none"
+              class="!w-6 !h-6 !rounded-full !border-2 !p-0 !min-w-0 transition-all duration-150 motion-reduce:transition-none"
               :class="
                 activeAccentId === color.id
-                  ? 'border-fg scale-110'
-                  : 'border-transparent hover:border-border-hover'
+                  ? '!border-fg scale-110'
+                  : '!border-transparent hover:!border-border-hover'
               "
               :style="{ backgroundColor: color.value }"
               @click="customAccent = color.id"
@@ -140,32 +139,32 @@ async function downloadCustomPng() {
             class="flex items-center border border-border rounded-md overflow-hidden"
             role="radiogroup"
           >
-            <button
-              type="button"
+            <ButtonBase
+              size="sm"
               role="radio"
               :aria-checked="customBgDark"
               :aria-label="$t('brand.logos.on_dark')"
-              class="px-2.5 py-1 text-xs font-mono cursor-pointer border-none transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent motion-reduce:transition-none"
+              class="!border-none !rounded-none motion-reduce:transition-none"
               :class="
                 customBgDark ? 'bg-bg-muted text-fg' : 'bg-transparent text-fg-muted hover:text-fg'
               "
               @click="customBgDark = true"
             >
               {{ $t('brand.logos.on_dark') }}
-            </button>
-            <button
-              type="button"
+            </ButtonBase>
+            <ButtonBase
+              size="sm"
               role="radio"
               :aria-checked="!customBgDark"
               :aria-label="$t('brand.logos.on_light')"
-              class="px-2.5 py-1 text-xs font-mono cursor-pointer border-none border-is border-is-border transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent motion-reduce:transition-none"
+              class="!border-none !rounded-none border-is border-is-border motion-reduce:transition-none"
               :class="
                 !customBgDark ? 'bg-bg-muted text-fg' : 'bg-transparent text-fg-muted hover:text-fg'
               "
               @click="customBgDark = false"
             >
               {{ $t('brand.logos.on_light') }}
-            </button>
+            </ButtonBase>
           </div>
         </div>
 
