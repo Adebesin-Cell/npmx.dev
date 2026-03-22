@@ -70,7 +70,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
         </p>
       </header>
 
-      <div class="space-y-16">
+      <div class="flex flex-col gap-16">
         <!-- Logos Section -->
         <section aria-labelledby="brand-logos-heading">
           <h2 id="brand-logos-heading" class="text-lg text-fg uppercase tracking-wider mb-4">
