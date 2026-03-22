@@ -106,13 +106,19 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                     />
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="text-xs text-fg-subtle font-mono">{{ $t('brand.logos.on_dark') }}</span>
+                    <span class="text-xs text-fg-subtle font-mono">{{
+                      $t('brand.logos.on_dark')
+                    }}</span>
                     <div class="flex items-center gap-2">
                       <a
                         :href="logo.src"
                         :download="logo.src.replace('/', '')"
                         class="inline-flex items-center gap-1 text-xs font-mono text-fg-muted border border-border rounded-md px-2.5 py-1 hover:bg-bg-muted hover:text-fg transition-colors duration-200 no-underline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-                        :aria-label="$t('brand.logos.download_svg_aria', { name: `${logo.name()} (${$t('brand.logos.on_dark')})` })"
+                        :aria-label="
+                          $t('brand.logos.download_svg_aria', {
+                            name: `${logo.name()} (${$t('brand.logos.on_dark')})`,
+                          })
+                        "
                       >
                         <span class="i-lucide:download w-3.5 h-3.5" aria-hidden="true" />
                         {{ $t('brand.logos.download_svg') }}
@@ -120,7 +126,11 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                       <ButtonBase
                         size="sm"
                         classicon="i-lucide:download"
-                        :aria-label="$t('brand.logos.download_png_aria', { name: `${logo.name()} (${$t('brand.logos.on_dark')})` })"
+                        :aria-label="
+                          $t('brand.logos.download_png_aria', {
+                            name: `${logo.name()} (${$t('brand.logos.on_dark')})`,
+                          })
+                        "
                         :disabled="pngLoading.has(logo.src)"
                         @click="handlePngDownload(logo)"
                       >
@@ -149,13 +159,19 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                     />
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="text-xs text-fg-subtle font-mono">{{ $t('brand.logos.on_light') }}</span>
+                    <span class="text-xs text-fg-subtle font-mono">{{
+                      $t('brand.logos.on_light')
+                    }}</span>
                     <div class="flex items-center gap-2">
                       <a
                         :href="logo.src"
                         :download="logo.src.replace('/', '')"
                         class="inline-flex items-center gap-1 text-xs font-mono text-fg-muted border border-border rounded-md px-2.5 py-1 hover:bg-bg-muted hover:text-fg transition-colors duration-200 no-underline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-                        :aria-label="$t('brand.logos.download_svg_aria', { name: `${logo.name()} (${$t('brand.logos.on_light')})` })"
+                        :aria-label="
+                          $t('brand.logos.download_svg_aria', {
+                            name: `${logo.name()} (${$t('brand.logos.on_light')})`,
+                          })
+                        "
                       >
                         <span class="i-lucide:download w-3.5 h-3.5" aria-hidden="true" />
                         {{ $t('brand.logos.download_svg') }}
@@ -163,7 +179,11 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                       <ButtonBase
                         size="sm"
                         classicon="i-lucide:download"
-                        :aria-label="$t('brand.logos.download_png_aria', { name: `${logo.name()} (${$t('brand.logos.on_light')})` })"
+                        :aria-label="
+                          $t('brand.logos.download_png_aria', {
+                            name: `${logo.name()} (${$t('brand.logos.on_light')})`,
+                          })
+                        "
                         :disabled="pngLoading.has(logo.src)"
                         @click="handlePngDownload(logo)"
                       >
