@@ -63,6 +63,9 @@
         },
         "keyboard_shortcuts": {
           "type": "string"
+        },
+        "brand": {
+          "type": "string"
         }
       },
       "additionalProperties": false
@@ -4395,6 +4398,222 @@
         },
         "button_close_aria_label": {
           "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "logo_menu": {
+      "type": "object",
+      "properties": {
+        "copy_svg": {
+          "type": "string"
+        },
+        "browse_brand": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "brand": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "heading": {
+          "type": "string"
+        },
+        "meta_description": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string"
+        },
+        "logos": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "wordmark": {
+              "type": "string"
+            },
+            "wordmark_alt": {
+              "type": "string"
+            },
+            "wordmark_light_alt": {
+              "type": "string"
+            },
+            "mark": {
+              "type": "string"
+            },
+            "mark_alt": {
+              "type": "string"
+            },
+            "mark_light_alt": {
+              "type": "string"
+            },
+            "app_icon": {
+              "type": "string"
+            },
+            "app_icon_alt": {
+              "type": "string"
+            },
+            "app_icon_light_alt": {
+              "type": "string"
+            },
+            "on_dark": {
+              "type": "string"
+            },
+            "on_light": {
+              "type": "string"
+            },
+            "download_svg": {
+              "type": "string"
+            },
+            "download_png": {
+              "type": "string"
+            },
+            "download_svg_aria": {
+              "type": "string"
+            },
+            "download_png_aria": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "customize": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "accent_label": {
+              "type": "string"
+            },
+            "bg_label": {
+              "type": "string"
+            },
+            "download_svg_aria": {
+              "type": "string"
+            },
+            "download_png_aria": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "copy_hex": {
+              "type": "string"
+            },
+            "copy_oklch": {
+              "type": "string"
+            },
+            "copied": {
+              "type": "string"
+            },
+            "background": {
+              "type": "string"
+            },
+            "foreground": {
+              "type": "string"
+            },
+            "accent": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "typography": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "sans": {
+              "type": "string"
+            },
+            "sans_desc": {
+              "type": "string"
+            },
+            "mono": {
+              "type": "string"
+            },
+            "mono_desc": {
+              "type": "string"
+            },
+            "pangram": {
+              "type": "string"
+            },
+            "numbers": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "usage": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "do": {
+              "type": "string"
+            },
+            "dont": {
+              "type": "string"
+            },
+            "do_clear_space": {
+              "type": "string"
+            },
+            "do_color_variants": {
+              "type": "string"
+            },
+            "do_aspect_ratio": {
+              "type": "string"
+            },
+            "do_minimum_size": {
+              "type": "string"
+            },
+            "dont_stretch": {
+              "type": "string"
+            },
+            "dont_recolor": {
+              "type": "string"
+            },
+            "dont_busy_bg": {
+              "type": "string"
+            },
+            "dont_effects": {
+              "type": "string"
+            },
+            "dont_rotate": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
