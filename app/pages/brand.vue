@@ -94,9 +94,9 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- Dark variant -->
-                <div>
+                <div class="flex flex-col">
                   <div
-                    class="bg-[#0a0a0a] rounded-lg p-6 sm:p-8 flex items-center justify-center border border-border min-h-32 mb-2"
+                    class="bg-[#0a0a0a] rounded-lg p-6 sm:p-8 flex items-center justify-center border border-border min-h-40 flex-1"
                   >
                     <img
                       :src="logo.src"
@@ -105,7 +105,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                       :class="{ 'max-h-20': logo.span }"
                     />
                   </div>
-                  <div class="flex items-center justify-between">
+                  <div class="flex items-center justify-between mt-2">
                     <span class="text-xs text-fg-subtle font-mono">{{
                       $t('brand.logos.on_dark')
                     }}</span>
@@ -113,7 +113,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                       <a
                         :href="logo.src"
                         :download="logo.src.replace('/', '')"
-                        class="inline-flex items-center gap-1 text-xs font-mono text-fg-muted border border-border rounded-md px-2.5 py-1 hover:bg-bg-muted hover:text-fg transition-colors duration-200 no-underline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                        class="inline-flex items-center gap-1 text-xs font-mono text-fg-muted border border-border rounded-md px-2 py-0.5 hover:bg-bg-muted hover:text-fg transition-colors duration-200 no-underline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                         :aria-label="
                           $t('brand.logos.download_svg_aria', {
                             name: `${logo.name()} (${$t('brand.logos.on_dark')})`,
@@ -141,9 +141,9 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                 </div>
 
                 <!-- Light variant -->
-                <div>
+                <div class="flex flex-col">
                   <div
-                    class="bg-white rounded-lg p-6 sm:p-8 flex items-center justify-center border border-border min-h-32 mb-2"
+                    class="bg-white rounded-lg p-6 sm:p-8 flex items-center justify-center border border-border min-h-40 flex-1"
                   >
                     <AppLogo
                       v-if="logo.src === '/logo.svg'"
@@ -158,7 +158,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                       :style="logo.src === '/logo-mark.svg' ? 'filter: invert(1)' : ''"
                     />
                   </div>
-                  <div class="flex items-center justify-between">
+                  <div class="flex items-center justify-between mt-2">
                     <span class="text-xs text-fg-subtle font-mono">{{
                       $t('brand.logos.on_light')
                     }}</span>
@@ -166,7 +166,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                       <a
                         :href="logo.src"
                         :download="logo.src.replace('/', '')"
-                        class="inline-flex items-center gap-1 text-xs font-mono text-fg-muted border border-border rounded-md px-2.5 py-1 hover:bg-bg-muted hover:text-fg transition-colors duration-200 no-underline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                        class="inline-flex items-center gap-1 text-xs font-mono text-fg-muted border border-border rounded-md px-2 py-0.5 hover:bg-bg-muted hover:text-fg transition-colors duration-200 no-underline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                         :aria-label="
                           $t('brand.logos.download_svg_aria', {
                             name: `${logo.name()} (${$t('brand.logos.on_light')})`,
