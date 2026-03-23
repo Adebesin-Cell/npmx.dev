@@ -63,8 +63,7 @@ function downloadCustomSvg() {
   try {
     const blob = new Blob([svg], { type: 'image/svg+xml' })
     downloadFile(blob, `npmx-logo-${activeAccentId.value}.svg`)
-  }
-  finally {
+  } finally {
     svgLoading.value = false
   }
 }

@@ -49,8 +49,7 @@ function handleSvgDownload(src: string) {
   svgLoading.value.add(src)
   try {
     downloadFileLink(src, src.replace('/', ''))
-  }
-  finally {
+  } finally {
     svgLoading.value.delete(src)
   }
 }
@@ -137,7 +136,11 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                         <span
                           class="size-[1em]"
                           aria-hidden="true"
-                          :class="svgLoading.has(logo.src) ? 'i-lucide:loader-circle animate-spin' : 'i-lucide:download'"
+                          :class="
+                            svgLoading.has(logo.src)
+                              ? 'i-lucide:loader-circle animate-spin'
+                              : 'i-lucide:download'
+                          "
                         />
                         {{ $t('brand.logos.download_svg') }}
                       </ButtonBase>
@@ -203,7 +206,11 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                         <span
                           class="size-[1em]"
                           aria-hidden="true"
-                          :class="svgLoading.has(logo.srcLight ?? logo.src) ? 'i-lucide:loader-circle animate-spin' : 'i-lucide:download'"
+                          :class="
+                            svgLoading.has(logo.srcLight ?? logo.src)
+                              ? 'i-lucide:loader-circle animate-spin'
+                              : 'i-lucide:download'
+                          "
                         />
                         {{ $t('brand.logos.download_svg') }}
                       </ButtonBase>
