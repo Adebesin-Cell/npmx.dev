@@ -43,12 +43,12 @@ function getCustomSvgString(): string {
   const el = customLogoRef.value?.$el as SVGElement | undefined
   if (!el) return ''
   const clone = el.cloneNode(true) as SVGElement
-  clone.querySelectorAll('[fill="currentColor"]').forEach(path => {
-    ;(path as SVGElement).setAttribute('fill', customBgDark.value ? '#fafafa' : '#0a0a0a')
+  clone.querySelectorAll<SVGElement>('[fill="currentColor"]').forEach(path => {
+    path.setAttribute('fill', customBgDark.value ? '#fafafa' : '#0a0a0a')
   })
-  clone.querySelectorAll('[fill="var(--accent)"]').forEach(path => {
+  clone.querySelectorAll<SVGElement>('[fill="var(--accent)"]').forEach(path => {
     const style = getComputedStyle(path as SVGElement)
-    ;(path as SVGElement).setAttribute('fill', style.fill || activeAccentColor.value)
+    path.setAttribute('fill', style.fill || activeAccentColor.value)
   })
   clone.removeAttribute('aria-hidden')
   clone.removeAttribute('class')
