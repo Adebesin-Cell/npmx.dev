@@ -2,7 +2,6 @@
 import { ACCENT_COLORS, type AccentColorId } from '#shared/utils/constants'
 
 const { selectedAccentColor } = useAccentColor()
-const { download: downloadBlob } = useSvgToPng()
 const { t } = useI18n()
 
 const customAccent = ref<string | null>(null)
@@ -58,13 +57,9 @@ function getCustomSvgString(): string {
 function downloadCustomSvg() {
   const svg = getCustomSvgString()
   if (!svg) return
+
   const blob = new Blob([svg], { type: 'image/svg+xml' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `npmx-logo-${activeAccentId.value}.svg`
-  a.click()
-  URL.revokeObjectURL(url)
+  downloadFile(blob, `npmx-logo-${activeAccentId.value}.svg`)
 }
 
 const pngLoading = ref(false)
@@ -73,10 +68,12 @@ async function downloadCustomPng() {
   const svg = getCustomSvgString()
   if (!svg) return
   pngLoading.value = true
+
+  const blob = new Blob([svg], { type: 'image/svg+xml' })
+  const url = URL.createObjectURL(blob)
+
   try {
     await document.fonts.ready
-    const blob = new Blob([svg], { type: 'image/svg+xml' })
-    const url = URL.createObjectURL(blob)
 
     const img = new Image()
     const loaded = new Promise<void>((resolve, reject) => {
@@ -100,12 +97,12 @@ async function downloadCustomPng() {
 
     await new Promise<void>(resolve => {
       canvas.toBlob(pngBlob => {
-        if (pngBlob) downloadBlob(pngBlob, `npmx-logo-${activeAccentId.value}.png`)
-        URL.revokeObjectURL(url)
+        if (pngBlob) downloadFile(pngBlob, `npmx-logo-${activeAccentId.value}.png`)
         resolve()
       }, 'image/png')
     })
   } finally {
+    URL.revokeObjectURL(url)
     pngLoading.value = false
   }
 }
