@@ -210,11 +210,15 @@ async function downloadCustomPng() {
           </ButtonBase>
           <ButtonBase
             size="sm"
-            classicon="i-lucide:download"
             :aria-label="$t('brand.customize.download_png_aria')"
             :disabled="pngLoading"
             @click="downloadCustomPng"
           >
+            <span
+              class="size-[1em]"
+              aria-hidden="true"
+              :class="pngLoading ? 'i-lucide:loader-circle animate-spin' : 'i-lucide:download'"
+            />
             {{ $t('brand.logos.download_png') }}
           </ButtonBase>
         </div>

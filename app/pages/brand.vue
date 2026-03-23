@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ACCENT_COLORS } from '#shared/utils/constants'
+
 useSeoMeta({
   title: () => `${$t('brand.title')} - npmx`,
   ogTitle: () => `${$t('brand.title')} - npmx`,
@@ -146,6 +148,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                     <AppLogo
                       v-if="logo.src === '/logo.svg'"
                       class="max-h-20 w-auto max-w-full text-[#0a0a0a]"
+                      :style="{ '--accent': ACCENT_COLORS.light.sky }"
                       :aria-label="logo.altLight()"
                     />
                     <img
@@ -153,6 +156,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                       :src="logo.src"
                       :alt="logo.altLight()"
                       class="max-h-16 w-auto max-w-full"
+                      :class="{ 'max-h-20': logo.span }"
                       :style="logo.src === '/logo-mark.svg' ? 'filter: invert(1)' : ''"
                     />
                   </div>

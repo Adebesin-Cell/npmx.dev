@@ -31,12 +31,34 @@ function close() {
   show.value = false
 }
 
-const { copy, copied } = useClipboard({ copiedDuring: 2000 })
+const copied = shallowRef(false)
 
 async function copySvg() {
-  const res = await fetch('/logo.svg')
-  const svg = await res.text()
-  await copy(svg)
+  try {
+    // Build the ClipboardItem synchronously so Safari keeps the user-gesture context.
+    // The blob *value* can be a promise — Safari resolves it while the gesture is still valid.
+    const textPromise = fetch('/logo.svg').then(r => r.text())
+    const item = new ClipboardItem({
+      'text/plain': textPromise.then(t => new Blob([t], { type: 'text/plain' })),
+    })
+    await navigator.clipboard.write([item])
+    copied.value = true
+    setTimeout(() => { copied.value = false }, 2000)
+  } catch {
+    // Fallback for older browsers that don't support ClipboardItem with promises
+    const res = await fetch('/logo.svg')
+    const svg = await res.text()
+    const textarea = document.createElement('textarea')
+    textarea.value = svg
+    textarea.style.position = 'fixed'
+    textarea.style.opacity = '0'
+    document.body.appendChild(textarea)
+    textarea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textarea)
+    copied.value = true
+    setTimeout(() => { copied.value = false }, 2000)
+  }
   setTimeout(close, 1000)
 }
 
