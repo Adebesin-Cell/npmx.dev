@@ -1521,7 +1521,8 @@
     },
     "guidelines": {
       "title": "just a note",
-      "message": "When using the npmx logo, we kindly ask that you keep it legible — ensure there's enough contrast against the background and don't go smaller than 24px. Accessibility matters to us, and we appreciate you keeping that in mind."
+      "message": "Accessibility matters to us, and we would love you to follow us in this vision. When using mentioned media, ensure there is enough contrast against the background, and don't go smaller than 24px. If you need any other resources or additional information about the project, feel free to reach us at {link}.",
+      "discord_link_text": "chat.npmx.dev"
     }
   }
 }

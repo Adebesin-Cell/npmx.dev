@@ -144,7 +144,7 @@ async function downloadCustomPng() {
         <!-- Accent color picker -->
         <fieldset class="flex items-center gap-3 flex-1 border-none p-0 m-0">
           <legend class="sr-only">{{ $t('brand.customize.accent_label') }}</legend>
-          <span class="text-xs font-mono text-fg-muted shrink-0">{{
+          <span class="text-sm font-mono text-fg-muted shrink-0">{{
             $t('brand.customize.accent_label')
           }}</span>
           <div class="flex items-center gap-1.5" role="radiogroup">
@@ -170,13 +170,13 @@ async function downloadCustomPng() {
 
         <!-- Background toggle -->
         <div class="flex items-center gap-3">
-          <span class="text-xs font-mono text-fg-muted">{{ $t('brand.customize.bg_label') }}</span>
+          <span class="text-sm font-mono text-fg-muted">{{ $t('brand.customize.bg_label') }}</span>
           <div
             class="flex items-center border border-border rounded-md overflow-hidden"
             role="radiogroup"
           >
             <ButtonBase
-              size="sm"
+              size="md"
               role="radio"
               :aria-checked="customBgDark"
               :aria-label="$t('brand.logos.on_dark')"
@@ -189,7 +189,7 @@ async function downloadCustomPng() {
               {{ $t('brand.logos.on_dark') }}
             </ButtonBase>
             <ButtonBase
-              size="sm"
+              size="md"
               role="radio"
               :aria-checked="!customBgDark"
               :aria-label="$t('brand.logos.on_light')"
@@ -207,7 +207,7 @@ async function downloadCustomPng() {
         <!-- Download buttons -->
         <div class="flex items-center gap-2">
           <ButtonBase
-            size="sm"
+            size="md"
             :aria-label="$t('brand.customize.download_svg_aria')"
             :disabled="svgLoading"
             @click="downloadCustomSvg"
@@ -220,7 +220,7 @@ async function downloadCustomPng() {
             {{ $t('brand.logos.download_svg') }}
           </ButtonBase>
           <ButtonBase
-            size="sm"
+            size="md"
             :aria-label="$t('brand.customize.download_png_aria')"
             :disabled="pngLoading"
             @click="downloadCustomPng"

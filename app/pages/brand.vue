@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ACCENT_COLORS } from '#shared/utils/constants'
+import { ACCENT_COLORS, DISCORD_COMMUNITY_URL } from '#shared/utils/constants'
 
 useSeoMeta({
   title: () => `${$t('brand.title')} - npmx`,
@@ -69,7 +69,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
 
 <template>
   <main class="container flex-1 py-12 sm:py-16 overflow-x-hidden">
-    <article class="max-w-4xl mx-auto">
+    <article class="max-w-2xl mx-auto">
       <!-- Header -->
       <header class="mb-12">
         <div class="flex items-baseline justify-between gap-4 mb-4">
@@ -119,12 +119,12 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                     />
                   </div>
                   <div class="flex items-center justify-between mt-2">
-                    <span class="text-xs text-fg-subtle font-mono">{{
+                    <span class="text-sm text-fg-subtle font-mono">{{
                       $t('brand.logos.on_dark')
                     }}</span>
                     <div class="flex items-center gap-2">
                       <ButtonBase
-                        size="sm"
+                        size="md"
                         :aria-label="
                           $t('brand.logos.download_svg_aria', {
                             name: `${logo.name()} (${$t('brand.logos.on_dark')})`,
@@ -145,7 +145,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                         {{ $t('brand.logos.download_svg') }}
                       </ButtonBase>
                       <ButtonBase
-                        size="sm"
+                        size="md"
                         :aria-label="
                           $t('brand.logos.download_png_aria', {
                             name: `${logo.name()} (${$t('brand.logos.on_dark')})`,
@@ -189,12 +189,12 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                     />
                   </div>
                   <div class="flex items-center justify-between mt-2">
-                    <span class="text-xs text-fg-subtle font-mono">{{
+                    <span class="text-sm text-fg-subtle font-mono">{{
                       $t('brand.logos.on_light')
                     }}</span>
                     <div class="flex items-center gap-2">
                       <ButtonBase
-                        size="sm"
+                        size="md"
                         :aria-label="
                           $t('brand.logos.download_svg_aria', {
                             name: `${logo.name()} (${$t('brand.logos.on_light')})`,
@@ -215,7 +215,7 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
                         {{ $t('brand.logos.download_svg') }}
                       </ButtonBase>
                       <ButtonBase
-                        size="sm"
+                        size="md"
                         :aria-label="
                           $t('brand.logos.download_png_aria', {
                             name: `${logo.name()} (${$t('brand.logos.on_light')})`,
@@ -314,7 +314,17 @@ async function handlePngDownload(logo: (typeof logos)[number]) {
           <blockquote
             class="border-is-2 border-is-accent ps-6 py-2 text-fg-muted leading-relaxed italic"
           >
-            {{ $t('brand.guidelines.message') }}
+            <i18n-t keypath="brand.guidelines.message" tag="p" class="m-0">
+              <template #link>
+                <a
+                  :href="DISCORD_COMMUNITY_URL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-accent hover:underline"
+                  >{{ $t('brand.guidelines.discord_link_text') }}</a
+                >
+              </template>
+            </i18n-t>
           </blockquote>
         </section>
       </div>
