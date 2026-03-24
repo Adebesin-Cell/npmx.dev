@@ -175,7 +175,7 @@ async function downloadCustomPng() {
               role="radiogroup"
             >
               <ButtonBase
-                size="sm"
+                size="md"
                 role="radio"
                 :aria-checked="customBgDark"
                 :aria-label="$t('brand.logos.on_dark')"
@@ -188,7 +188,7 @@ async function downloadCustomPng() {
                 {{ $t('brand.logos.on_dark') }}
               </ButtonBase>
               <ButtonBase
-                size="sm"
+                size="md"
                 role="radio"
                 :aria-checked="!customBgDark"
                 :aria-label="$t('brand.logos.on_light')"
