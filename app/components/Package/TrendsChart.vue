@@ -1926,8 +1926,8 @@ const isSparklineLayout = shallowRef(false)
         <div
           v-if="isSparklineLayout"
           id="split-chart-layout-panel"
-          role="tabpanel"
-          aria-labelledby="split-chart-layout-tab"
+          :role="isMultiPackageMode ? 'tabpanel' : undefined"
+          :aria-labelledby="isMultiPackageMode ? 'split-chart-layout-tab' : undefined"
         >
           <ChartSplitSparkline
             :dataset="normalisedDataset"
@@ -1941,8 +1941,8 @@ const isSparklineLayout = shallowRef(false)
           :data-minimap-visible="maxDatapoints > 6"
           v-else
           id="combined-chart-layout-panel"
-          role="tabpanel"
-          aria-labelledby="combined-chart-layout-tab"
+          :role="isMultiPackageMode ? 'tabpanel' : undefined"
+          :aria-labelledby="isMultiPackageMode ? 'combined-chart-layout-tab' : undefined"
         >
           <VueUiXy
             :dataset="normalisedDataset"
