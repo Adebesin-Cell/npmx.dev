@@ -233,6 +233,7 @@ import {
   PackageSelectionView,
   PackageSelectionCheckbox,
   PackageExternalLinks,
+  ChartSplitSparkline,
 } from '#components'
 
 // Server variant components must be imported directly to test the server-side render
@@ -246,6 +247,7 @@ import FacetBarChart from '~/components/Compare/FacetBarChart.vue'
 import PackageLikeCard from '~/components/Package/LikeCard.vue'
 import SizeIncrease from '~/components/Package/SizeIncrease.vue'
 import Likes from '~/components/Package/Likes.vue'
+import type { VueUiXyDatasetItem } from 'vue-data-ui'
 
 describe('component accessibility audits', () => {
   describe('DateTime', () => {
@@ -937,6 +939,59 @@ describe('component accessibility audits', () => {
       })
 
       const results = await runAxe(wrapper)
+      expect(results.violations).toEqual([])
+    })
+  })
+
+  describe('ChartSplitSparkline', () => {
+    const dataset = [
+      {
+        color: 'oklch(0.7025 0.132 160.37)',
+        name: 'vue',
+        series: [100_000, 200_000, 150_000],
+        type: 'line',
+        dashIndices: []
+      },
+      {
+        color: 'oklch(0.6917 0.1865 35.04)',
+        name: 'svelte',
+        series: [100_000, 200_000, 150_000],
+        type: 'line',
+        dashIndices: []
+      }
+    ] as Array<VueUiXyDatasetItem & {
+      color?: string
+      series: number[]
+      dashIndices?: number[]
+    }>
+    const dates = [1743465600000, 1744070400000, 1744675200000]
+    const datetimeFormatterOptions = {
+        year: 'yyyy-MM-dd',
+        month: 'yyyy-MM-dd',
+        day: 'yyyy-MM-dd'
+    }
+
+    it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(ChartSplitSparkline, {
+        props: {
+          dataset,
+          dates,
+          datetimeFormatterOptions
+        }
+      })
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+
+    it('should have no accessibility violations when empty', async () => {
+      const component = await mountSuspended(ChartSplitSparkline, {
+        props: {
+          dataset: [],
+          dates: [],
+          datetimeFormatterOptions
+        }
+      })
+      const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })
   })
