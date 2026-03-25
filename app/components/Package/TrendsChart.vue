@@ -1625,7 +1625,6 @@ watch(selectedMetric, value => {
 
 // Sparkline charts (a11y alternative display for multi series)
 const isSparklineLayout = shallowRef(false)
-
 </script>
 
 <template>
@@ -1925,7 +1924,7 @@ const isSparklineLayout = shallowRef(false)
     >
       <ClientOnly v-if="chartData.dataset">
         <div v-if="isSparklineLayout">
-          <ChartSplitSparkline 
+          <ChartSplitSparkline
             :dataset="normalisedDataset"
             :dates="chartData.dates"
             :datetimeFormatterOptions

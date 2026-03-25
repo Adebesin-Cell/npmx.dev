@@ -950,25 +950,27 @@ describe('component accessibility audits', () => {
         name: 'vue',
         series: [100_000, 200_000, 150_000],
         type: 'line',
-        dashIndices: []
+        dashIndices: [],
       },
       {
         color: 'oklch(0.6917 0.1865 35.04)',
         name: 'svelte',
         series: [100_000, 200_000, 150_000],
         type: 'line',
-        dashIndices: []
+        dashIndices: [],
+      },
+    ] as Array<
+      VueUiXyDatasetItem & {
+        color?: string
+        series: number[]
+        dashIndices?: number[]
       }
-    ] as Array<VueUiXyDatasetItem & {
-      color?: string
-      series: number[]
-      dashIndices?: number[]
-    }>
+    >
     const dates = [1743465600000, 1744070400000, 1744675200000]
     const datetimeFormatterOptions = {
-        year: 'yyyy-MM-dd',
-        month: 'yyyy-MM-dd',
-        day: 'yyyy-MM-dd'
+      year: 'yyyy-MM-dd',
+      month: 'yyyy-MM-dd',
+      day: 'yyyy-MM-dd',
     }
 
     it('should have no accessibility violations', async () => {
@@ -976,8 +978,8 @@ describe('component accessibility audits', () => {
         props: {
           dataset,
           dates,
-          datetimeFormatterOptions
-        }
+          datetimeFormatterOptions,
+        },
       })
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
@@ -988,8 +990,8 @@ describe('component accessibility audits', () => {
         props: {
           dataset: [],
           dates: [],
-          datetimeFormatterOptions
-        }
+          datetimeFormatterOptions,
+        },
       })
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
