@@ -1468,6 +1468,12 @@
               },
               "additionalProperties": false
             },
+            "chart_view_combined": {
+              "type": "string"
+            },
+            "chart_view_split": {
+              "type": "string"
+            },
             "granularity": {
               "type": "string"
             },
