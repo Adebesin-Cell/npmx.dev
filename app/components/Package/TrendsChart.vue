@@ -1622,6 +1622,10 @@ watch(selectedMetric, value => {
   if (!isMounted.value) return
   loadMetric(value)
 })
+
+// Sparkline charts (a11y alternative display for multi series)
+const isSparklineLayout = shallowRef(false)
+
 </script>
 
 <template>
@@ -1630,6 +1634,51 @@ watch(selectedMetric, value => {
     id="trends-chart"
     :aria-busy="activeMetricState.pending ? 'true' : 'false'"
   >
+    <div
+      v-if="isMultiPackageMode"
+      class="inline-flex items-center gap-1 rounded-md border border-border-subtle bg-bg-subtle p-0.5 mt-4 mb-8"
+      role="tablist"
+      :aria-label="'Chart layout toggle'"
+    >
+      <button
+        id="classic-line-chart-layout"
+        type="button"
+        role="tab"
+        :aria-selected="isSparklineLayout ? 'false' : 'true'"
+        aria-controls="TODO"
+        :tabindex="isSparklineLayout ? 0 : -1"
+        class="flex items-center justify-center gap-x-2 rounded px-3 py-2 font-mono text-sm border border-solid transition-colors duration-150 focus-visible:outline-accent/70"
+        :class="
+          isSparklineLayout
+            ? 'border-transparent text-fg-subtle hover:text-fg'
+            : 'bg-bg border-border shadow-sm text-fg'
+        "
+        @click="isSparklineLayout = false"
+      >
+        <span class="i-lucide:chart-line size-[1em]" aria-hidden="true" />
+        <span>{{ $t('package.trends.chart_view_combined') }}</span>
+      </button>
+
+      <button
+        id="comparison-tab-charts"
+        type="button"
+        role="tab"
+        :aria-selected="isSparklineLayout ? 'true' : 'false'"
+        aria-controls="comparison-panel-charts"
+        :tabindex="isSparklineLayout ? -1 : 0"
+        class="flex items-center justify-center gap-x-2 rounded px-3 py-2 font-mono text-sm border border-solid transition-colors duration-150 focus-visible:outline-accent/70"
+        :class="
+          isSparklineLayout
+            ? 'bg-bg border-border shadow-sm text-fg'
+            : 'border-transparent text-fg-subtle hover:text-fg'
+        "
+        @click="isSparklineLayout = true"
+      >
+        <span class="i-lucide:square-split-horizontal size-[1em]" aria-hidden="true" />
+        <span>{{ $t('package.trends.chart_view_split') }}</span>
+      </button>
+    </div>
+
     <div class="w-full mb-4 flex flex-col gap-3">
       <div class="grid grid-cols-2 sm:flex sm:flex-row gap-3 sm:gap-2 sm:items-end">
         <SelectField
@@ -1875,7 +1924,15 @@ watch(selectedMetric, value => {
       "
     >
       <ClientOnly v-if="chartData.dataset">
-        <div :data-pending="pending" :data-minimap-visible="maxDatapoints > 6">
+        <div v-if="isSparklineLayout">
+          <ChartSplitSparkline 
+            :dataset="normalisedDataset"
+            :dates="chartData.dates"
+            :datetimeFormatterOptions
+          />
+        </div>
+
+        <div :data-pending="pending" :data-minimap-visible="maxDatapoints > 6" v-else>
           <VueUiXy
             :dataset="normalisedDataset"
             :config="chartConfig"
