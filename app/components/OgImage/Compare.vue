@@ -122,8 +122,28 @@ function barPct(downloads: number): string {
         </h1>
       </div>
 
+      <!-- Empty state -->
+      <div
+        v-if="stats.length === 0"
+        class="flex flex-wrap items-center gap-x-3 text-4xl text-[#a3a3a3]"
+        style="font-family: 'Geist', sans-serif"
+      >
+        <span>compare npm packages</span>
+        <span
+          class="px-3 py-1 rounded-lg border font-normal"
+          :style="{
+            color: primaryColor,
+            backgroundColor: primaryColor + '10',
+            borderColor: primaryColor + '30',
+            boxShadow: `0 0 20px ${primaryColor}25`,
+          }"
+        >
+          side-by-side
+        </span>
+      </div>
+
       <!-- Bar chart rows -->
-      <div class="flex flex-col gap-2">
+      <div v-else class="flex flex-col gap-2">
         <div v-for="pkg in stats" :key="pkg.name" class="flex flex-col gap-1">
           <!-- Label row: name + downloads + version -->
           <div class="flex items-center gap-3" style="font-family: 'Geist', sans-serif">
