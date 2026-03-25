@@ -4,7 +4,7 @@ import { encodePackageName } from '#shared/utils/npm'
 
 const props = withDefaults(
   defineProps<{
-    packages: string | string[]
+    packages?: string | string[]
     primaryColor?: string
   }>(),
   {
