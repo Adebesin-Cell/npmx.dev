@@ -19,9 +19,7 @@ const ACCENT_COLORS = ['#60a5fa', '#f472b6', '#34d399', '#fbbf24']
 
 const displayPackages = computed(() => {
   const raw = props.packages
-  const list = (typeof raw === 'string' ? raw.split(',') : raw)
-    .map(p => p.trim())
-    .filter(Boolean)
+  const list = (typeof raw === 'string' ? raw.split(',') : raw).map(p => p.trim()).filter(Boolean)
   return list.slice(0, 4)
 })
 
