@@ -1,26 +1,14 @@
 <script setup lang="ts">
 import type { IconClass } from '~/types'
 
-/**
- * Tab — a single tab button. Must be used inside TabList, within a TabRoot.
- *
- * Styling is driven by `data-selected` attribute — no conditional class logic.
- * Extra classes and attrs are passed through to ButtonBase.
- */
-
 defineOptions({ name: 'TabItem', inheritAttrs: false })
 
 const props = withDefaults(
   defineProps<{
-    /** Unique value identifying this tab. Must match a TabPanel's value. */
     value: string
-    /** Optional icon class displayed before the label. */
     icon?: IconClass
-    /** Optional explicit element id (default: auto-generated from TabRoot idPrefix). */
     tabId?: string
-    /** @default "secondary" */
     variant?: 'primary' | 'secondary'
-    /** @default "md" */
     size?: 'sm' | 'md'
   }>(),
   {

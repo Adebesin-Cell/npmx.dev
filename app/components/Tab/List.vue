@@ -1,9 +1,4 @@
 <script setup lang="ts">
-/**
- * TabList — wraps Tab children with `role="tablist"` and handles
- * arrow-key roving focus per WAI-ARIA Tabs pattern.
- */
-
 defineOptions({ name: 'TabList' })
 
 defineProps<{
