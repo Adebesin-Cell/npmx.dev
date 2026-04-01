@@ -20,9 +20,18 @@ const OG_PADDING_X = 80
 const CONTENT_WIDTH = 1200 - OG_PADDING_X * 2
 
 const ACCENT_COLORS = [
-  '#60a5fa', '#f472b6', '#34d399', '#fbbf24',
-  '#a78bfa', '#fb923c', '#22d3ee', '#e879f9',
-  '#4ade80', '#f87171', '#38bdf8', '#facc15',
+  '#60a5fa',
+  '#f472b6',
+  '#34d399',
+  '#fbbf24',
+  '#a78bfa',
+  '#fb923c',
+  '#22d3ee',
+  '#e879f9',
+  '#4ade80',
+  '#f87171',
+  '#38bdf8',
+  '#facc15',
 ]
 
 // Tier thresholds
@@ -33,9 +42,7 @@ const SUMMARY_TOP_COUNT = 3
 
 const displayPackages = computed(() => {
   const raw = props.packages
-  return (typeof raw === 'string' ? raw.split(',') : raw)
-    .map(p => p.trim())
-    .filter(Boolean)
+  return (typeof raw === 'string' ? raw.split(',') : raw).map(p => p.trim()).filter(Boolean)
 })
 
 type LayoutTier = 'full' | 'compact' | 'grid' | 'summary'
@@ -70,10 +77,13 @@ if (layoutTier.value !== 'summary') {
             { timeout: FETCH_TIMEOUT_MS },
           ).catch(() => null),
           needsVersion
-            ? $fetch<{ 'dist-tags'?: { latest?: string } }>(`https://registry.npmjs.org/${encoded}`, {
-                timeout: FETCH_TIMEOUT_MS,
-                headers: { Accept: 'application/vnd.npm.install-v1+json' },
-              }).catch(() => null)
+            ? $fetch<{ 'dist-tags'?: { latest?: string } }>(
+                `https://registry.npmjs.org/${encoded}`,
+                {
+                  timeout: FETCH_TIMEOUT_MS,
+                  headers: { Accept: 'application/vnd.npm.install-v1+json' },
+                },
+              ).catch(() => null)
             : Promise.resolve(null),
         ])
         return {
@@ -125,7 +135,9 @@ const gridColumns = computed(() => {
 })
 
 const GRID_ITEM_GAP = 10
-const gridItemWidth = computed(() => `${Math.floor(CONTENT_WIDTH / gridColumns.value) - GRID_ITEM_GAP}px`)
+const gridItemWidth = computed(
+  () => `${Math.floor(CONTENT_WIDTH / gridColumns.value) - GRID_ITEM_GAP}px`,
+)
 
 const gridRows = computed(() => {
   const cols = gridColumns.value
@@ -137,7 +149,9 @@ const gridRows = computed(() => {
 })
 
 const summaryTopNames = computed(() => displayPackages.value.slice(0, SUMMARY_TOP_COUNT))
-const summaryRemainder = computed(() => Math.max(0, displayPackages.value.length - SUMMARY_TOP_COUNT))
+const summaryRemainder = computed(() =>
+  Math.max(0, displayPackages.value.length - SUMMARY_TOP_COUNT),
+)
 </script>
 
 <template>
@@ -248,12 +262,12 @@ const summaryRemainder = computed(() => Math.max(0, displayPackages.value.length
       </div>
 
       <!-- GRID layout (7-12 packages): packages in a side-by-side grid -->
-      <div v-else-if="layoutTier === 'grid'" class="flex flex-col gap-6" style="font-family: 'Geist', sans-serif">
-        <div
-          v-for="(row, ri) in gridRows"
-          :key="ri"
-          class="flex items-start"
-        >
+      <div
+        v-else-if="layoutTier === 'grid'"
+        class="flex flex-col gap-6"
+        style="font-family: 'Geist', sans-serif"
+      >
+        <div v-for="(row, ri) in gridRows" :key="ri" class="flex items-start">
           <!-- Using <span> as grid items because Satori treats <div> as full-width flex columns -->
           <span
             v-for="pkg in row"
@@ -274,9 +288,12 @@ const summaryRemainder = computed(() => Math.max(0, displayPackages.value.length
                 whiteSpace: 'nowrap',
                 color: pkg.color,
               }"
-            >{{ pkg.name }}</span>
+              >{{ pkg.name }}</span
+            >
             <span class="flex items-baseline gap-0.5">
-              <span class="text-2xl font-bold text-[#e5e5e5]">{{ formatDownloads(pkg.downloads) }}</span>
+              <span class="text-2xl font-bold text-[#e5e5e5]">{{
+                formatDownloads(pkg.downloads)
+              }}</span>
               <span class="text-sm font-medium text-[#737373]">/wk</span>
             </span>
           </span>
