@@ -94,7 +94,8 @@ if (layoutTier.value !== 'summary') {
         }
       }),
     )
-    stats.value = results
+    // Sort by downloads descending for readability
+    stats.value = results.sort((a, b) => b.downloads - a.downloads)
   } catch {
     stats.value = displayPackages.value.map((name, index) => ({
       name,
@@ -163,12 +164,12 @@ const summaryRemainder = computed(() =>
       <!-- Icon + title row -->
       <div class="flex items-start gap-4">
         <div
-          class="flex items-center justify-center w-14 h-14 p-3 rounded-xl shadow-lg bg-gradient-to-tr from-[#3b82f6]"
+          class="flex items-center justify-center w-16 h-16 p-3.5 rounded-xl shadow-lg bg-gradient-to-tr from-[#3b82f6]"
           :style="{ backgroundColor: primaryColor }"
         >
           <svg
-            width="32"
-            height="32"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
@@ -176,10 +177,12 @@ const summaryRemainder = computed(() =>
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <circle cx="18" cy="18" r="3" />
-            <circle cx="6" cy="6" r="3" />
-            <path d="M13 6h3a2 2 0 0 1 2 2v7" />
-            <path d="M11 18H8a2 2 0 0 1-2-2V9" />
+            <path d="m7.5 4.27 9 5.15" />
+            <path
+              d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"
+            />
+            <path d="m3.3 7 8.7 5 8.7-5" />
+            <path d="M12 22V12" />
           </svg>
         </div>
 
