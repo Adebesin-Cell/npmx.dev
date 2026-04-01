@@ -15,12 +15,36 @@ const props = withDefaults(
   },
 )
 
-const ACCENT_COLORS = ['#60a5fa', '#f472b6', '#34d399', '#fbbf24']
+// OG image is 1200×600. With 80px horizontal padding, content width is 1040px.
+const OG_PADDING_X = 80
+const CONTENT_WIDTH = 1200 - OG_PADDING_X * 2
+
+const ACCENT_COLORS = [
+  '#60a5fa', '#f472b6', '#34d399', '#fbbf24',
+  '#a78bfa', '#fb923c', '#22d3ee', '#e879f9',
+  '#4ade80', '#f87171', '#38bdf8', '#facc15',
+]
+
+// Tier thresholds
+const FULL_MAX = 4
+const COMPACT_MAX = 6
+const GRID_MAX = 12
+const SUMMARY_TOP_COUNT = 3
 
 const displayPackages = computed(() => {
   const raw = props.packages
-  const list = (typeof raw === 'string' ? raw.split(',') : raw).map(p => p.trim()).filter(Boolean)
-  return list.slice(0, 4)
+  return (typeof raw === 'string' ? raw.split(',') : raw)
+    .map(p => p.trim())
+    .filter(Boolean)
+})
+
+type LayoutTier = 'full' | 'compact' | 'grid' | 'summary'
+const layoutTier = computed<LayoutTier>(() => {
+  const count = displayPackages.value.length
+  if (count <= FULL_MAX) return 'full'
+  if (count <= COMPACT_MAX) return 'compact'
+  if (count <= GRID_MAX) return 'grid'
+  return 'summary'
 })
 
 interface PkgStats {
@@ -34,36 +58,41 @@ const stats = ref<PkgStats[]>([])
 
 const FETCH_TIMEOUT_MS = 2500
 
-try {
-  const results = await Promise.all(
-    displayPackages.value.map(async (name, index) => {
-      const encoded = encodePackageName(name)
-      const [dlData, pkgData] = await Promise.all([
-        $fetch<{ downloads: number }>(
-          `https://api.npmjs.org/downloads/point/last-week/${encoded}`,
-          { timeout: FETCH_TIMEOUT_MS },
-        ).catch(() => null),
-        $fetch<{ 'dist-tags'?: { latest?: string } }>(`https://registry.npmjs.org/${encoded}`, {
-          timeout: FETCH_TIMEOUT_MS,
-          headers: { Accept: 'application/vnd.npm.install-v1+json' },
-        }).catch(() => null),
-      ])
-      return {
-        name,
-        downloads: dlData?.downloads ?? 0,
-        version: pkgData?.['dist-tags']?.latest ?? '',
-        color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
-      }
-    }),
-  )
-  stats.value = results
-} catch {
-  stats.value = displayPackages.value.map((name, index) => ({
-    name,
-    downloads: 0,
-    version: '',
-    color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
-  }))
+if (layoutTier.value !== 'summary') {
+  try {
+    const results = await Promise.all(
+      displayPackages.value.map(async (name, index) => {
+        const encoded = encodePackageName(name)
+        const needsVersion = layoutTier.value === 'full'
+        const [dlData, pkgData] = await Promise.all([
+          $fetch<{ downloads: number }>(
+            `https://api.npmjs.org/downloads/point/last-week/${encoded}`,
+            { timeout: FETCH_TIMEOUT_MS },
+          ).catch(() => null),
+          needsVersion
+            ? $fetch<{ 'dist-tags'?: { latest?: string } }>(`https://registry.npmjs.org/${encoded}`, {
+                timeout: FETCH_TIMEOUT_MS,
+                headers: { Accept: 'application/vnd.npm.install-v1+json' },
+              }).catch(() => null)
+            : Promise.resolve(null),
+        ])
+        return {
+          name,
+          downloads: dlData?.downloads ?? 0,
+          version: pkgData?.['dist-tags']?.latest ?? '',
+          color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
+        }
+      }),
+    )
+    stats.value = results
+  } catch {
+    stats.value = displayPackages.value.map((name, index) => ({
+      name,
+      downloads: 0,
+      version: '',
+      color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
+    }))
+  }
 }
 
 const maxDownloads = computed(() => Math.max(...stats.value.map(s => s.downloads), 1))
@@ -76,17 +105,44 @@ function formatDownloads(n: number): string {
   }).format(n)
 }
 
-// Bar width as percentage string (max 100%)
+const BAR_MIN_PCT = 5
+const BAR_MAX_PCT = 100
+
 function barPct(downloads: number): string {
   if (downloads <= 0) return '0%'
   const pct = (downloads / maxDownloads.value) * 100
-  return `${Math.min(100, Math.max(pct, 5))}%`
+  return `${Math.min(BAR_MAX_PCT, Math.max(pct, BAR_MIN_PCT))}%`
 }
+
+// Grid layout: aim for 2 balanced rows
+const GRID_COLS_SMALL = 4 // for up to 8 packages (2 rows of 4)
+const GRID_COLS_LARGE = 5 // for 9+ packages (2 rows of 5)
+
+const gridColumns = computed(() => {
+  const count = stats.value.length
+  if (count <= GRID_COLS_SMALL * 2) return GRID_COLS_SMALL
+  return GRID_COLS_LARGE
+})
+
+const GRID_ITEM_GAP = 10
+const gridItemWidth = computed(() => `${Math.floor(CONTENT_WIDTH / gridColumns.value) - GRID_ITEM_GAP}px`)
+
+const gridRows = computed(() => {
+  const cols = gridColumns.value
+  const rows: PkgStats[][] = []
+  for (let i = 0; i < stats.value.length; i += cols) {
+    rows.push(stats.value.slice(i, i + cols))
+  }
+  return rows
+})
+
+const summaryTopNames = computed(() => displayPackages.value.slice(0, SUMMARY_TOP_COUNT))
+const summaryRemainder = computed(() => Math.max(0, displayPackages.value.length - SUMMARY_TOP_COUNT))
 </script>
 
 <template>
   <div
-    class="h-full w-full flex flex-col justify-center px-20 bg-[#050505] text-[#fafafa] relative overflow-hidden"
+    class="h-full w-full flex flex-col justify-center relative overflow-hidden bg-[#050505] text-[#fafafa] px-20"
     style="font-family: 'Geist Mono', sans-serif"
   >
     <div class="relative z-10 flex flex-col gap-5">
@@ -125,17 +181,16 @@ function barPct(downloads: number): string {
 
       <!-- Empty state -->
       <div
-        v-if="stats.length === 0"
+        v-if="displayPackages.length === 0"
         class="text-4xl text-[#a3a3a3]"
         style="font-family: 'Geist', sans-serif"
       >
         {{ emptyDescription }}
       </div>
 
-      <!-- Bar chart rows -->
-      <div v-else class="flex flex-col gap-2">
+      <!-- FULL layout (1-4 packages): name + downloads + version badge + bar -->
+      <div v-else-if="layoutTier === 'full'" class="flex flex-col gap-2">
         <div v-for="pkg in stats" :key="pkg.name" class="flex flex-col gap-1">
-          <!-- Label row: name + downloads + version -->
           <div class="flex items-center gap-3" style="font-family: 'Geist', sans-serif">
             <span
               class="text-2xl font-semibold tracking-tight truncate max-w-[400px]"
@@ -158,8 +213,6 @@ function barPct(downloads: number): string {
               {{ pkg.version }}
             </span>
           </div>
-
-          <!-- Bar -->
           <div
             class="h-6 rounded-md"
             :style="{
@@ -167,6 +220,86 @@ function barPct(downloads: number): string {
               background: `linear-gradient(90deg, ${pkg.color}50, ${pkg.color}20)`,
             }"
           />
+        </div>
+      </div>
+
+      <!-- COMPACT layout (5-6 packages): name + downloads + thinner bar, no version -->
+      <div v-else-if="layoutTier === 'compact'" class="flex flex-col gap-2">
+        <div v-for="pkg in stats" :key="pkg.name" class="flex flex-col gap-0.5">
+          <div class="flex items-center gap-2" style="font-family: 'Geist', sans-serif">
+            <span
+              class="text-xl font-semibold tracking-tight truncate max-w-[300px]"
+              :style="{ color: pkg.color }"
+            >
+              {{ pkg.name }}
+            </span>
+            <span class="text-xl font-bold text-[#fafafa]">
+              {{ formatDownloads(pkg.downloads) }}/wk
+            </span>
+          </div>
+          <div
+            class="h-3 rounded-sm"
+            :style="{
+              width: barPct(pkg.downloads),
+              background: `linear-gradient(90deg, ${pkg.color}50, ${pkg.color}20)`,
+            }"
+          />
+        </div>
+      </div>
+
+      <!-- GRID layout (7-12 packages): packages in a side-by-side grid -->
+      <div v-else-if="layoutTier === 'grid'" class="flex flex-col gap-6" style="font-family: 'Geist', sans-serif">
+        <div
+          v-for="(row, ri) in gridRows"
+          :key="ri"
+          class="flex items-start"
+        >
+          <!-- Using <span> as grid items because Satori treats <div> as full-width flex columns -->
+          <span
+            v-for="pkg in row"
+            :key="pkg.name"
+            :style="{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '2px',
+              width: gridItemWidth,
+            }"
+          >
+            <span
+              class="font-semibold tracking-tight"
+              :style="{
+                fontSize: '18px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                color: pkg.color,
+              }"
+            >{{ pkg.name }}</span>
+            <span class="flex items-baseline gap-0.5">
+              <span class="text-2xl font-bold text-[#e5e5e5]">{{ formatDownloads(pkg.downloads) }}</span>
+              <span class="text-sm font-medium text-[#737373]">/wk</span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <!-- SUMMARY layout (13+ packages): top names + remainder count -->
+      <div v-else class="flex flex-col gap-4" style="font-family: 'Geist', sans-serif">
+        <div class="text-5xl font-bold tracking-tight">
+          Comparing {{ displayPackages.length }} packages
+        </div>
+        <div class="flex items-center gap-2 text-2xl text-[#a3a3a3]">
+          <span
+            v-for="(name, i) in summaryTopNames"
+            :key="name"
+            class="font-semibold"
+            :style="{ color: ACCENT_COLORS[i % ACCENT_COLORS.length] }"
+          >
+            {{ name }}<span v-if="i < summaryTopNames.length - 1" class="text-[#525252]">,</span>
+          </span>
+          <span v-if="summaryRemainder > 0" class="text-[#737373]">
+            +{{ summaryRemainder }} more
+          </span>
         </div>
       </div>
     </div>
