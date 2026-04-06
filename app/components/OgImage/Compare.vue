@@ -54,6 +54,13 @@ const layoutTier = computed<LayoutTier>(() => {
   return 'summary'
 })
 
+const NAME_MAX_LENGTH = 40
+
+function truncateName(name: string): string {
+  if (name.length <= NAME_MAX_LENGTH) return name
+  return name.slice(0, NAME_MAX_LENGTH - 1) + '…'
+}
+
 interface PkgStats {
   name: string
   downloads: number
@@ -81,7 +88,7 @@ if (layoutTier.value !== 'summary') {
           }).catch(() => null),
         ])
         return {
-          name,
+          name: truncateName(name),
           downloads: dlData?.downloads ?? 0,
           version: pkgData?.['dist-tags']?.latest ?? '',
           color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
@@ -92,7 +99,7 @@ if (layoutTier.value !== 'summary') {
     stats.value = results.sort((a, b) => b.downloads - a.downloads)
   } catch {
     stats.value = displayPackages.value.map((name, index) => ({
-      name,
+      name: truncateName(name),
       downloads: 0,
       version: '',
       color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
@@ -143,7 +150,9 @@ const gridRows = computed(() => {
   return rows
 })
 
-const summaryTopNames = computed(() => displayPackages.value.slice(0, SUMMARY_TOP_COUNT))
+const summaryTopNames = computed(() =>
+  displayPackages.value.slice(0, SUMMARY_TOP_COUNT).map(truncateName),
+)
 const summaryRemainder = computed(() =>
   Math.max(0, displayPackages.value.length - SUMMARY_TOP_COUNT),
 )
