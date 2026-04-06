@@ -54,13 +54,6 @@ const layoutTier = computed<LayoutTier>(() => {
   return 'summary'
 })
 
-const NAME_MAX_LENGTH = 40
-
-function truncateName(name: string): string {
-  if (name.length <= NAME_MAX_LENGTH) return name
-  return name.slice(0, NAME_MAX_LENGTH - 1) + '…'
-}
-
 interface PkgStats {
   name: string
   downloads: number
@@ -88,7 +81,7 @@ if (layoutTier.value !== 'summary') {
           }).catch(() => null),
         ])
         return {
-          name: truncateName(name),
+          name,
           downloads: dlData?.downloads ?? 0,
           version: pkgData?.['dist-tags']?.latest ?? '',
           color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
@@ -99,7 +92,7 @@ if (layoutTier.value !== 'summary') {
     stats.value = results.sort((a, b) => b.downloads - a.downloads)
   } catch {
     stats.value = displayPackages.value.map((name, index) => ({
-      name: truncateName(name),
+      name,
       downloads: 0,
       version: '',
       color: ACCENT_COLORS[index % ACCENT_COLORS.length]!,
@@ -126,33 +119,7 @@ function barPct(downloads: number): string {
   return `${Math.min(BAR_MAX_PCT, Math.max(pct, BAR_MIN_PCT))}%`
 }
 
-// Grid layout: aim for 2 balanced rows
-const GRID_COLS_SMALL = 4 // for up to 8 packages (2 rows of 4)
-const GRID_COLS_LARGE = 5 // for 9+ packages (2 rows of 5)
-
-const gridColumns = computed(() => {
-  const count = stats.value.length
-  if (count <= GRID_COLS_SMALL * 2) return GRID_COLS_SMALL
-  return GRID_COLS_LARGE
-})
-
-const GRID_ITEM_GAP = 10
-const gridItemWidth = computed(
-  () => `${Math.floor(CONTENT_WIDTH / gridColumns.value) - GRID_ITEM_GAP}px`,
-)
-
-const gridRows = computed(() => {
-  const cols = gridColumns.value
-  const rows: PkgStats[][] = []
-  for (let i = 0; i < stats.value.length; i += cols) {
-    rows.push(stats.value.slice(i, i + cols))
-  }
-  return rows
-})
-
-const summaryTopNames = computed(() =>
-  displayPackages.value.slice(0, SUMMARY_TOP_COUNT).map(truncateName),
-)
+const summaryTopNames = computed(() => displayPackages.value.slice(0, SUMMARY_TOP_COUNT))
 const summaryRemainder = computed(() =>
   Math.max(0, displayPackages.value.length - SUMMARY_TOP_COUNT),
 )
@@ -213,8 +180,14 @@ const summaryRemainder = computed(() =>
         <div v-for="pkg in stats" :key="pkg.name" class="flex flex-col gap-1">
           <div class="flex items-center gap-3" style="font-family: 'Geist', sans-serif">
             <span
-              class="text-2xl font-semibold tracking-tight truncate max-w-[400px]"
-              :style="{ color: pkg.color }"
+              class="text-2xl font-semibold tracking-tight"
+              :style="{
+                color: pkg.color,
+                maxWidth: '400px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }"
             >
               {{ pkg.name }}
             </span>
@@ -248,8 +221,14 @@ const summaryRemainder = computed(() =>
         <div v-for="pkg in stats" :key="pkg.name" class="flex flex-col gap-0.5">
           <div class="flex items-center gap-2" style="font-family: 'Geist', sans-serif">
             <span
-              class="text-xl font-semibold tracking-tight truncate max-w-[300px]"
-              :style="{ color: pkg.color }"
+              class="text-xl font-semibold tracking-tight"
+              :style="{
+                color: pkg.color,
+                maxWidth: '300px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }"
             >
               {{ pkg.name }}
             </span>
@@ -278,63 +257,70 @@ const summaryRemainder = computed(() =>
         </div>
       </div>
 
-      <!-- GRID layout (7-12 packages): packages in a side-by-side grid -->
+      <!-- GRID layout (7-12 packages): flex-wrap grid -->
       <div
         v-else-if="layoutTier === 'grid'"
-        class="flex flex-col gap-6"
-        style="font-family: 'Geist', sans-serif"
+        :style="{
+          display: 'flex',
+          flexWrap: 'wrap',
+          rowGap: 24,
+          columnGap: 40,
+          fontFamily: 'Geist, sans-serif',
+        }"
       >
-        <div v-for="(row, ri) in gridRows" :key="ri" class="flex items-start">
-          <!-- Using <span> as grid items because Satori treats <div> as full-width flex columns -->
+        <span
+          v-for="pkg in stats"
+          :key="pkg.name"
+          :style="{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            width: '220px',
+          }"
+        >
           <span
-            v-for="pkg in row"
-            :key="pkg.name"
+            class="font-semibold tracking-tight"
             :style="{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '2px',
-              width: gridItemWidth,
+              fontSize: '18px',
+              maxWidth: '220px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              color: pkg.color,
             }"
+            >{{ pkg.name }}</span
           >
-            <span class="flex items-baseline gap-1.5">
-              <span
-                class="font-semibold tracking-tight"
-                :style="{
-                  fontSize: '18px',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  color: pkg.color,
-                }"
-                >{{ pkg.name }}</span
-              >
-              <span v-if="pkg.version" class="text-xs text-[#a3a3a3]">{{ pkg.version }}</span>
-            </span>
-            <span class="flex items-baseline gap-0.5">
-              <span class="text-2xl font-bold text-[#e5e5e5]">{{
-                formatDownloads(pkg.downloads)
-              }}</span>
-              <span class="text-sm font-medium text-[#a3a3a3]">/wk</span>
-            </span>
+          <span :style="{ display: 'flex', alignItems: 'baseline', gap: 2 }">
+            <span class="text-2xl font-bold text-[#e5e5e5]">{{
+              formatDownloads(pkg.downloads)
+            }}</span>
+            <span class="text-sm font-medium text-[#d4d4d4]">/wk</span>
           </span>
-        </div>
+        </span>
       </div>
 
-      <!-- SUMMARY layout (13+ packages): top names + remainder count -->
-      <div v-else class="flex flex-col gap-4" style="font-family: 'Geist', sans-serif">
-        <div class="text-5xl font-bold tracking-tight">
-          Comparing {{ displayPackages.length }} packages
+      <!-- SUMMARY layout (13+ packages): package count + top names -->
+      <div v-else class="flex flex-col gap-3" style="font-family: 'Geist', sans-serif">
+        <div class="text-2xl text-[#a3a3a3]">
+          <span class="text-4xl font-bold text-[#fafafa]">{{ displayPackages.length }}</span>
+          packages
         </div>
-        <div class="flex items-center gap-2 text-2xl text-[#a3a3a3]">
+        <div :style="{ display: 'flex', alignItems: 'baseline', gap: 8, whiteSpace: 'nowrap' }">
           <span
             v-for="(name, i) in summaryTopNames"
             :key="name"
-            class="font-semibold"
-            :style="{ color: ACCENT_COLORS[i % ACCENT_COLORS.length] }"
+            class="text-xl font-semibold"
+            :style="{
+              color: ACCENT_COLORS[i % ACCENT_COLORS.length],
+              maxWidth: '280px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              flexShrink: 1,
+            }"
+            >{{ name }}{{ i < summaryTopNames.length - 1 ? ',' : '' }}</span
           >
-            {{ name }}<span v-if="i < summaryTopNames.length - 1" class="text-[#525252]">,</span>
-          </span>
-          <span v-if="summaryRemainder > 0" class="text-[#737373]">
+          <span v-if="summaryRemainder > 0" class="text-xl text-[#737373]">
             +{{ summaryRemainder }} more
           </span>
         </div>
