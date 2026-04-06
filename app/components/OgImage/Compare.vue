@@ -15,7 +15,6 @@ const props = withDefaults(
   },
 )
 
-
 const ACCENT_COLORS = [
   '#60a5fa',
   '#f472b6',
