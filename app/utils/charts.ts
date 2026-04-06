@@ -637,6 +637,7 @@ export async function copyAltTextForCompareFacetBarChart({
 }
 
 // Used in chart context menu callbacks
+// @todo replace with downloadFileLink
 export function loadFile(link: string, filename: string) {
   const a = document.createElement('a')
   a.href = link
@@ -719,4 +720,15 @@ export function applyEllipsis(text: string, maxLength = 45) {
     return text
   }
   return text.slice(0, maxLength) + '...'
+}
+
+/**
+ * Constants shared among chart components using seeded patterns with the <VueUiPatternSeed> component.
+ * Important: `disambiguator` can be any number, and is used to cycle through different pattern sets. Its
+ * value was chosen for the diversity of its motifs.
+ */
+export const CHART_PATTERN_CONFIG = {
+  disambiguator: 1,
+  minSize: 16,
+  maxSize: 24,
 }
