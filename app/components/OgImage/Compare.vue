@@ -334,7 +334,7 @@ const summaryRemainder = computed(() =>
 
     <!-- Branding -->
     <div
-      class="absolute bottom-6 right-20 text-lg font-semibold tracking-tight text-[#525252]"
+      class="absolute bottom-6 inset-ie-20 text-lg font-semibold tracking-tight text-[#525252]"
       style="font-family: 'Geist Mono', sans-serif"
     >
       <span :style="{ color: primaryColor }" class="opacity-80 tracking-[-0.1em]">./</span>npmx
