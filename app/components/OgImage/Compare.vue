@@ -15,9 +15,6 @@ const props = withDefaults(
   },
 )
 
-// OG image is 1200×600. With 80px horizontal padding, content width is 1040px.
-const OG_PADDING_X = 80
-const CONTENT_WIDTH = 1200 - OG_PADDING_X * 2
 
 const ACCENT_COLORS = [
   '#60a5fa',
