@@ -128,7 +128,8 @@ export default defineNuxtConfig({
     '/api/registry/package-meta/**': { isr: 300 },
     '/:pkg/.well-known/skills/**': { isr: 3600 },
     '/:scope/:pkg/.well-known/skills/**': { isr: 3600 },
-    '/__og-image__/**': {
+    '/__og-image__/**': getISRConfig(3600),
+    '/__og-image__/image/compare/**': {
       isr: {
         expiration: 3600,
         passQuery: true,
