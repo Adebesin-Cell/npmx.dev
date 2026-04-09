@@ -14,8 +14,8 @@ const orgName = computed(() => route.params.org.toLowerCase())
 
 const { isConnected } = useConnector()
 
-// Fetch all packages in this org using the org packages API (lazy to not block navigation)
-const { data: results, status, error, isLoadingMore, hasMore, loadAll } = useOrgPackages(orgName)
+// Fetch packages progressively (first 250 on SSR, rest on demand via loadAll)
+const { data: results, status, error, loadAll } = useOrgPackages(orgName)
 
 // Handle 404 errors reactively (since we're not awaiting)
 watch(
@@ -32,15 +32,23 @@ watch(
   { immediate: true },
 )
 
-const packages = computed(() => results.value?.objects ?? [])
+const allPackages = computed(() => results.value?.objects ?? [])
 const totalPackages = computed(() => results.value?.totalPackages ?? 0)
+
+// Show first 250 packages initially; expanding triggers loadAll() to fetch remaining data
+const {
+  visibleItems: packages,
+  hasMore,
+  isExpanding,
+  expand,
+} = useVisibleItems(allPackages, 250, { onExpand: loadAll })
 const packageCount = computed(() => packages.value.length)
 
 // Preferences (persisted to localStorage)
 const { viewMode, paginationMode, pageSize, columns, toggleColumn, resetColumns } =
   usePackageListPreferences()
 
-// Structured filters and sorting
+// Structured filters and sorting (operates on visible set; expand() widens it)
 const {
   filters,
   sortOption,
@@ -69,7 +77,7 @@ const totalPages = computed(() => {
   return Math.ceil(sortedPackages.value.length / pageSize.value)
 })
 
-// Reset to page 1 when filters change; load all results so client-side filtering works
+// Reset to page 1 when filters change; expand so filtering works across all packages
 watch([filters, sortOption], () => {
   currentPage.value = 1
   if (
@@ -77,7 +85,7 @@ watch([filters, sortOption], () => {
     filters.value.keywords.length > 0 ||
     sortOption.value !== 'updated-desc'
   ) {
-    loadAll()
+    expand()
   }
 })
 
@@ -260,7 +268,7 @@ defineOgImageComponent('Default', {
 
     <!-- Loading state (only when no packages loaded yet) -->
     <LoadingSpinner
-      v-if="status === 'pending' && packages.length === 0"
+      v-if="status === 'pending' && allPackages.length === 0"
       :text="$t('common.loading_packages')"
     />
 
@@ -275,7 +283,7 @@ defineOgImageComponent('Default', {
     </div>
 
     <!-- Empty state -->
-    <div v-else-if="packageCount === 0" class="py-12 text-center">
+    <div v-else-if="allPackages.length === 0" class="py-12 text-center">
       <p class="text-fg-muted font-mono">
         {{ $t('org.page.no_packages') }} <span class="text-fg">@{{ orgName }}</span>
       </p>
@@ -324,7 +332,7 @@ defineOgImageComponent('Default', {
         <PackageList
           :results="sortedPackages"
           :has-more="hasMore"
-          :is-loading="isLoadingMore"
+          :is-loading="isExpanding"
           :view-mode="viewMode"
           :columns="columns"
           :filters="filters"
@@ -332,7 +340,7 @@ defineOgImageComponent('Default', {
           :pagination-mode="paginationMode"
           :page-size="pageSize"
           :current-page="currentPage"
-          @load-more="loadAll"
+          @load-more="expand"
           @click-keyword="toggleKeyword"
         />
 

@@ -9,17 +9,14 @@ const INITIAL_BATCH_SIZE = 250
 const ALGOLIA_BATCH_SIZE = 1000
 
 export interface OrgPackagesResponse extends NpmSearchResponse {
-  /** Total number of packages in the org (may exceed objects.length if not all loaded yet) */
+  /** Total number of packages in the org (may exceed objects.length before loadAll) */
   totalPackages: number
-  /** Whether there are more packages that haven't been loaded yet */
-  isTruncated: boolean
 }
 
 function emptyOrgResponse(): OrgPackagesResponse {
   return {
     ...emptySearchResponse(),
     totalPackages: 0,
-    isTruncated: false,
   }
 }
 
@@ -27,7 +24,7 @@ function emptyOrgResponse(): OrgPackagesResponse {
  * Fetch packages for an npm organization with progressive loading.
  *
  * 1. Gets the authoritative package list from the npm registry (single request)
- * 2. Fetches metadata for the first batch immediately
+ * 2. Fetches metadata for the first batch immediately (fast SSR)
  * 3. Remaining packages are loaded on-demand via `loadAll()`
  */
 export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
@@ -40,22 +37,11 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
   })
   const { getPackagesByNameSlice } = useAlgoliaSearch()
 
-  // --- Progressive loading state ---
-  const cache = shallowRef<{
-    org: string
-    allNames: string[]
-    objects: NpmSearchResult[]
-    totalPackages: number
-  } | null>(null)
+  // Tracks all package names so loadAll() knows what to fetch
+  const allNames = shallowRef<string[]>([])
+  const loadedObjects = shallowRef<NpmSearchResult[]>([])
 
-  const isLoadingMore = shallowRef(false)
-
-  const hasMore = computed(() => {
-    if (!cache.value) return false
-    return cache.value.objects.length < cache.value.allNames.length
-  })
-
-  // Promise lock to prevent duplicate loadAll calls
+  // Promise lock — scoped inside the composable to avoid cross-instance sharing
   let loadAllPromise: Promise<void> | null = null
 
   const asyncData = useLazyAsyncData(
@@ -90,11 +76,12 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
       }
 
       if (packageNames.length === 0) {
-        cache.value = { org, allNames: [], objects: [], totalPackages: 0 }
+        allNames.value = []
+        loadedObjects.value = []
         return emptyOrgResponse()
       }
 
-      const totalPackages = packageNames.length
+      allNames.value = packageNames
       const initialNames = packageNames.slice(0, INITIAL_BATCH_SIZE)
 
       // Fetch metadata for first batch
@@ -135,30 +122,25 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
           .map(metaToSearchResult)
       }
 
-      cache.value = {
-        org,
-        allNames: packageNames,
-        objects: initialObjects,
-        totalPackages,
-      }
+      loadedObjects.value = initialObjects
 
       return {
         isStale: false,
         objects: initialObjects,
         total: initialObjects.length,
-        totalPackages,
-        isTruncated: packageNames.length > initialObjects.length,
+        totalPackages: packageNames.length,
         time: new Date().toISOString(),
       } satisfies OrgPackagesResponse
     },
     { default: emptyOrgResponse },
   )
 
-  /** Load all remaining packages that weren't fetched in the initial batch */
+  /** Load all remaining packages that weren't fetched in the initial batch. */
   async function loadAll(): Promise<void> {
-    if (!hasMore.value) return
+    const names = allNames.value
+    if (names.length <= loadedObjects.value.length) return
 
-    // Reuse existing promise if already running
+    // Reuse in-flight promise to prevent duplicate fetches
     if (loadAllPromise) {
       await loadAllPromise
       return
@@ -173,109 +155,71 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
   }
 
   async function _doLoadAll(): Promise<void> {
-    const currentCache = cache.value
-    if (!currentCache || currentCache.objects.length >= currentCache.allNames.length) return
+    const names = allNames.value
+    const current = loadedObjects.value
+    if (names.length <= current.length) return
 
-    const org = currentCache.org
-    isLoadingMore.value = true
+    const org = toValue(orgName)
+    const remainingNames = names.slice(current.length)
 
-    try {
-      const remainingNames = currentCache.allNames.slice(currentCache.objects.length)
+    let newObjects: NpmSearchResult[] = []
 
-      if (searchProviderValue.value === 'algolia') {
-        // Split remaining into batches and fetch in parallel
-        const batches: string[][] = []
-        for (let i = 0; i < remainingNames.length; i += ALGOLIA_BATCH_SIZE) {
-          batches.push(remainingNames.slice(i, i + ALGOLIA_BATCH_SIZE))
-        }
+    if (searchProviderValue.value === 'algolia') {
+      const batches: string[][] = []
+      for (let i = 0; i < remainingNames.length; i += ALGOLIA_BATCH_SIZE) {
+        batches.push(remainingNames.slice(i, i + ALGOLIA_BATCH_SIZE))
+      }
 
-        const results = await Promise.allSettled(
-          batches.map(batch => getPackagesByNameSlice(batch)),
-        )
+      const results = await Promise.allSettled(batches.map(batch => getPackagesByNameSlice(batch)))
 
-        if (toValue(orgName) !== org) return
+      if (toValue(orgName) !== org) return
 
-        const newObjects: NpmSearchResult[] = []
-        for (const result of results) {
-          if (result.status === 'fulfilled') {
-            newObjects.push(...result.value)
-          }
-        }
-
-        if (newObjects.length > 0) {
-          const existingNames = new Set(currentCache.objects.map(o => o.package.name))
-          const deduped = newObjects.filter(o => !existingNames.has(o.package.name))
-          cache.value = {
-            ...currentCache,
-            objects: [...currentCache.objects, ...deduped],
-          }
-        }
-      } else {
-        // npm fallback: fetch with concurrency
-        const metaResults = await mapWithConcurrency(
-          remainingNames,
-          async name => {
-            try {
-              return await $fetch<PackageMetaResponse>(
-                `/api/registry/package-meta/${encodePackageName(name)}`,
-              )
-            } catch {
-              return null
-            }
-          },
-          10,
-        )
-
-        if (toValue(orgName) !== org) return
-
-        const newObjects = metaResults
-          .filter((meta): meta is PackageMetaResponse => meta !== null)
-          .map(metaToSearchResult)
-
-        if (newObjects.length > 0) {
-          const existingNames = new Set(currentCache.objects.map(o => o.package.name))
-          const deduped = newObjects.filter(o => !existingNames.has(o.package.name))
-          cache.value = {
-            ...currentCache,
-            objects: [...currentCache.objects, ...deduped],
-          }
+      for (const result of results) {
+        if (result.status === 'fulfilled') {
+          newObjects.push(...result.value)
         }
       }
-    } finally {
-      isLoadingMore.value = false
+    } else {
+      const metaResults = await mapWithConcurrency(
+        remainingNames,
+        async name => {
+          try {
+            return await $fetch<PackageMetaResponse>(
+              `/api/registry/package-meta/${encodePackageName(name)}`,
+            )
+          } catch {
+            return null
+          }
+        },
+        10,
+      )
+
+      if (toValue(orgName) !== org) return
+
+      newObjects = metaResults
+        .filter((meta): meta is PackageMetaResponse => meta !== null)
+        .map(metaToSearchResult)
     }
-  }
 
-  // Reset cache when provider changes
-  watch(
-    () => searchProviderValue.value,
-    () => {
-      cache.value = null
-      loadAllPromise = null
-    },
-  )
+    if (newObjects.length > 0) {
+      const existingNames = new Set(current.map(o => o.package.name))
+      const deduped = newObjects.filter(o => !existingNames.has(o.package.name))
+      const all = [...current, ...deduped]
+      loadedObjects.value = all
 
-  // Computed data that prefers cache
-  const data = computed<OrgPackagesResponse | null>(() => {
-    const org = toValue(orgName)
-    if (cache.value && cache.value.org === org) {
-      return {
+      // Update asyncData so the page sees the new objects
+      asyncData.data.value = {
         isStale: false,
-        objects: cache.value.objects,
-        total: cache.value.objects.length,
-        totalPackages: cache.value.totalPackages,
-        isTruncated: cache.value.objects.length < cache.value.allNames.length,
+        objects: all,
+        total: all.length,
+        totalPackages: names.length,
         time: new Date().toISOString(),
       }
     }
-    return asyncData.data.value
-  })
+  }
 
   return {
     ...asyncData,
-    data,
-    isLoadingMore,
-    hasMore,
     loadAll,
   }
 }
