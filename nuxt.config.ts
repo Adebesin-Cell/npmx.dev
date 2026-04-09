@@ -132,6 +132,7 @@ export default defineNuxtConfig({
       isr: {
         expiration: 3600,
         passQuery: true,
+        allowQuery: ['packages', '_query'],
       },
     },
     '/_avatar/**': { isr: 3600, proxy: 'https://www.gravatar.com/avatar/**' },
