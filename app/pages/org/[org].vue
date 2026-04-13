@@ -38,11 +38,16 @@ const totalPackages = computed(() => results.value?.totalPackages ?? 0)
 // Show first 250 packages initially; expanding triggers loadAll() to fetch remaining data
 const {
   visibleItems: packages,
-  hasMore,
+  hasMore: hasMoreVisible,
   isExpanding,
   expand,
 } = useVisibleItems(allPackages, 250, { onExpand: loadAll })
 const packageCount = computed(() => packages.value.length)
+
+// hasMore combines both: hidden in-memory items AND unfetched server data
+const hasMore = computed(
+  () => hasMoreVisible.value || allPackages.value.length < totalPackages.value,
+)
 
 // Preferences (persisted to localStorage)
 const { viewMode, paginationMode, pageSize, columns, toggleColumn, resetColumns } =
