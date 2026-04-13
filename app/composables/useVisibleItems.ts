@@ -5,8 +5,10 @@ export interface UseVisibleItemsOptions {
   /**
    * Called when expanding. Useful for loading remaining data on demand.
    * If it returns a promise, `isExpanding` will be `true` until it resolves.
+   * Return `false` to signal a partial load — `showAll` stays false so
+   * `hasMore` remains true and the user can retry.
    */
-  onExpand?: () => void | Promise<void>
+  onExpand?: () => void | boolean | Promise<void | boolean>
 }
 
 export function useVisibleItems<T>(
@@ -30,15 +32,17 @@ export function useVisibleItems<T>(
 
   const expand = async () => {
     if (showAll.value) return
+    let fullyLoaded = true
     if (options?.onExpand) {
       isExpanding.value = true
       try {
-        await options.onExpand()
+        const result = await options.onExpand()
+        if (result === false) fullyLoaded = false
       } finally {
         isExpanding.value = false
       }
     }
-    showAll.value = true
+    if (fullyLoaded) showAll.value = true
   }
   const collapse = () => {
     showAll.value = false

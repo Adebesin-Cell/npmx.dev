@@ -137,8 +137,8 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
 
   /** Load all remaining packages that weren't fetched in the initial batch. */
   async function loadAll(): Promise<void> {
-    const names = allNames.value
-    if (names.length <= loadedObjects.value.length) return
+    const loadedSet = new Set(loadedObjects.value.map(o => o.package.name))
+    if (loadedSet.size >= allNames.value.length) return
 
     // Reuse in-flight promise to prevent duplicate fetches
     if (loadAllPromise) {
@@ -157,10 +157,11 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
   async function _doLoadAll(): Promise<void> {
     const names = allNames.value
     const current = loadedObjects.value
-    if (names.length <= current.length) return
+    const loadedSet = new Set(current.map(o => o.package.name))
+    const remainingNames = names.filter(n => !loadedSet.has(n))
+    if (remainingNames.length === 0) return
 
     const org = toValue(orgName)
-    const remainingNames = names.slice(current.length)
 
     let newObjects: NpmSearchResult[] = []
 
