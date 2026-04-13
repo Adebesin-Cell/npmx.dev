@@ -3,7 +3,7 @@ import { emptySearchResponse, metaToSearchResult } from './search-utils'
 import { mapWithConcurrency } from '#shared/utils/async'
 
 /** Number of packages to fetch metadata for in the initial load */
-const INITIAL_BATCH_SIZE = 250
+const INITIAL_BATCH_SIZE = 50
 
 /** Max names per Algolia getObjects request */
 const ALGOLIA_BATCH_SIZE = 1000
@@ -135,8 +135,8 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
     { default: emptyOrgResponse },
   )
 
-  /** Load all remaining packages that weren't fetched in the initial batch. */
-  async function loadAll(): Promise<void> {
+  /** Load the next batch of packages (default: 1 Algolia batch of 1000). */
+  async function loadMore(count: number = ALGOLIA_BATCH_SIZE): Promise<void> {
     const loadedSet = new Set(loadedObjects.value.map(o => o.package.name))
     if (loadedSet.size >= allNames.value.length) return
 
@@ -146,7 +146,7 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
       return
     }
 
-    loadAllPromise = _doLoadAll()
+    loadAllPromise = _doLoadMore(count)
     try {
       await loadAllPromise
     } finally {
@@ -154,15 +154,21 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
     }
   }
 
-  async function _doLoadAll(): Promise<void> {
+  /** Load ALL remaining packages (used when filters need the full dataset). */
+  async function loadAll(): Promise<void> {
+    const remaining = allNames.value.length - loadedObjects.value.length
+    if (remaining <= 0) return
+    await loadMore(remaining)
+  }
+
+  async function _doLoadMore(count: number): Promise<void> {
     const names = allNames.value
     const current = loadedObjects.value
     const loadedSet = new Set(current.map(o => o.package.name))
-    const remainingNames = names.filter(n => !loadedSet.has(n))
+    const remainingNames = names.filter(n => !loadedSet.has(n)).slice(0, count)
     if (remainingNames.length === 0) return
 
     const org = toValue(orgName)
-
     let newObjects: NpmSearchResult[] = []
 
     if (searchProviderValue.value === 'algolia') {
@@ -203,8 +209,7 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
     }
 
     if (newObjects.length > 0) {
-      const existingNames = new Set(current.map(o => o.package.name))
-      const deduped = newObjects.filter(o => !existingNames.has(o.package.name))
+      const deduped = newObjects.filter(o => !loadedSet.has(o.package.name))
       const all = [...current, ...deduped]
       loadedObjects.value = all
 
@@ -221,6 +226,7 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
 
   return {
     ...asyncData,
+    loadMore,
     loadAll,
   }
 }
