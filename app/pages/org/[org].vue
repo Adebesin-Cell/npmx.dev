@@ -14,8 +14,8 @@ const orgName = computed(() => route.params.org.toLowerCase())
 
 const { isConnected } = useConnector()
 
-// Fetch packages progressively (first 250 on SSR, rest on demand via loadAll)
-const { data: results, status, error, loadMore, loadAll } = useOrgPackages(orgName)
+// Fetch all packages in this org using the org packages API (lazy to not block navigation)
+const { data: results, status, error } = useOrgPackages(orgName)
 
 // Handle 404 errors reactively (since we're not awaiting)
 watch(
@@ -33,40 +33,13 @@ watch(
 )
 
 const packages = computed(() => results.value?.objects ?? [])
-const totalPackages = computed(() => results.value?.totalPackages ?? 0)
 const packageCount = computed(() => packages.value.length)
-
-// Progressive loading: first 50 on SSR, rest fetched on demand via loadAll()
-const hasMore = computed(() => packages.value.length < totalPackages.value)
-const isLoadingMore = shallowRef(false)
-
-/** Fetch the next batch of packages (1000 at a time). */
-async function fetchNextBatch() {
-  if (!hasMore.value || isLoadingMore.value) return
-  isLoadingMore.value = true
-  try {
-    await loadMore()
-  } finally {
-    isLoadingMore.value = false
-  }
-}
-
-/** Fetch ALL remaining packages (needed for client-side filtering). */
-async function fetchAllRemaining() {
-  if (!hasMore.value || isLoadingMore.value) return
-  isLoadingMore.value = true
-  try {
-    await loadAll()
-  } finally {
-    isLoadingMore.value = false
-  }
-}
 
 // Preferences (persisted to localStorage)
 const { viewMode, paginationMode, pageSize, columns, toggleColumn, resetColumns } =
   usePackageListPreferences()
 
-// Structured filters and sorting (operates on all loaded packages)
+// Structured filters and sorting
 const {
   filters,
   sortOption,
@@ -90,40 +63,20 @@ const {
 // Pagination state
 const currentPage = shallowRef(1)
 
-// Total items accounts for unfetched packages so pagination shows the real count
-const paginationTotal = computed(() =>
-  hasMore.value ? totalPackages.value : sortedPackages.value.length,
-)
-
 // Calculate total pages
 const totalPages = computed(() => {
-  return Math.ceil(paginationTotal.value / pageSize.value)
+  return Math.ceil(sortedPackages.value.length / pageSize.value)
 })
 
-// Reset to page 1 when filters change; load all packages so client-side filtering works
+// Reset to page 1 when filters change
 watch([filters, sortOption], () => {
   currentPage.value = 1
-  if (
-    filters.value.text ||
-    filters.value.keywords.length > 0 ||
-    sortOption.value !== 'updated-desc'
-  ) {
-    fetchAllRemaining()
-  }
 })
 
 // Clamp current page when total pages decreases (e.g., after filtering)
 watch(totalPages, newTotal => {
   if (currentPage.value > newTotal && newTotal > 0) {
     currentPage.value = newTotal
-  }
-})
-
-// Load next batch when user navigates beyond what's loaded
-watch(currentPage, page => {
-  const loadedPages = Math.ceil(sortedPackages.value.length / pageSize.value)
-  if (page > loadedPages && hasMore.value) {
-    fetchNextBatch()
   }
 })
 
@@ -188,10 +141,7 @@ useSeoMeta({
 
 defineOgImageComponent('Default', {
   title: () => `@${orgName.value}`,
-  description: () =>
-    totalPackages.value || packageCount.value
-      ? `${totalPackages.value || packageCount.value} packages`
-      : 'npm organization',
+  description: () => (packageCount.value ? `${packageCount.value} packages` : 'npm organization'),
   primaryColor: '#60a5fa',
 })
 </script>
@@ -213,23 +163,7 @@ defineOgImageComponent('Default', {
         <div>
           <h1 class="font-mono text-2xl sm:text-3xl font-medium">@{{ orgName }}</h1>
           <p v-if="status === 'success'" class="text-fg-muted text-sm mt-1">
-            <template v-if="hasMore">
-              {{
-                $t('org.page.showing_packages', {
-                  loaded: $n(packageCount),
-                  total: $n(totalPackages),
-                })
-              }}
-            </template>
-            <template v-else>
-              {{
-                $t(
-                  'org.public_packages',
-                  { count: $n(totalPackages || packageCount) },
-                  totalPackages || packageCount,
-                )
-              }}
-            </template>
+            {{ $t('org.public_packages', { count: $n(packageCount) }, packageCount) }}
           </p>
         </div>
 
@@ -297,11 +231,8 @@ defineOgImageComponent('Default', {
       </section>
     </ClientOnly>
 
-    <!-- Loading state (only when no packages loaded yet) -->
-    <LoadingSpinner
-      v-if="status === 'pending' && packages.length === 0"
-      :text="$t('common.loading_packages')"
-    />
+    <!-- Loading state -->
+    <LoadingSpinner v-if="status === 'pending'" :text="$t('common.loading_packages')" />
 
     <!-- Error state -->
     <div v-else-if="status === 'error'" role="alert" class="py-12 text-center">
@@ -314,7 +245,7 @@ defineOgImageComponent('Default', {
     </div>
 
     <!-- Empty state -->
-    <div v-else-if="packageCount === 0 && totalPackages === 0" class="py-12 text-center">
+    <div v-else-if="packageCount === 0" class="py-12 text-center">
       <p class="text-fg-muted font-mono">
         {{ $t('org.page.no_packages') }} <span class="text-fg">@{{ orgName }}</span>
       </p>
@@ -362,8 +293,6 @@ defineOgImageComponent('Default', {
       <template v-else>
         <PackageList
           :results="sortedPackages"
-          :has-more="hasMore"
-          :is-loading="isLoadingMore"
           :view-mode="viewMode"
           :columns="columns"
           :filters="filters"
@@ -371,7 +300,6 @@ defineOgImageComponent('Default', {
           :pagination-mode="paginationMode"
           :page-size="pageSize"
           :current-page="currentPage"
-          @load-more="fetchNextBatch"
           @click-keyword="toggleKeyword"
         />
 
@@ -380,7 +308,7 @@ defineOgImageComponent('Default', {
           v-model:mode="paginationMode"
           v-model:page-size="pageSize"
           v-model:current-page="currentPage"
-          :total-items="paginationTotal"
+          :total-items="sortedPackages.length"
           :view-mode="viewMode"
         />
       </template>

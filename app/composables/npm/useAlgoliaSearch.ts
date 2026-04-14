@@ -254,8 +254,14 @@ export function useAlgoliaSearch() {
       batches.push(packageNames.slice(i, i + BATCH_SIZE))
     }
 
-    const results = await Promise.all(batches.map(batch => getPackagesByNameSlice(batch)))
-    const allObjects = results.flat()
+    // Fetch batches with concurrency limit to avoid overwhelming the API
+    const CONCURRENCY = 3
+    const allObjects: NpmSearchResult[] = []
+    for (let i = 0; i < batches.length; i += CONCURRENCY) {
+      const chunk = batches.slice(i, i + CONCURRENCY)
+      const results = await Promise.all(chunk.map(batch => getPackagesByNameSlice(batch)))
+      allObjects.push(...results.flat())
+    }
 
     return {
       isStale: false,
@@ -367,6 +373,5 @@ export function useAlgoliaSearch() {
     searchWithSuggestions,
     searchByOwner,
     getPackagesByName,
-    getPackagesByNameSlice,
   }
 }
