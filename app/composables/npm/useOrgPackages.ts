@@ -11,12 +11,15 @@ const ALGOLIA_BATCH_SIZE = 1000
 export interface OrgPackagesResponse extends NpmSearchResponse {
   /** Total number of packages in the org (may exceed objects.length before loadAll) */
   totalPackages: number
+  /** All package names in the org (used by loadMore to know what to fetch next) */
+  allPackageNames: string[]
 }
 
 function emptyOrgResponse(): OrgPackagesResponse {
   return {
     ...emptySearchResponse(),
     totalPackages: 0,
+    allPackageNames: [],
   }
 }
 
@@ -37,8 +40,6 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
   })
   const { getPackagesByNameSlice } = useAlgoliaSearch()
 
-  // Tracks all package names so loadAll() knows what to fetch
-  const allNames = shallowRef<string[]>([])
   const loadedObjects = shallowRef<NpmSearchResult[]>([])
 
   // Promise lock — scoped inside the composable to avoid cross-instance sharing
@@ -76,12 +77,10 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
       }
 
       if (packageNames.length === 0) {
-        allNames.value = []
         loadedObjects.value = []
         return emptyOrgResponse()
       }
 
-      allNames.value = packageNames
       const initialNames = packageNames.slice(0, INITIAL_BATCH_SIZE)
 
       // Fetch metadata for first batch
@@ -129,16 +128,22 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
         objects: initialObjects,
         total: initialObjects.length,
         totalPackages: packageNames.length,
+        allPackageNames: packageNames,
         time: new Date().toISOString(),
       } satisfies OrgPackagesResponse
     },
     { default: emptyOrgResponse },
   )
 
+  /** Read allPackageNames from async data (survives SSR→client hydration via Nuxt payload). */
+  function allPackageNames(): string[] {
+    return asyncData.data.value?.allPackageNames ?? []
+  }
+
   /** Load the next batch of packages (default: 1 Algolia batch of 1000). */
   async function loadMore(count: number = ALGOLIA_BATCH_SIZE): Promise<void> {
     const loadedSet = new Set(loadedObjects.value.map(o => o.package.name))
-    if (loadedSet.size >= allNames.value.length) return
+    if (loadedSet.size >= allPackageNames().length) return
 
     // Reuse in-flight promise to prevent duplicate fetches
     if (loadAllPromise) {
@@ -156,13 +161,13 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
 
   /** Load ALL remaining packages (used when filters need the full dataset). */
   async function loadAll(): Promise<void> {
-    const remaining = allNames.value.length - loadedObjects.value.length
+    const remaining = allPackageNames().length - loadedObjects.value.length
     if (remaining <= 0) return
     await loadMore(remaining)
   }
 
   async function _doLoadMore(count: number): Promise<void> {
-    const names = allNames.value
+    const names = allPackageNames()
     const current = loadedObjects.value
     const loadedSet = new Set(current.map(o => o.package.name))
     const remainingNames = names.filter(n => !loadedSet.has(n)).slice(0, count)
@@ -219,6 +224,7 @@ export function useOrgPackages(orgName: MaybeRefOrGetter<string>) {
         objects: all,
         total: all.length,
         totalPackages: names.length,
+        allPackageNames: names,
         time: new Date().toISOString(),
       }
     }
