@@ -260,7 +260,11 @@ export function useAlgoliaSearch() {
     for (let i = 0; i < batches.length; i += CONCURRENCY) {
       const chunk = batches.slice(i, i + CONCURRENCY)
       const results = await Promise.all(chunk.map(batch => getPackagesByNameSlice(batch)))
-      allObjects.push(...results.flat())
+      for (const result of results) {
+        for (const pkg of result) {
+          allObjects.push(pkg)
+        }
+      }
     }
 
     return {
