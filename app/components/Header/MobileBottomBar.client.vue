@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isOpen, activeView, toggle, close } = useMobileNav()
+const { isOpen, activeView, toggle, close, back } = useMobileNav()
 const { open: openCommandPalette } = useCommandPalette()
 const colorMode = useColorMode()
 
@@ -34,10 +34,19 @@ function handleThemeClick() {
       >
         <AppMark class="w-6 h-auto" />
       </NuxtLink>
-      <div v-else class="flex items-center gap-2 flex-1 min-w-0">
-        <AppMark class="w-6 h-auto flex-shrink-0" aria-hidden="true" />
+      <button
+        v-else
+        type="button"
+        class="flex items-center gap-2 flex-1 min-w-0 px-2 py-1 -mx-2 rounded-md hover:bg-bg-subtle transition-colors duration-200 text-start"
+        :aria-label="$t('nav.back_to_main_menu')"
+        @click="back"
+      >
+        <span
+          class="i-lucide:arrow-left rtl-flip w-4 h-4 text-fg-muted flex-shrink-0"
+          aria-hidden="true"
+        />
         <span class="font-mono text-sm text-fg truncate">{{ contextLabel }}</span>
-      </div>
+      </button>
 
       <div v-if="!contextLabel" class="flex-1" />
 
