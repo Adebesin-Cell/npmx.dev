@@ -64,13 +64,29 @@
       "view_org_packages": "عرض حزم هذه المؤسسة"
     }
   },
+  "command_palette": {
+    "state": {},
+    "groups": {},
+    "actions": {},
+    "connections": {},
+    "navigation": {},
+    "links": {},
+    "package_links": {},
+    "theme": {},
+    "package": {},
+    "package_actions": {},
+    "code": {},
+    "diff": {},
+    "version": {},
+    "status": {},
+    "announcements": {}
+  },
   "nav": {
     "main_navigation": "الصفحة الرئيسية",
     "popular_packages": "الحزم الشائعة",
     "settings": "الإعدادات",
     "compare": "مقارنة",
     "back": "عودة",
-    "menu": "القائمة",
     "mobile_menu": "قائمة التنقل",
     "open_menu": "فتح القائمة",
     "links": "روابط",
@@ -319,6 +335,7 @@
       "no_matches": "لا توجد إصدارات تطابق هذا النطاق",
       "copy_alt": {}
     },
+    "timeline": {},
     "dependencies": {
       "title": "التبعيات ({count})",
       "list_label": "تبعيات الحزمة",
@@ -355,6 +372,7 @@
       "show_less": "(عرض أقل)"
     },
     "trends": {
+      "chart_assistive_text": {},
       "granularity": "مستوى التفصيل",
       "granularity_daily": "يومي",
       "granularity_weekly": "أسبوعي",
@@ -925,6 +943,9 @@
       "packages_selected": "{count}/{max} حزمة محددة.",
       "add_hint": "أضف حزمتين على الأقل للمقارنة."
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "(بدون تبعية)",
       "typeahead_title": "ماذا كان سيفعل James؟",
@@ -999,7 +1020,10 @@
         "vulnerabilities": {
           "label": "الثغرات",
           "description": "ثغرات أمنية معروفة"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "أي من",
@@ -1138,5 +1162,20 @@
   "translation_status": {
     "table": {}
   },
-  "action_bar": {}
+  "vacations": {
+    "what": {},
+    "meantime": {},
+    "return": {},
+    "stats": {
+      "subtitle": {}
+    }
+  },
+  "action_bar": {},
+  "logo_menu": {},
+  "brand": {
+    "logos": {},
+    "customize": {},
+    "typography": {},
+    "guidelines": {}
+  }
 }

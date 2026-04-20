@@ -59,13 +59,29 @@
     "instant_search_turn_off": "बंद करा",
     "instant_search_advisory": "{label} {state} — {action}"
   },
+  "command_palette": {
+    "state": {},
+    "groups": {},
+    "actions": {},
+    "connections": {},
+    "navigation": {},
+    "links": {},
+    "package_links": {},
+    "theme": {},
+    "package": {},
+    "package_actions": {},
+    "code": {},
+    "diff": {},
+    "version": {},
+    "status": {},
+    "announcements": {}
+  },
   "nav": {
     "main_navigation": "मुख्य",
     "popular_packages": "लोकप्रिय पॅकेजेस",
     "settings": "सेटिंग्ज",
     "compare": "तुलना करा",
     "back": "मागे",
-    "menu": "मेनू",
     "mobile_menu": "नेव्हिगेशन मेनू",
     "open_menu": "मेनू उघडा",
     "links": "लिंक",
@@ -412,6 +428,7 @@
       "current_tags": "सध्याचे टॅग्स",
       "no_match_filter": "{filter} शी जुळणारी कोणतीही आवृत्ती नाही"
     },
+    "timeline": {},
     "dependencies": {
       "title": "{count} निर्भरता | {count} निर्भरता",
       "list_label": "पॅकेज निर्भरता",
@@ -1075,6 +1092,9 @@
       "packages_selected": "{count}/{max} पॅकेजेस निवडली.",
       "add_hint": "तुलनेसाठी किमान 2 पॅकेजेस जोडा."
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "(निर्भरता नाही)",
       "typeahead_title": "James काय करेल?",
@@ -1149,7 +1169,10 @@
         "vulnerabilities": {
           "label": "असुरक्षितता",
           "description": "ज्ञात सुरक्षा असुरक्षितता"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "कोणतेही",
@@ -1394,5 +1417,12 @@
     "selection": "0 निवडले | 1 निवडले | {count} निवडले",
     "shortcut": "\"{key}\" दाबून क्रियांवर फोकस करा",
     "button_close_aria_label": "क्रिया पट्टी बंद करा"
+  },
+  "logo_menu": {},
+  "brand": {
+    "logos": {},
+    "customize": {},
+    "typography": {},
+    "guidelines": {}
   }
 }

@@ -192,7 +192,6 @@
     "settings": "innstillinger",
     "compare": "sammenlign",
     "back": "tilbake",
-    "menu": "Meny",
     "mobile_menu": "Navigasjonsmeny",
     "open_menu": "Åpne meny",
     "links": "Lenker",
@@ -557,6 +556,7 @@
       "current_tags": "Nåværende tagger",
       "no_match_filter": "Ingen versjoner matcher {filter}"
     },
+    "timeline": {},
     "dependencies": {
       "title": "Avhengighet ({count}) | Avhengigheter ({count})",
       "list_label": "Pakkeavhengigheter",
@@ -1236,6 +1236,9 @@
       "packages_selected": "{count}/{max} pakker valgt.",
       "add_hint": "Legg til minst 2 pakker for å sammenligne."
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "(Ingen avhengighet)",
       "typeahead_title": "Hva ville James gjort?",
@@ -1314,7 +1317,10 @@
         "vulnerabilities": {
           "label": "Sårbarheter",
           "description": "Kjente sikkerhetssårbarheter"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "Enhver",

@@ -192,7 +192,6 @@
     "settings": "настройки",
     "compare": "сравнить",
     "back": "назад",
-    "menu": "Меню",
     "mobile_menu": "Навигационное меню",
     "open_menu": "Открыть меню",
     "links": "Ссылки",
@@ -557,6 +556,7 @@
       "current_tags": "Текущие теги",
       "no_match_filter": "Нет версий по фильтру «{filter}»"
     },
+    "timeline": {},
     "dependencies": {
       "title": "Зависимости ({count})",
       "list_label": "Зависимости пакета",
@@ -1325,7 +1325,10 @@
         "vulnerabilities": {
           "label": "Уязвимости",
           "description": "Известные уязвимости безопасности"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "Любой",
