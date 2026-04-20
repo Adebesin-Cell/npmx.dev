@@ -75,8 +75,7 @@ async function downloadCustomPng() {
   if (!svg) return
   pngLoading.value = true
 
-  const blob = new Blob([svg], { type: 'image/svg+xml' })
-  const url = URL.createObjectURL(blob)
+  const url = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
 
   try {
     await document.fonts.ready
@@ -108,7 +107,6 @@ async function downloadCustomPng() {
       }, 'image/png')
     })
   } finally {
-    URL.revokeObjectURL(url)
     pngLoading.value = false
   }
 }
