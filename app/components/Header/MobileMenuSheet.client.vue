@@ -52,6 +52,23 @@ onUnmounted(deactivate)
 
 <template>
   <Teleport to="body">
+    <!-- Backdrop: fades in/out, sits below the sheet and above page content -->
+    <Transition
+      enter-active-class="transition-opacity duration-200 motion-reduce:transition-none"
+      leave-active-class="transition-opacity duration-150 motion-reduce:transition-none"
+      enter-from-class="opacity-0"
+      leave-to-class="opacity-0"
+    >
+      <button
+        v-if="isOpen"
+        type="button"
+        class="sm:hidden fixed inset-0 z-40 bg-black/50 cursor-default"
+        :aria-label="$t('common.close')"
+        @click="close"
+      />
+    </Transition>
+
+    <!-- Sheet: anchored to the bottom bar, max 70% viewport height -->
     <Transition
       enter-active-class="transition-transform duration-200 ease-out motion-reduce:transition-none"
       leave-active-class="transition-transform duration-200 ease-in motion-reduce:transition-none"
@@ -65,13 +82,13 @@ onUnmounted(deactivate)
         role="dialog"
         aria-modal="true"
         :aria-label="$t('nav.mobile_menu')"
-        class="sm:hidden fixed inset-0 z-50 bg-bg flex flex-col overflow-hidden pb-[var(--mobile-bar-height,3.5rem)]"
+        class="sm:hidden fixed inset-x-0 bottom-[var(--mobile-bar-height,3.5rem)] z-50 bg-bg border-t border-border flex flex-col overflow-hidden max-h-[70dvh] rounded-t-lg shadow-xl"
       >
         <div
-          class="flex-1 flex w-[200%] transition-transform duration-200 motion-reduce:transition-none"
+          class="flex-1 min-h-0 flex w-[200%] transition-transform duration-200 motion-reduce:transition-none"
           :style="{ transform: activeView === 'docs' ? 'translateX(-50%)' : 'translateX(0)' }"
         >
-          <div class="w-1/2 flex flex-col">
+          <div class="w-1/2 min-h-0 flex flex-col">
             <HeaderMobileMenuRootView
               :links="links"
               @close="close"
@@ -81,7 +98,7 @@ onUnmounted(deactivate)
               @show-auth="handleShowAuth"
             />
           </div>
-          <div class="w-1/2 flex flex-col">
+          <div class="w-1/2 min-h-0 flex flex-col">
             <HeaderMobileMenuDocsView @back="back" @close="close" />
           </div>
         </div>

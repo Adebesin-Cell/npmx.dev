@@ -18,7 +18,7 @@ const { user: atprotoUser } = useAtproto()
 </script>
 
 <template>
-  <div class="flex-1 overflow-y-auto overscroll-contain py-2">
+  <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain py-2">
     <!-- Account section -->
     <div class="px-2 py-2">
       <span class="px-3 py-2 block font-mono text-xs text-fg-subtle uppercase tracking-wider">
