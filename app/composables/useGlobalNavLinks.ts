@@ -1,5 +1,4 @@
 import type { NavigationConfig, NavigationConfigWithGroups } from '~/types'
-import { NPMX_DOCS_SITE } from '#shared/utils/constants'
 
 export function useGlobalNavLinks() {
   const discord = useDiscordLink()
@@ -97,15 +96,6 @@ export function useGlobalNavLinks() {
       type: 'group',
       label: $t('nav.links'),
       items: [
-        {
-          name: 'Docs',
-          label: $t('footer.docs'),
-          href: NPMX_DOCS_SITE,
-          target: '_blank',
-          type: 'link',
-          external: true,
-          iconClass: 'i-lucide:file-text',
-        },
         {
           name: 'Source',
           label: $t('footer.source'),

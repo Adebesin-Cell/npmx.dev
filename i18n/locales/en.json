@@ -198,6 +198,9 @@
     "back_to_main_menu": "Back to main menu",
     "docs_label": "Docs",
     "close_menu": "Close menu",
+    "switch_to_light_theme": "Switch to light theme",
+    "switch_to_dark_theme": "Switch to dark theme",
+    "docs_home": "Docs home",
     "links": "Links",
     "tap_to_search": "Tap to search"
   },

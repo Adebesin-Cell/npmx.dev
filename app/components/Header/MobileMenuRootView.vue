@@ -137,6 +137,7 @@ const { user: atprotoUser } = useAtproto()
             :to="link.to"
             :href="link.href"
             :target="link.target"
+            :rel="link.external ? 'noopener noreferrer' : undefined"
             class="flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
             @click="emit('close')"
           >

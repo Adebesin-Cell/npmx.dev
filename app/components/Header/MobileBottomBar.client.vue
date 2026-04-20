@@ -87,7 +87,11 @@ function handleThemeClick() {
       />
       <ButtonBase
         type="button"
-        :aria-label="colorMode.value === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+        :aria-label="
+          colorMode.value === 'dark'
+            ? $t('nav.switch_to_light_theme')
+            : $t('nav.switch_to_dark_theme')
+        "
         :classicon="colorMode.value === 'dark' ? 'i-lucide:sun' : 'i-lucide:moon'"
         @click="handleThemeClick"
       />
