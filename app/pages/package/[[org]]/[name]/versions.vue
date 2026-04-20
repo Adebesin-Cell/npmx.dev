@@ -271,7 +271,7 @@ const flatItems = computed<FlatItem[]>(() => {
 <template>
   <main class="flex-1 flex flex-col">
     <!-- Header -->
-    <header class="border-b border-border bg-bg sticky top-14 z-20">
+    <header class="border-b border-border bg-bg sticky top-0 sm:top-14 z-20">
       <div class="container py-3 flex items-center justify-between gap-4">
         <div class="flex items-center gap-2 min-w-0">
           <NuxtLink

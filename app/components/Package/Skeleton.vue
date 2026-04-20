@@ -19,7 +19,7 @@
     </div>
   </header>
 
-  <div class="w-full bg-bg sticky top-14 z-10 border-b border-border pt-2">
+  <div class="w-full bg-bg sticky top-0 sm:top-14 z-10 border-b border-border pt-2">
     <div class="w-full container flex flex-col md:flex-row-reverse flex-wrap gap-2 justify-between">
       <!-- Version -->
       <span class="inline-flex items-baseline font-mono text-base sm:text-lg shrink-0">
