@@ -5,6 +5,7 @@ import { isEditableElement } from '~/utils/input'
 
 const route = useRoute()
 const router = useRouter()
+const { mobileLinks } = useGlobalNavLinks()
 const { locale, locales } = useI18n()
 
 // Initialize user preferences (accent color, package manager) before hydration to prevent flash/CLS
@@ -155,6 +156,9 @@ defineOgImage('Page.takumi', {}, { alt: 'npmx — a fast, modern browser for the
     <AppFooter />
 
     <ScrollToTop />
+
+    <HeaderMobileBottomBar />
+    <HeaderMobileMenuSheet :links="mobileLinks" />
   </div>
 </template>
 

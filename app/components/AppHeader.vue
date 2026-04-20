@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { LinkBase } from '#components'
-import type { NavigationConfig, NavigationConfigWithGroups } from '~/types'
-import { NPMX_DOCS_SITE } from '#shared/utils/constants'
 
-const discord = useDiscordLink()
 const { open: openCommandPalette } = useCommandPalette()
 const { commandPaletteShortcutLabel } = usePlatformModifierKey()
 
@@ -18,159 +15,16 @@ withDefaults(
 
 const { isConnected, npmUser } = useConnector()
 
-const desktopLinks = computed<NavigationConfig>(() => [
-  {
-    name: 'Compare',
-    label: $t('nav.compare'),
-    to: { name: 'compare' },
-    keyshortcut: 'c',
-    type: 'link',
-    external: false,
-    iconClass: 'i-lucide:git-compare',
-  },
-  {
-    name: 'Settings',
-    label: $t('nav.settings'),
-    to: { name: 'settings' },
-    keyshortcut: ',',
-    type: 'link',
-    external: false,
-    iconClass: 'i-lucide:settings',
-  },
-])
-
-const mobileLinks = computed<NavigationConfigWithGroups>(() => [
-  {
-    name: 'Desktop Links',
-    type: 'group',
-    items: [...desktopLinks.value],
-  },
-  {
-    type: 'separator',
-  },
-  {
-    name: 'About & Policies',
-    type: 'group',
-    items: [
-      {
-        name: 'About',
-        label: $t('footer.about'),
-        to: { name: 'about' },
-        type: 'link',
-        external: false,
-        iconClass: 'i-lucide:info',
-      },
-      {
-        name: 'Blog',
-        label: $t('footer.blog'),
-        to: { name: 'blog' },
-        type: 'link',
-        external: false,
-        iconClass: 'i-lucide:notebook-pen',
-      },
-      {
-        name: 'Privacy Policy',
-        label: $t('privacy_policy.title'),
-        to: { name: 'privacy' },
-        type: 'link',
-        external: false,
-        iconClass: 'i-lucide:shield-check',
-      },
-      {
-        name: 'Accessibility',
-        label: $t('a11y.title'),
-        to: { name: 'accessibility' },
-        type: 'link',
-        external: false,
-        iconClass: 'i-custom:a11y',
-      },
-      {
-        name: 'Translation Status',
-        label: $t('translation_status.title'),
-        to: { name: 'translation-status' },
-        type: 'link',
-        external: false,
-        iconClass: 'i-lucide:languages',
-      },
-      {
-        name: 'Brand',
-        label: $t('footer.brand'),
-        to: { name: 'brand' },
-        type: 'link',
-        external: false,
-        iconClass: 'i-lucide:palette',
-      },
-    ],
-  },
-  {
-    type: 'separator',
-  },
-  {
-    name: 'External Links',
-    type: 'group',
-    label: $t('nav.links'),
-    items: [
-      {
-        name: 'Docs',
-        label: $t('footer.docs'),
-        href: NPMX_DOCS_SITE,
-        target: '_blank',
-        type: 'link',
-        external: true,
-        iconClass: 'i-lucide:file-text',
-      },
-      {
-        name: 'Source',
-        label: $t('footer.source'),
-        href: 'https://repo.npmx.dev',
-        target: '_blank',
-        type: 'link',
-        external: true,
-        iconClass: 'i-simple-icons:github',
-      },
-      {
-        name: 'Social',
-        label: $t('footer.social'),
-        href: 'https://social.npmx.dev',
-        target: '_blank',
-        type: 'link',
-        external: true,
-        iconClass: 'i-simple-icons:bluesky',
-      },
-      {
-        name: 'Chat',
-        label: discord.value.label,
-        href: discord.value.url,
-        target: '_blank',
-        type: 'link',
-        external: true,
-        iconClass: 'i-lucide:message-circle',
-      },
-    ],
-  },
-])
+const { desktopLinks } = useGlobalNavLinks()
 
 const showFullSearch = shallowRef(false)
-const showMobileMenu = shallowRef(false)
 const { env, prNumber } = useAppConfig().buildInfo
 
-// On mobile, clicking logo+search button expands search
 const route = useRoute()
-const isMobile = useIsMobile()
-const isSearchExpandedManually = shallowRef(false)
 const searchBoxRef = useTemplateRef('searchBoxRef')
 
-// On search page, always show search expanded on mobile
 const isOnHomePage = computed(() => route.name === 'index')
 const isOnSearchPage = computed(() => route.name === 'search')
-const isSearchExpanded = computed(() => isOnSearchPage.value || isSearchExpandedManually.value)
-
-function expandMobileSearch() {
-  isSearchExpandedManually.value = true
-  nextTick(() => {
-    searchBoxRef.value?.focus()
-  })
-}
 
 watch(
   isOnSearchPage,
@@ -187,13 +41,6 @@ watch(
 
 function handleSearchBlur() {
   showFullSearch.value = false
-  // Collapse expanded search on mobile after blur (with delay for click handling)
-  // But don't collapse if we're on the search page
-  if (isMobile.value && !isOnSearchPage.value) {
-    setTimeout(() => {
-      isSearchExpandedManually.value = false
-    }, 150)
-  }
 }
 
 function handleSearchFocus() {
@@ -207,23 +54,12 @@ useShortcuts({
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 border-b border-border">
+  <header class="hidden sm:block sticky top-0 z-50 border-b border-border">
     <div class="absolute inset-0 bg-bg/80 backdrop-blur-md" />
     <nav
       :aria-label="$t('nav.main_navigation')"
       class="relative container min-h-14 flex items-center gap-2 z-1 justify-end"
     >
-      <!-- Mobile: Logo (navigates home) -->
-      <LogoContextMenu v-if="!isSearchExpanded && !isOnHomePage" class="sm:hidden flex-shrink-0">
-        <NuxtLink
-          to="/"
-          :aria-label="$t('header.home')"
-          class="font-mono text-lg font-medium text-fg hover:text-fg transition-colors duration-200 focus-ring me-4"
-        >
-          <AppMark class="w-6 h-auto" />
-        </NuxtLink>
-      </LogoContextMenu>
-
       <!-- Desktop: Logo (navigates home) -->
       <LogoContextMenu v-if="showLogo" class="hidden sm:flex flex-shrink-0 items-center">
         <NuxtLink
@@ -243,7 +79,7 @@ useShortcuts({
       </LogoContextMenu>
 
       <NuxtLink
-        v-if="showLogo && !isSearchExpanded && prNumber"
+        v-if="showLogo && prNumber"
         :to="`https://github.com/npmx-dev/npmx.dev/pull/${prNumber}`"
         :aria-label="$t('header.pr', { prNumber })"
       >
@@ -277,21 +113,19 @@ useShortcuts({
       <div
         class="flex-1 flex items-center md:gap-6"
         :class="{
-          'hidden sm:flex': !isSearchExpanded,
           'justify-end': isOnHomePage,
           'justify-center': !isOnHomePage,
         }"
       >
-        <!-- Search bar (hidden on mobile unless expanded) -->
+        <!-- Search bar -->
         <HeaderSearchBox
           ref="searchBoxRef"
-          :inputClass="isSearchExpanded ? 'w-full' : ''"
-          :class="{ 'max-w-md': !isSearchExpanded }"
+          :class="{ 'max-w-md': !showFullSearch }"
           @focus="handleSearchFocus"
           @blur="handleSearchBlur"
         />
         <ul
-          v-if="!isSearchExpanded && isConnected && npmUser"
+          v-if="isConnected && npmUser"
           :class="{ hidden: showFullSearch }"
           class="hidden sm:flex items-center gap-4 sm:gap-6 list-none m-0 p-0"
         >
@@ -307,7 +141,7 @@ useShortcuts({
         </ul>
       </div>
 
-      <!-- End: Desktop nav items + Mobile menu button -->
+      <!-- End: Desktop nav items -->
       <div class="hidden sm:flex flex-shrink-0 items-center gap-2">
         <!-- Desktop: Explore link -->
         <LinkBase
@@ -323,30 +157,6 @@ useShortcuts({
 
         <HeaderAccountMenu />
       </div>
-
-      <!-- Mobile: Search button (expands search) -->
-      <ButtonBase
-        type="button"
-        class="sm:hidden ms-auto"
-        :aria-label="$t('nav.tap_to_search')"
-        :aria-expanded="showMobileMenu"
-        @click="expandMobileSearch"
-        v-if="!isSearchExpanded && !isOnHomePage"
-        classicon="i-lucide:search"
-      />
-
-      <!-- Mobile: Menu button (always visible, click to open menu) -->
-      <ButtonBase
-        type="button"
-        class="sm:hidden"
-        :aria-label="$t('nav.open_menu')"
-        :aria-expanded="showMobileMenu"
-        @click="showMobileMenu = !showMobileMenu"
-        classicon="i-lucide:menu"
-      />
     </nav>
-
-    <!-- Mobile menu -->
-    <HeaderMobileMenu :links="mobileLinks" v-model:open="showMobileMenu" />
   </header>
 </template>
