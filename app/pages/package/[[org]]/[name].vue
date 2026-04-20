@@ -5,7 +5,10 @@ import { getDependencyCount } from '~/utils/npm/dependency-count'
 const readmeHeader = useTemplateRef('readmeHeader')
 const isReadmeHeaderPinned = shallowRef(false)
 const packageHeaderHeight = usePackageHeaderHeight()
-const readmeStickyTop = computed(() => `${56 + (packageHeaderHeight.value || 44)}px`)
+const isSmUp = useMediaQuery('(min-width: 640px)')
+const readmeStickyTop = computed(
+  () => `${(isSmUp.value ? 56 : 0) + (packageHeaderHeight.value || 44)}px`,
+)
 
 function isStickyPinned(el: HTMLElement | null): boolean {
   if (!el) return false
