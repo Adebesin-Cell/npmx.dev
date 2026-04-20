@@ -22,7 +22,7 @@ const docsLinks = [{ label: 'Docs home', href: NPMX_DOCS_SITE, external: true }]
           :href="link.href"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-3 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
+          class="flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
           @click="emit('close')"
         >
           <span class="i-lucide:file-text w-5 h-5 text-fg-muted" aria-hidden="true" />
@@ -39,7 +39,7 @@ const docsLinks = [{ label: 'Docs home', href: NPMX_DOCS_SITE, external: true }]
     <div class="border-t border-border p-3">
       <button
         type="button"
-        class="w-full flex items-center gap-2 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
+        class="w-full flex items-center gap-2 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
         :aria-label="$t('nav.back_to_main_menu')"
         @click="emit('back')"
       >

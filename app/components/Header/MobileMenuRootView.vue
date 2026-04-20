@@ -28,7 +28,7 @@ const { user: atprotoUser } = useAtproto()
       <button
         v-if="isConnected && npmUser"
         type="button"
-        class="w-full flex items-center gap-3 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
+        class="w-full flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
         @click="emit('showConnector')"
       >
         <img
@@ -49,7 +49,7 @@ const { user: atprotoUser } = useAtproto()
       <button
         v-if="atprotoUser"
         type="button"
-        class="w-full flex items-center gap-3 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
+        class="w-full flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
         @click="emit('showAuth')"
       >
         <img
@@ -69,7 +69,7 @@ const { user: atprotoUser } = useAtproto()
       <button
         v-else
         type="button"
-        class="w-full flex items-center gap-3 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
+        class="w-full flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
         @click="emit('showAuth')"
       >
         <span class="w-5 h-5 rounded-full bg-bg-muted flex items-center justify-center">
@@ -85,7 +85,7 @@ const { user: atprotoUser } = useAtproto()
         {{ $t('command_palette.title') }}
       </span>
       <ButtonBase
-        class="w-full flex items-center gap-3 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
+        class="w-full flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
         :aria-label="$t('shortcuts.command_palette')"
         @click="emit('openCommandPalette')"
       >
@@ -103,7 +103,7 @@ const { user: atprotoUser } = useAtproto()
     <div class="px-2 py-2">
       <button
         type="button"
-        class="w-full flex items-center gap-3 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
+        class="w-full flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200 text-start"
         :aria-label="$t('nav.docs_label')"
         @click="emit('enterDocs')"
       >
@@ -137,7 +137,7 @@ const { user: atprotoUser } = useAtproto()
             :to="link.to"
             :href="link.href"
             :target="link.target"
-            class="flex items-center gap-3 px-3 py-3 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
+            class="flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
             @click="emit('close')"
           >
             <span :class="link.iconClass" class="w-5 h-5 text-fg-muted" aria-hidden="true" />

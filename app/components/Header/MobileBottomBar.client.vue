@@ -22,7 +22,7 @@ function handleThemeClick() {
 <template>
   <Teleport to="body">
     <div
-      class="sm:hidden fixed inset-x-0 bottom-0 z-40 bg-bg border-t border-border flex items-center gap-2 px-3 h-14"
+      class="sm:hidden fixed inset-x-0 bottom-0 z-50 bg-bg border-t border-border flex items-center gap-2 px-3 h-14"
       :style="{ '--mobile-bar-height': '3.5rem' }"
     >
       <NuxtLink
