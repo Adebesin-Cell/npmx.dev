@@ -143,24 +143,29 @@ async function downloadCustomPng() {
           <span class="text-sm font-mono text-fg-muted shrink-0">{{
             $t('brand.customize.accent_label')
           }}</span>
-          <div class="flex items-center gap-1.5" role="radiogroup">
-            <ButtonBase
+          <div class="flex items-center gap-1.5">
+            <label
               v-for="color in pickerColors"
               :key="color.id"
-              role="radio"
-              :aria-checked="activeAccentId === color.id"
-              :aria-label="color.label"
-              class="!w-6 !h-6 !rounded-full !border-2 !p-0 !min-w-0 transition-all duration-150 motion-reduce:transition-none"
+              class="relative w-6 h-6 rounded-full border-2 cursor-pointer duration-150 motion-reduce:transition-none"
               :class="
                 activeAccentId === color.id
-                  ? '!border-fg scale-110'
+                  ? 'border-fg scale-110'
                   : color.id === 'neutral'
-                    ? '!border-border hover:!border-border-hover'
-                    : '!border-transparent hover:!border-border-hover'
+                    ? 'border-border hover:border-border-hover'
+                    : 'border-transparent hover:border-border-hover'
               "
               :style="{ backgroundColor: color.value }"
-              @click="customAccent = color.id"
-            />
+              :aria-label="color.label"
+            >
+              <input
+                v-model="customAccent"
+                type="radio"
+                name="brand-customize-accent"
+                :value="color.id"
+                class="sr-only"
+              />
+            </label>
           </div>
         </fieldset>
 
@@ -170,40 +175,33 @@ async function downloadCustomPng() {
             <span class="text-sm font-mono text-fg-muted">{{
               $t('brand.customize.bg_label')
             }}</span>
-            <div
-              class="flex items-center border border-border rounded-md overflow-hidden"
-              role="radiogroup"
-            >
-              <ButtonBase
-                size="md"
-                role="radio"
-                :aria-checked="customBgDark"
-                :aria-label="$t('brand.logos.on_dark')"
-                class="!border-none !rounded-none motion-reduce:transition-none"
-                :class="
-                  customBgDark
-                    ? 'bg-bg-muted text-fg'
-                    : 'bg-transparent text-fg-muted hover:text-fg'
-                "
-                @click="customBgDark = true"
+            <div class="flex items-center border border-border rounded-md overflow-hidden">
+              <label
+                class="px-3 py-1.5 text-sm font-mono cursor-pointer motion-reduce:transition-none"
+                :class="customBgDark ? 'bg-bg-muted text-fg' : 'text-fg-muted hover:text-fg'"
               >
+                <input
+                  v-model="customBgDark"
+                  type="radio"
+                  name="brand-customize-bg"
+                  :value="true"
+                  class="sr-only"
+                />
                 {{ $t('brand.logos.on_dark') }}
-              </ButtonBase>
-              <ButtonBase
-                size="md"
-                role="radio"
-                :aria-checked="!customBgDark"
-                :aria-label="$t('brand.logos.on_light')"
-                class="!border-none !rounded-none border-is border-is-border motion-reduce:transition-none"
-                :class="
-                  !customBgDark
-                    ? 'bg-bg-muted text-fg'
-                    : 'bg-transparent text-fg-muted hover:text-fg'
-                "
-                @click="customBgDark = false"
+              </label>
+              <label
+                class="px-3 py-1.5 text-sm font-mono cursor-pointer border-is border-is-border motion-reduce:transition-none"
+                :class="!customBgDark ? 'bg-bg-muted text-fg' : 'text-fg-muted hover:text-fg'"
               >
+                <input
+                  v-model="customBgDark"
+                  type="radio"
+                  name="brand-customize-bg"
+                  :value="false"
+                  class="sr-only"
+                />
                 {{ $t('brand.logos.on_light') }}
-              </ButtonBase>
+              </label>
             </div>
           </div>
 
