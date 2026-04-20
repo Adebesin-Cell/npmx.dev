@@ -6,7 +6,9 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const docsLinks = [{ labelKey: 'nav.docs_home', href: NPMX_DOCS_SITE, external: true }]
+const docsLinks = computed(() => [
+  { label: $t('nav.docs_home'), href: NPMX_DOCS_SITE, external: true },
+])
 </script>
 
 <template>
@@ -26,7 +28,7 @@ const docsLinks = [{ labelKey: 'nav.docs_home', href: NPMX_DOCS_SITE, external: 
           @click="emit('close')"
         >
           <span class="i-lucide:file-text w-5 h-5 text-fg-muted" aria-hidden="true" />
-          <span class="flex-1">{{ $t(link.labelKey) }}</span>
+          <span class="flex-1">{{ link.label }}</span>
           <span
             v-if="link.external"
             class="i-lucide:external-link rtl-flip w-3 h-3 ms-auto text-fg-subtle"
