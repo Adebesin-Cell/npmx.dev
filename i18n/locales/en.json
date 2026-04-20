@@ -196,6 +196,9 @@
     "menu": "Menu",
     "mobile_menu": "Navigation menu",
     "open_menu": "Open menu",
+    "back_to_main_menu": "Back to main menu",
+    "docs_label": "Docs",
+    "close_menu": "Close menu",
     "links": "Links",
     "tap_to_search": "Tap to search"
   },
