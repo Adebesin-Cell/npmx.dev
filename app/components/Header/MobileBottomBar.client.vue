@@ -9,9 +9,6 @@ const contextLabel = computed(() => {
   return ''
 })
 
-// Hide on scroll down, reveal on scroll up (svelte.dev-style).
-// Keeps the bar visible while the menu is open, near the top of the page,
-// or when scroll direction flips.
 const hidden = shallowRef(false)
 const SCROLL_THRESHOLD = 24
 
