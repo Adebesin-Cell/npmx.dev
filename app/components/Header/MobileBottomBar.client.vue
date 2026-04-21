@@ -50,7 +50,7 @@ function handleThemeClick() {
 <template>
   <Teleport to="body">
     <div
-      class="sm:hidden fixed inset-x-0 bottom-0 z-50 bg-bg border-t border-border flex items-center gap-2 px-3 h-14 transition-transform duration-200 ease-out motion-reduce:transition-none"
+      class="sm:hidden fixed inset-x-0 bottom-0 z-50 bg-bg border-t border-border flex items-center gap-2 px-3 h-14 pb-[env(safe-area-inset-bottom)] transition-transform duration-200 ease-out motion-reduce:transition-none"
       :class="hidden ? 'translate-y-full' : 'translate-y-0'"
       :style="{ '--mobile-bar-height': '3.5rem' }"
     >

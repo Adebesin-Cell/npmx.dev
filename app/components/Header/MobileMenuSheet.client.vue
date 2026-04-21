@@ -17,20 +17,21 @@ function handleOpenCommandPalette() {
   nextTick(() => openCommandPalette())
 }
 
+function showDialogAfterClose(selector: string) {
+  const modal = document.querySelector<HTMLDialogElement>(selector)
+  if (!modal) return
+  close()
+  nextTick(() => {
+    if (!modal.open) modal.showModal()
+  })
+}
+
 function handleShowConnector() {
-  const modal = document.querySelector<HTMLDialogElement>('#connector-modal')
-  if (modal) {
-    close()
-    modal.showModal()
-  }
+  showDialogAfterClose('#connector-modal')
 }
 
 function handleShowAuth() {
-  const modal = document.querySelector<HTMLDialogElement>('#auth-modal')
-  if (modal) {
-    close()
-    modal.showModal()
-  }
+  showDialogAfterClose('#auth-modal')
 }
 
 const route = useRoute()
