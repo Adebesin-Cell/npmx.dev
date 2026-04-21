@@ -75,29 +75,13 @@
     "instant_search_turn_off": "बंद करें",
     "instant_search_advisory": "{label} {state} — {action}"
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "मुख्य",
     "popular_packages": "लोकप्रिय पैकेज",
     "settings": "सेटिंग्स",
     "compare": "तुलना करें",
     "back": "वापस",
+    "menu": "मेन्यू",
     "mobile_menu": "नेविगेशन मेन्यू",
     "open_menu": "मेन्यू खोलें",
     "links": "लिंक",
@@ -444,7 +428,6 @@
       "current_tags": "वर्तमान टैग्स",
       "no_match_filter": "कोई संस्करण {filter} से मेल नहीं खाता"
     },
-    "timeline": {},
     "dependencies": {
       "title": "निर्भरताएँ ({count})",
       "list_label": "पैकेज निर्भरताएँ",
@@ -1116,9 +1099,6 @@
       "packages_selected": "{count}/{max} पैकेज चुने गए।",
       "add_hint": "तुलना करने के लिए कम से कम 2 पैकेज जोड़ें।"
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {
       "label": "(कोई निर्भरता नहीं)",
       "typeahead_title": "James क्या करते?",
@@ -1193,10 +1173,7 @@
         "vulnerabilities": {
           "label": "कमजोरियाँ",
           "description": "ज्ञात सुरक्षा कमजोरियाँ"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "कोई भी",

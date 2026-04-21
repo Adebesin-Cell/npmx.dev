@@ -41,29 +41,13 @@
       "view_org_packages": "এই সংস্থার প্যাকেজগুলি দেখুন"
     }
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "প্রধান",
     "popular_packages": "জনপ্রিয় প্যাকেজগুলি",
     "settings": "সেটিংস",
     "compare": "তুলনা করুন",
     "back": "পিছনে",
+    "menu": "মেনু",
     "mobile_menu": "নেভিগেশন মেনু",
     "open_menu": "মেনু খুলুন",
     "links": "লিংকগুলি",
@@ -250,7 +234,6 @@
       "view_all": "{count}টি ভার্সন দেখুন | সব {count}টি ভার্সন দেখুন",
       "copy_alt": {}
     },
-    "timeline": {},
     "dependencies": {
       "title": "নির্ভরতা ({count})",
       "list_label": "প্যাকেজ নির্ভরতা",
@@ -286,7 +269,6 @@
       "show_less": "(কম দেখান)"
     },
     "trends": {
-      "chart_assistive_text": {},
       "granularity": "বিস্তৃতি",
       "granularity_daily": "দৈনিক",
       "granularity_weekly": "সাপ্তাহিক",
@@ -821,9 +803,6 @@
       "packages_selected": "{count}/{max}টি প্যাকেজ নির্বাচিত।",
       "add_hint": "তুলনা করার জন্য কমপক্ষে ২টি প্যাকেজ যোগ করুন।"
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {},
     "facets": {
       "all": "সব",
@@ -850,10 +829,7 @@
         "types": {},
         "moduleFormat": {},
         "license": {},
-        "vulnerabilities": {},
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        "vulnerabilities": {}
       },
       "values": {},
       "trends": {}
@@ -890,20 +866,5 @@
   "translation_status": {
     "table": {}
   },
-  "vacations": {
-    "what": {},
-    "meantime": {},
-    "return": {},
-    "stats": {
-      "subtitle": {}
-    }
-  },
-  "action_bar": {},
-  "logo_menu": {},
-  "brand": {
-    "logos": {},
-    "customize": {},
-    "typography": {},
-    "guidelines": {}
-  }
+  "action_bar": {}
 }

@@ -76,29 +76,13 @@
     "instant_search_turn_off": "nonaktifkan",
     "instant_search_advisory": "{label} {state} — {action}"
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "Utama",
     "popular_packages": "Paket populer",
     "settings": "pengaturan",
     "compare": "bandingkan",
     "back": "kembali",
+    "menu": "Menu",
     "mobile_menu": "Menu navigasi",
     "open_menu": "Buka menu",
     "links": "Tautan",
@@ -459,7 +443,6 @@
       "current_tags": "Tag Saat Ini",
       "no_match_filter": "Tidak ada versi yang cocok dengan {filter}"
     },
-    "timeline": {},
     "dependencies": {
       "title": "Dependensi ({count})",
       "list_label": "Dependensi paket",
@@ -1135,9 +1118,6 @@
       "packages_selected": "{count}/{max} paket dipilih.",
       "add_hint": "Tambah setidaknya 2 paket untuk dibandingkan."
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {
       "label": "(Tanpa Ketergantungan)",
       "typeahead_title": "Apa yang Akan Anda Lakukan?",
@@ -1216,10 +1196,7 @@
         "vulnerabilities": {
           "label": "Kerentanan",
           "description": "Kerentanan keamanan yang diketahui"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "Apa saja",

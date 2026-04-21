@@ -42,29 +42,13 @@
       "view_org_packages": "ఈ సంస్థ ప్యాకేజ్‌లను వీక్షించండి"
     }
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "ప్రధాన",
     "popular_packages": "జనాదరణ ప్యాకేజ్‌లు",
     "settings": "సెట్టింగ్‌లు",
     "compare": "పోల్చండి",
     "back": "వెనక్కి",
+    "menu": "మెనూ",
     "mobile_menu": "నావిగేషన్ మెనూ",
     "open_menu": "మెనూను తెరవండి",
     "links": "లింక్‌లు",
@@ -251,7 +235,6 @@
       "view_all": "{count} వెర్షన్‌లను వీక్షించండి | అన్ని {count} వెర్షన్‌లను వీక్షించండి",
       "copy_alt": {}
     },
-    "timeline": {},
     "dependencies": {
       "title": "డిపెండెన్సీలు ({count})",
       "list_label": "ప్యాకేజ్ డిపెండెన్సీలు",
@@ -287,7 +270,6 @@
       "show_less": "(తక్కువ చూపించండి)"
     },
     "trends": {
-      "chart_assistive_text": {},
       "granularity": "గ్రాన్యులారిటీ",
       "granularity_daily": "రోజువారీ",
       "granularity_weekly": "వారపు",
@@ -822,9 +804,6 @@
       "packages_selected": "{count}/{max} ప్యాకేజ్‌లు ఎంచుకోబడ్డాయి.",
       "add_hint": "పోల్చడానికి కనీసం 2 ప్యాకేజ్‌లను జోడించండి."
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {},
     "facets": {
       "all": "అన్నీ",
@@ -851,10 +830,7 @@
         "types": {},
         "moduleFormat": {},
         "license": {},
-        "vulnerabilities": {},
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        "vulnerabilities": {}
       },
       "values": {},
       "trends": {}
@@ -891,20 +867,5 @@
   "translation_status": {
     "table": {}
   },
-  "vacations": {
-    "what": {},
-    "meantime": {},
-    "return": {},
-    "stats": {
-      "subtitle": {}
-    }
-  },
-  "action_bar": {},
-  "logo_menu": {},
-  "brand": {
-    "logos": {},
-    "customize": {},
-    "typography": {},
-    "guidelines": {}
-  }
+  "action_bar": {}
 }

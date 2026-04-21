@@ -64,29 +64,13 @@
       "view_org_packages": "இந்த நிறுவனத்தின் தொகுப்புகளைக் காண்க"
     }
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "முதன்மை",
     "popular_packages": "பிரபலமான தொகுப்புகள்",
     "settings": "அமைப்புகள்",
     "compare": "ஒப்பிடு",
     "back": "பின்செல்",
+    "menu": "பட்டி",
     "mobile_menu": "வழிசெலுத்தல் பட்டி",
     "open_menu": "பட்டியைத் திற",
     "links": "இணைப்புகள்",
@@ -319,7 +303,6 @@
       "view_all": "{count} பதிப்பைக் காண்க | அனைத்து {count} பதிப்புகளையும் காண்க",
       "copy_alt": {}
     },
-    "timeline": {},
     "dependencies": {
       "title": "சார்பு ({count}) | சார்புகள் ({count})",
       "list_label": "தொகுப்பு சார்புகள்",
@@ -355,7 +338,6 @@
       "show_less": "(குறைவாகக் காண்பி)"
     },
     "trends": {
-      "chart_assistive_text": {},
       "granularity": "நுண்ணிலை",
       "granularity_daily": "தினசரி",
       "granularity_weekly": "வாராந்திர",
@@ -911,9 +893,6 @@
       "packages_selected": "{count}/{max} தொகுப்புகள் தேர்ந்தெடுக்கப்பட்டன.",
       "add_hint": "ஒப்பிட குறைந்தது 2 தொகுப்புகளைச் சேர்க்கவும்."
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {
       "label": "(சார்பு இல்லை)",
       "typeahead_title": "What Would James Do?",
@@ -988,10 +967,7 @@
         "vulnerabilities": {
           "label": "பாதிப்புகள்",
           "description": "அறியப்பட்ட பாதுகாப்பு பாதிப்புகள்"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "எதுவும்",
@@ -1106,20 +1082,5 @@
   "translation_status": {
     "table": {}
   },
-  "vacations": {
-    "what": {},
-    "meantime": {},
-    "return": {},
-    "stats": {
-      "subtitle": {}
-    }
-  },
-  "action_bar": {},
-  "logo_menu": {},
-  "brand": {
-    "logos": {},
-    "customize": {},
-    "typography": {},
-    "guidelines": {}
-  }
+  "action_bar": {}
 }

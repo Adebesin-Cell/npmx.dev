@@ -42,29 +42,13 @@
       "view_org_packages": "यस संगठनका प्याकेजहरू हेर्नुहोस्"
     }
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "मुख्य",
     "popular_packages": "लोकप्रिय प्याकेजहरू",
     "settings": "सेटिङ्स",
     "compare": "तुलना",
     "back": "पछाडि",
+    "menu": "मेनु",
     "mobile_menu": "नेभिगेसन मेनु",
     "open_menu": "मेनु खोल्नुहोस्",
     "links": "लिङ्कहरू",
@@ -237,7 +221,6 @@
       "view_all": "{count} संस्करण हेर्नुहोस् | सबै {count} संस्करणहरू हेर्नुहोस्",
       "copy_alt": {}
     },
-    "timeline": {},
     "dependencies": {
       "title": "डिपेन्डेन्सीहरू ({count})",
       "list_label": "प्याकेज डिपेन्डेन्सीहरू",
@@ -273,7 +256,6 @@
       "show_less": "(कम देखाउनुहोस्)"
     },
     "trends": {
-      "chart_assistive_text": {},
       "granularity": "सूक्ष्मता",
       "granularity_daily": "दैनिक",
       "granularity_weekly": "साप्ताहिक",
@@ -807,9 +789,6 @@
       "packages_selected": "{count}/{max} प्याकेज चयन गरियो।",
       "add_hint": "तुलना गर्न कम्तिमा २ प्याकेज थप्नुहोस्।"
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {},
     "facets": {
       "all": "सबै",
@@ -836,10 +815,7 @@
         "types": {},
         "moduleFormat": {},
         "license": {},
-        "vulnerabilities": {},
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        "vulnerabilities": {}
       },
       "values": {},
       "trends": {}
@@ -876,20 +852,5 @@
   "translation_status": {
     "table": {}
   },
-  "vacations": {
-    "what": {},
-    "meantime": {},
-    "return": {},
-    "stats": {
-      "subtitle": {}
-    }
-  },
-  "action_bar": {},
-  "logo_menu": {},
-  "brand": {
-    "logos": {},
-    "customize": {},
-    "typography": {},
-    "guidelines": {}
-  }
+  "action_bar": {}
 }

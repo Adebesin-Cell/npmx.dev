@@ -73,29 +73,13 @@
     "instant_search_turn_off": "オフにする",
     "instant_search_advisory": "{label} {state} — {action}"
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "メイン",
     "popular_packages": "人気のパッケージ",
     "settings": "設定",
     "compare": "比較",
     "back": "戻る",
+    "menu": "メニュー",
     "mobile_menu": "ナビゲーションメニュー",
     "open_menu": "メニューを開く",
     "links": "リンク",
@@ -421,7 +405,6 @@
         "general_description": "{package_name} パッケージの {versions_count} 個の {semver_grouping_mode} バージョンにおけるバージョン別ダウンロード数を示す棒グラフ。期間は {date_range_label}（{first_version} から {last_version} まで）。最多ダウンロードはバージョン {max_downloaded_version} で {max_version_downloads} 回。{per_version_analysis}。{watermark}。"
       }
     },
-    "timeline": {},
     "dependencies": {
       "title": "依存関係（{count}）",
       "list_label": "パッケージの依存関係",
@@ -458,7 +441,6 @@
       "show_less": "（表示を減らす）"
     },
     "trends": {
-      "chart_assistive_text": {},
       "granularity": "粒度",
       "granularity_daily": "日次",
       "granularity_weekly": "週次",
@@ -1073,9 +1055,6 @@
       "packages_selected": "{count}/{max} パッケージ選択中。",
       "add_hint": "比較するには少なくとも2つのパッケージを追加してください。"
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {
       "label": "(依存関係なし)",
       "typeahead_title": "Jamesならどうする？",
@@ -1150,10 +1129,7 @@
         "vulnerabilities": {
           "label": "脆弱性",
           "description": "既知のセキュリティ脆弱性"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "指定なし",
@@ -1346,20 +1322,5 @@
   "translation_status": {
     "table": {}
   },
-  "vacations": {
-    "what": {},
-    "meantime": {},
-    "return": {},
-    "stats": {
-      "subtitle": {}
-    }
-  },
-  "action_bar": {},
-  "logo_menu": {},
-  "brand": {
-    "logos": {},
-    "customize": {},
-    "typography": {},
-    "guidelines": {}
-  }
+  "action_bar": {}
 }

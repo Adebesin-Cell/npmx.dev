@@ -65,29 +65,13 @@
       "view_org_packages": "Показване на пакети от тази организация"
     }
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "Главна",
     "popular_packages": "Популярни пакети",
     "settings": "настройки",
     "compare": "сравняване",
     "back": "назад",
+    "menu": "Меню",
     "mobile_menu": "Навигационно меню",
     "open_menu": "Отваряне на меню",
     "links": "Връзки",
@@ -373,7 +357,6 @@
         "general_description": "Стълбовидна диаграма, показваща изтеглянията по версии за {versions_count} {semver_grouping_mode} версии на пакета {package_name}, {date_range_label} от версия {first_version} до версия {last_version}. Най-изтегляната версия е {max_downloaded_version} с {max_version_downloads} изтегляния. {per_version_analysis}. {watermark}."
       }
     },
-    "timeline": {},
     "dependencies": {
       "title": "Зависимост ({count}) | Зависимости ({count})",
       "list_label": "Зависимости на пакета",
@@ -410,7 +393,6 @@
       "show_less": "(показване на по-малко)"
     },
     "trends": {
-      "chart_assistive_text": {},
       "granularity": "Гранулация",
       "granularity_daily": "Дневна",
       "granularity_weekly": "Седмична",
@@ -1014,9 +996,6 @@
       "packages_selected": "{count}/{max} избрани пакета.",
       "add_hint": "Добавете поне 2 пакета за сравнение."
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {
       "label": "(Без зависимост)",
       "typeahead_title": "Какво би направил James?",
@@ -1091,10 +1070,7 @@
         "vulnerabilities": {
           "label": "Уязвимости",
           "description": "Известни уязвимости в сигурността"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "Всякакъв",
@@ -1263,20 +1239,5 @@
   "translation_status": {
     "table": {}
   },
-  "vacations": {
-    "what": {},
-    "meantime": {},
-    "return": {},
-    "stats": {
-      "subtitle": {}
-    }
-  },
-  "action_bar": {},
-  "logo_menu": {},
-  "brand": {
-    "logos": {},
-    "customize": {},
-    "typography": {},
-    "guidelines": {}
-  }
+  "action_bar": {}
 }

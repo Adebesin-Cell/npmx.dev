@@ -192,6 +192,7 @@
     "settings": "设置",
     "compare": "包对比",
     "back": "返回",
+    "menu": "菜单",
     "mobile_menu": "导航菜单",
     "open_menu": "打开菜单",
     "links": "链接",
@@ -557,7 +558,6 @@
       "current_tags": "当前标签",
       "no_match_filter": "没有与“{filter}”匹配的版本"
     },
-    "timeline": {},
     "dependencies": {
       "title": "依赖（{count} 个）",
       "list_label": "包依赖",

@@ -192,6 +192,7 @@
     "settings": "設定",
     "compare": "比較",
     "back": "返回",
+    "menu": "選單",
     "mobile_menu": "導覽選單",
     "open_menu": "開啟選單",
     "links": "連結",
@@ -555,7 +556,6 @@
       "current_tags": "當前標籤",
       "no_match_filter": "沒有版本符合 {filter}"
     },
-    "timeline": {},
     "dependencies": {
       "title": "相依（{count} 個）",
       "list_label": "套件相依",
@@ -1324,10 +1324,7 @@
         "vulnerabilities": {
           "label": "漏洞",
           "description": "已知安全漏洞"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "不限",

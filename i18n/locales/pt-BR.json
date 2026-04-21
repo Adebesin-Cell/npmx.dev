@@ -192,6 +192,7 @@
     "settings": "configurações",
     "compare": "comparar",
     "back": "voltar",
+    "menu": "Menu",
     "mobile_menu": "Menu de navegação",
     "open_menu": "Abrir menu",
     "links": "Links",
@@ -552,7 +553,6 @@
       "current_tags": "Tags atuais",
       "no_match_filter": "Nenhuma versão corresponde a {filter}"
     },
-    "timeline": {},
     "dependencies": {
       "title": "Dependências ({count})",
       "list_label": "Dependências do pacote",

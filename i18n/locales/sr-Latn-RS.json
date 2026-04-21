@@ -76,29 +76,13 @@
     "instant_search_turn_off": "isključite",
     "instant_search_advisory": "{label} {state} — {action}"
   },
-  "command_palette": {
-    "state": {},
-    "groups": {},
-    "actions": {},
-    "connections": {},
-    "navigation": {},
-    "links": {},
-    "package_links": {},
-    "theme": {},
-    "package": {},
-    "package_actions": {},
-    "code": {},
-    "diff": {},
-    "version": {},
-    "status": {},
-    "announcements": {}
-  },
   "nav": {
     "main_navigation": "Glavno",
     "popular_packages": "Popularni paketi",
     "settings": "podešavanja",
     "compare": "poređenje",
     "back": "nazad",
+    "menu": "Meni",
     "mobile_menu": "Meni za navigaciju",
     "open_menu": "Otvorite meni",
     "links": "Linkovi",
@@ -459,7 +443,6 @@
       "current_tags": "Trenutne oznake",
       "no_match_filter": "Nijedna verzija ne odgovara filteru {filter}"
     },
-    "timeline": {},
     "dependencies": {
       "title": "Zavisnost ({count}) | Zavisnosti ({count})",
       "list_label": "Zavisnosti paketa",
@@ -1131,9 +1114,6 @@
       "packages_selected": "{count}/{max} paketa izabrano.",
       "add_hint": "Dodajte najmanje 2 paketa za poređenje."
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {
       "label": "(Bez zavisnosti)",
       "typeahead_title": "Šta bi James uradio?",
@@ -1212,10 +1192,7 @@
         "vulnerabilities": {
           "label": "Ranjivosti",
           "description": "Poznate bezbednosne ranjivosti"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "Bilo koje",

@@ -192,6 +192,7 @@
     "settings": "nastavení",
     "compare": "porovnat",
     "back": "zpět",
+    "menu": "Menu",
     "mobile_menu": "Navigační menu",
     "open_menu": "Otevřít menu",
     "links": "Odkazy",
@@ -557,7 +558,6 @@
       "current_tags": "Aktuální značky",
       "no_match_filter": "Žádné verze neodpovídají {filter}"
     },
-    "timeline": {},
     "dependencies": {
       "title": "Závislosti ({count})",
       "list_label": "Závislosti balíčku",
@@ -1237,9 +1237,6 @@
       "packages_selected": "Vybrané balíčky: {count}/{max}.",
       "add_hint": "Přidejte alespoň 2 balíčky ke srovnání."
     },
-    "scatter_chart": {
-      "copy_alt": {}
-    },
     "no_dependency": {
       "label": "(Žádná závislost)",
       "typeahead_title": "Co by udělal James?",
@@ -1318,10 +1315,7 @@
         "vulnerabilities": {
           "label": "Zranitelnosti",
           "description": "Známé bezpečnostní zranitelnosti"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "Jakékoliv",

@@ -192,6 +192,7 @@
     "settings": "instellingen",
     "compare": "vergelijken",
     "back": "terug",
+    "menu": "Menu",
     "mobile_menu": "Navigatie menu",
     "open_menu": "Open menu",
     "links": "Links",
@@ -556,7 +557,6 @@
       "current_tags": "Huidige tags",
       "no_match_filter": "Geen versies die voldoen aan {filter}"
     },
-    "timeline": {},
     "dependencies": {
       "title": "Dependency ({count}) | Dependencies ({count})",
       "list_label": "Pakket dependencies",
@@ -1317,10 +1317,7 @@
         "vulnerabilities": {
           "label": "Kwetsbaarheden",
           "description": "Bekende beveiliging kwetsbaarheden"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "Alle",

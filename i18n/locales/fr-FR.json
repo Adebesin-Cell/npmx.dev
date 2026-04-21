@@ -193,6 +193,7 @@
     "settings": "paramètres",
     "compare": "comparer",
     "back": "Retour",
+    "menu": "Menu",
     "mobile_menu": "Menu de navigation",
     "open_menu": "Ouvrir le menu",
     "links": "Liens",
@@ -252,6 +253,7 @@
     "hide_platform_packages_description": "Masquer les paquets binaires natifs comme {'@'}esbuild/linux-x64 des résultats",
     "enable_graph_pulse_loop": "Activer la boucle de l'effet de pulsation sur le mini-graphe",
     "enable_graph_pulse_loop_description": "Activer une animation de pulsation continue sur le graphique des téléchargements hebdomadaires. Cette animation peut être gênante pour certaines personnes.",
+    "enable_code_ligatures": "Activer les ligatures de code",
     "theme": "Thème",
     "theme_light": "Clair",
     "theme_dark": "Sombre",
@@ -280,8 +282,7 @@
       "black": "Noir"
     },
     "keyboard_shortcuts_enabled": "Activer les raccourcis clavier",
-    "keyboard_shortcuts_enabled_description": "Les raccourcis clavier peuvent être désactivés s'ils entrent en conflit avec d'autres raccourcis du navigateur ou du système",
-    "enable_code_ligatures": "Activer les ligatures de code"
+    "keyboard_shortcuts_enabled_description": "Les raccourcis clavier peuvent être désactivés s'ils entrent en conflit avec d'autres raccourcis du navigateur ou du système"
   },
   "i18n": {
     "missing_keys": "{count} traduction manquante | {count} traductions manquantes",
@@ -340,8 +341,8 @@
       "tangled": "Voir sur Tangled"
     },
     "collapse": "Réduire",
-    "collapse_with_name": "Réduire {name}",
     "expand": "Développer",
+    "collapse_with_name": "Réduire {name}",
     "expand_with_name": "Développer {name}"
   },
   "profile": {
@@ -965,7 +966,6 @@
     "view_raw": "Voir le fichier brut",
     "toggle_container": "Changer la largeur du conteneur",
     "open_raw_file": "Ouvrir le fichier brut",
-    "open_path_dropdown": "Ouvrir le menu du chemin",
     "file_too_large": "Fichier trop volumineux pour l'aperçu",
     "file_size_warning": "{size} dépasse la limite de 500 Ko pour la coloration syntaxique",
     "failed_to_load": "Échec du chargement du fichier",
@@ -983,6 +983,7 @@
       "preview": "aperçu",
       "code": "code"
     },
+    "open_path_dropdown": "Ouvrir le menu du chemin",
     "file_path": "Chemin du fichier",
     "binary_file": "Fichier binaire",
     "binary_rendering_warning": "Le type de fichier \"{contentType}\" n'est pas pris en charge pour l'aperçu."

@@ -192,6 +192,7 @@
     "settings": "Einstellungen",
     "compare": "Vergleichen",
     "back": "Zurück",
+    "menu": "Menü",
     "mobile_menu": "Navigationsmenü",
     "open_menu": "Menü öffnen",
     "links": "Links",
@@ -556,7 +557,6 @@
       "current_tags": "Aktuelle Tags",
       "no_match_filter": "Keine Versionen entsprechen {filter}"
     },
-    "timeline": {},
     "dependencies": {
       "title": "Abhängigkeit ({count}) | Abhängigkeiten ({count})",
       "list_label": "Paketabhängigkeiten",
@@ -1317,10 +1317,7 @@
         "vulnerabilities": {
           "label": "Sicherheitslücken",
           "description": "Bekannte Sicherheitsrisiken"
-        },
-        "githubStars": {},
-        "githubIssues": {},
-        "createdAt": {}
+        }
       },
       "values": {
         "any": "Beliebig",
