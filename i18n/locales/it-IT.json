@@ -64,13 +64,29 @@
       "view_org_packages": "Vedi pacchetti di questa organizzazione"
     }
   },
+  "command_palette": {
+    "state": {},
+    "groups": {},
+    "actions": {},
+    "connections": {},
+    "navigation": {},
+    "links": {},
+    "package_links": {},
+    "theme": {},
+    "package": {},
+    "package_actions": {},
+    "code": {},
+    "diff": {},
+    "version": {},
+    "status": {},
+    "announcements": {}
+  },
   "nav": {
     "main_navigation": "Principale",
     "popular_packages": "Pacchetti popolari",
     "settings": "impostazioni",
     "compare": "confronta",
     "back": "indietro",
-    "menu": "Menu",
     "mobile_menu": "Menu di navigazione",
     "open_menu": "Apri menu",
     "links": "Link",
@@ -312,6 +328,7 @@
       "view_all": "Visualizza {count} versione | Visualizza tutte le {count} versioni",
       "copy_alt": {}
     },
+    "timeline": {},
     "dependencies": {
       "title": "Dipendenza ({count}) | Dipendenze ({count})",
       "list_label": "Dipendenze del pacchetto",
@@ -347,6 +364,7 @@
       "show_less": "(mostra meno)"
     },
     "trends": {
+      "chart_assistive_text": {},
       "granularity": "Granularità",
       "granularity_daily": "Giornaliero",
       "granularity_weekly": "Settimanale",
@@ -901,6 +919,9 @@
       "packages_selected": "{count}/{max} pacchetti selezionati.",
       "add_hint": "Aggiungi almeno 2 pacchetti da confrontare."
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "Nessuna dipendenza",
       "typeahead_title": "Cosa farebbe James?",
@@ -975,7 +996,10 @@
         "vulnerabilities": {
           "label": "Vulnerabilità",
           "description": "Vulnerabilità di sicurezza note"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "Qualsiasi",
@@ -1088,5 +1112,20 @@
   "translation_status": {
     "table": {}
   },
-  "action_bar": {}
+  "vacations": {
+    "what": {},
+    "meantime": {},
+    "return": {},
+    "stats": {
+      "subtitle": {}
+    }
+  },
+  "action_bar": {},
+  "logo_menu": {},
+  "brand": {
+    "logos": {},
+    "customize": {},
+    "typography": {},
+    "guidelines": {}
+  }
 }

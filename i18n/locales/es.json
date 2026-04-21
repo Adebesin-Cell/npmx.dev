@@ -76,13 +76,29 @@
     "instant_search_turn_off": "desactivar",
     "instant_search_advisory": "{label} {state} — {action}"
   },
+  "command_palette": {
+    "state": {},
+    "groups": {},
+    "actions": {},
+    "connections": {},
+    "navigation": {},
+    "links": {},
+    "package_links": {},
+    "theme": {},
+    "package": {},
+    "package_actions": {},
+    "code": {},
+    "diff": {},
+    "version": {},
+    "status": {},
+    "announcements": {}
+  },
   "nav": {
     "main_navigation": "Principal",
     "popular_packages": "Paquetes populares",
     "settings": "configuración",
     "compare": "comparar",
     "back": "atrás",
-    "menu": "Menú",
     "mobile_menu": "Menú de navegación",
     "open_menu": "Abrir menú",
     "links": "Enlaces",
@@ -443,6 +459,7 @@
       "current_tags": "Etiquetas actuales",
       "no_match_filter": "Ninguna versión coincide con {filter}"
     },
+    "timeline": {},
     "dependencies": {
       "title": "Dependencias ({count})",
       "list_label": "Dependencias del paquete",
@@ -1118,6 +1135,9 @@
       "packages_selected": "{count}/{max} paquetes seleccionados.",
       "add_hint": "Añade al menos 2 paquetes para comparar."
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "(Sin dependencia)",
       "typeahead_title": "¿Qué haría James?",
@@ -1196,7 +1216,10 @@
         "vulnerabilities": {
           "label": "Vulnerabilidades",
           "description": "Vulnerabilidades de seguridad conocidas"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "Cualquiera",

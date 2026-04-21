@@ -73,13 +73,29 @@
     "instant_search_turn_off": "kapat",
     "instant_search_advisory": "{label} {state} — {action}"
   },
+  "command_palette": {
+    "state": {},
+    "groups": {},
+    "actions": {},
+    "connections": {},
+    "navigation": {},
+    "links": {},
+    "package_links": {},
+    "theme": {},
+    "package": {},
+    "package_actions": {},
+    "code": {},
+    "diff": {},
+    "version": {},
+    "status": {},
+    "announcements": {}
+  },
   "nav": {
     "main_navigation": "Ana",
     "popular_packages": "Popüler paketler",
     "settings": "ayarlar",
     "compare": "karşılaştır",
     "back": "geri",
-    "menu": "Menü",
     "mobile_menu": "Navigasyon menüsü",
     "open_menu": "Menüyü aç",
     "links": "Bağlantılar",
@@ -394,6 +410,7 @@
         "general_description": "{package_name} paketinin {versions_count} {semver_grouping_mode} sürümü için sürüm başına indirmeleri gösteren çubuk grafiği, {date_range_label} {first_version} sürümünden {last_version} sürümüne kadar. En çok indirilen sürüm {max_version_downloads} indirme ile {max_downloaded_version}'dır. {per_version_analysis}. {watermark}."
       }
     },
+    "timeline": {},
     "dependencies": {
       "title": "Bağımlılık ({count}) | Bağımlılıklar ({count})",
       "list_label": "Paket bağımlılıkları",
@@ -430,6 +447,7 @@
       "show_less": "(daha az göster)"
     },
     "trends": {
+      "chart_assistive_text": {},
       "granularity": "Ayrıntı düzeyi",
       "granularity_daily": "Günlük",
       "granularity_weekly": "Haftalık",
@@ -1039,6 +1057,9 @@
       "packages_selected": "{count} paket seçildi",
       "add_hint": "Karşılaştırmak için paket ekleyin"
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "Bağımlılık yok",
       "typeahead_title": "Bağımlılık yok",
@@ -1113,7 +1134,10 @@
         "vulnerabilities": {
           "label": "Güvenlik açıkları",
           "description": "Bilinen güvenlik açıkları"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "Herhangi",
@@ -1305,5 +1329,20 @@
   "translation_status": {
     "table": {}
   },
-  "action_bar": {}
+  "vacations": {
+    "what": {},
+    "meantime": {},
+    "return": {},
+    "stats": {
+      "subtitle": {}
+    }
+  },
+  "action_bar": {},
+  "logo_menu": {},
+  "brand": {
+    "logos": {},
+    "customize": {},
+    "typography": {},
+    "guidelines": {}
+  }
 }

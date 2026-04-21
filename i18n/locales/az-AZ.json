@@ -73,13 +73,29 @@
     "instant_search_turn_off": "bağla",
     "instant_search_advisory": "{label} {state} — {action}"
   },
+  "command_palette": {
+    "state": {},
+    "groups": {},
+    "actions": {},
+    "connections": {},
+    "navigation": {},
+    "links": {},
+    "package_links": {},
+    "theme": {},
+    "package": {},
+    "package_actions": {},
+    "code": {},
+    "diff": {},
+    "version": {},
+    "status": {},
+    "announcements": {}
+  },
   "nav": {
     "main_navigation": "Əsas",
     "popular_packages": "Populyar paketlər",
     "settings": "tənzimləmələr",
     "compare": "müqayisə",
     "back": "geri",
-    "menu": "Menyu",
     "mobile_menu": "Naviqasiya menyusu",
     "open_menu": "Menyunu aç",
     "links": "Keçidlər",
@@ -394,6 +410,7 @@
         "general_description": "{package_name} paketinin {versions_count} {semver_grouping_mode} versiyası üçün versiya başına endirmələri göstərən çubuq diaqramı, {date_range_label} {first_version} versiyasından {last_version} versiyasına qədər. Ən çox endirilən versiya {max_version_downloads} endirmə ilə {max_downloaded_version}-dir. {per_version_analysis}. {watermark}."
       }
     },
+    "timeline": {},
     "dependencies": {
       "title": "Asılılıq ({count}) | Asılılıqlar ({count})",
       "list_label": "Paket asılılıqları",
@@ -430,6 +447,7 @@
       "show_less": "(daha az göstər)"
     },
     "trends": {
+      "chart_assistive_text": {},
       "granularity": "Dərəcəlilik",
       "granularity_daily": "Günlük",
       "granularity_weekly": "Həftəlik",
@@ -1039,6 +1057,9 @@
       "packages_selected": "{count}/{max} paket seçilib.",
       "add_hint": "Müqayisə üçün ən azı 2 paket əlavə edin."
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "(Asılılıq yoxdur)",
       "typeahead_title": "James Nə Edərdi?",
@@ -1113,7 +1134,10 @@
         "vulnerabilities": {
           "label": "Zəifliklər",
           "description": "Məlum təhlükəsizlik zəiflikləri"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "İstənilən",
@@ -1306,5 +1330,20 @@
   "translation_status": {
     "table": {}
   },
-  "action_bar": {}
+  "vacations": {
+    "what": {},
+    "meantime": {},
+    "return": {},
+    "stats": {
+      "subtitle": {}
+    }
+  },
+  "action_bar": {},
+  "logo_menu": {},
+  "brand": {
+    "logos": {},
+    "customize": {},
+    "typography": {},
+    "guidelines": {}
+  }
 }

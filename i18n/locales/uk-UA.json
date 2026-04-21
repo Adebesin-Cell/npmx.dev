@@ -76,13 +76,29 @@
     "instant_search_turn_off": "вимкнути",
     "instant_search_advisory": "{label} {state} — {action}"
   },
+  "command_palette": {
+    "state": {},
+    "groups": {},
+    "actions": {},
+    "connections": {},
+    "navigation": {},
+    "links": {},
+    "package_links": {},
+    "theme": {},
+    "package": {},
+    "package_actions": {},
+    "code": {},
+    "diff": {},
+    "version": {},
+    "status": {},
+    "announcements": {}
+  },
   "nav": {
     "main_navigation": "Головна",
     "popular_packages": "Популярні пакети",
     "settings": "налаштування",
     "compare": "порівняти",
     "back": "назад",
-    "menu": "Меню",
     "mobile_menu": "Меню навігації",
     "open_menu": "Відкрити меню",
     "links": "Посилання",
@@ -443,6 +459,7 @@
       "current_tags": "Поточні теги",
       "no_match_filter": "Версій за фільтром \"{filter}\" не знайдено"
     },
+    "timeline": {},
     "dependencies": {
       "title": "Залежності ({count})",
       "list_label": "Залежності пакета",
@@ -1114,6 +1131,9 @@
       "packages_selected": "Вибрано {count}/{max} пакетів.",
       "add_hint": "Додайте щонайменше 2 пакети для порівняння."
     },
+    "scatter_chart": {
+      "copy_alt": {}
+    },
     "no_dependency": {
       "label": "(Без залежності)",
       "typeahead_title": "Що б зробив Джеймс?",
@@ -1192,7 +1212,10 @@
         "vulnerabilities": {
           "label": "Вразливості",
           "description": "Відомі вразливості безпеки"
-        }
+        },
+        "githubStars": {},
+        "githubIssues": {},
+        "createdAt": {}
       },
       "values": {
         "any": "Будь-яке",
