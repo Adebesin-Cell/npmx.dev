@@ -189,8 +189,8 @@ importers:
         specifier: 18.0.0
         version: 18.0.0
       module-replacements:
-        specifier: 2.11.0
-        version: 2.11.0
+        specifier: 3.0.0-beta.7
+        version: 3.0.0-beta.7
       nuxt:
         specifier: 4.4.2
         version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6)(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@parcel/watcher@2.5.4)(@types/node@24.12.0)(@upstash/redis@1.37.0)(@vue/compiler-sfc@3.5.32)(better-sqlite3@12.8.0)(cac@6.7.14)(db0@0.3.4)(encoding@0.1.13)(esbuild@0.27.3)(eslint@9.39.2)(ioredis@5.9.2)(magicast@0.5.2)(optionator@0.9.4)(oxlint@1.58.0)(rolldown@1.0.0-rc.16)(rollup-plugin-visualizer@6.0.5)(rollup@4.56.0)(terser@5.46.0)(tsx@4.21.0)(typescript@6.0.2)(vite@8.0.0)(vue-tsc@3.2.6)(yaml@2.8.2)
@@ -8719,6 +8719,9 @@ packages:
 
   module-replacements@2.11.0:
     resolution: {integrity: sha512-j5sNQm3VCpQQ7nTqGeOZtoJtV3uKERgCBm9QRhmGRiXiqkf7iRFOkfxdJRZWLkqYY8PNf4cDQF/WfXUYLENrRA==}
+
+  module-replacements@3.0.0-beta.7:
+    resolution: {integrity: sha512-n1F9l3gF1wNh13xmnXS2JU7P9c3DlzCgVEyLKrVN0U37RwrXyYoePMMvYvs/6aUONAxbnscphzESZTCorXFh7Q==}
 
   motion-dom@12.34.3:
     resolution: {integrity: sha512-sYgFe+pR9aIM7o4fhs2aXtOI+oqlUd33N9Yoxcgo1Fv7M20sRkHtCmzE/VRNIcq7uNJ+qio+Xubt1FXH3pQ+eQ==}
@@ -20509,6 +20512,8 @@ snapshots:
   mocked-exports@0.1.1: {}
 
   module-replacements@2.11.0: {}
+
+  module-replacements@3.0.0-beta.7: {}
 
   motion-dom@12.34.3:
     dependencies:
