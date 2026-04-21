@@ -583,13 +583,28 @@
         "back": {
           "type": "string"
         },
-        "menu": {
-          "type": "string"
-        },
         "mobile_menu": {
           "type": "string"
         },
         "open_menu": {
+          "type": "string"
+        },
+        "back_to_main_menu": {
+          "type": "string"
+        },
+        "docs_label": {
+          "type": "string"
+        },
+        "close_menu": {
+          "type": "string"
+        },
+        "switch_to_light_theme": {
+          "type": "string"
+        },
+        "switch_to_dark_theme": {
+          "type": "string"
+        },
+        "docs_home": {
           "type": "string"
         },
         "links": {
