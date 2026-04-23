@@ -1,18 +1,7 @@
 <script setup lang="ts">
-import type { PackageVersionInfo, SlimVersion } from '#shared/types'
 import { compare, validRange } from 'semver'
 import type { RouteLocationRaw } from 'vue-router'
 import { fetchAllPackageVersions } from '~/utils/npm/api'
-import { NPMX_DOCS_SITE } from '#shared/utils/constants'
-import {
-  buildVersionToTagsMap,
-  filterExcludedTags,
-  filterVersions,
-  getPrereleaseChannel,
-  getVersionGroupKey,
-  getVersionGroupLabel,
-  isSameVersionGroup,
-} from '~/utils/versions'
 
 const props = defineProps<{
   packageName: string
@@ -105,6 +94,9 @@ interface VersionDisplay {
 function versionRoute(version: string): RouteLocationRaw {
   return packageRoute(props.packageName, version)
 }
+
+// Route to the full versions history page
+const versionsPageRoute = computed(() => packageVersionsRoute(props.packageName))
 
 // Version to tags lookup (supports multiple tags per version)
 const versionToTags = computed(() => buildVersionToTagsMap(props.distTags))
@@ -219,12 +211,16 @@ const visibleTagRows = computed(() => {
       )
     : rowsMaybeFilteredForDeprecation
   const first = rows.slice(0, MAX_VISIBLE_TAGS)
-  const latestTagRow = rows.find(row => row.tag === 'latest')
-  // Ensure 'latest' tag is always included (at the end) if not already present
-  if (latestTagRow && !first.includes(latestTagRow)) {
-    first.pop()
-    first.push(latestTagRow)
+
+  // When no filter is active, ensure 'latest' is always shown (even if not fully loaded)
+  if (!isFilterActive.value) {
+    const latestTagRow = rows.find(row => row.tag === 'latest')
+    if (latestTagRow && !first.includes(latestTagRow)) {
+      first.pop()
+      first.push(latestTagRow)
+    }
   }
+
   return first
 })
 
@@ -532,15 +528,27 @@ function majorGroupContainsCurrent(group: (typeof otherMajorGroups.value)[0]): b
     id="versions"
   >
     <template #actions>
-      <ButtonBase
-        variant="secondary"
-        class="text-fg-subtle hover:text-fg transition-colors min-w-6 min-h-6 -m-1 p-1 rounded"
-        :title="$t('package.downloads.community_distribution')"
-        classicon="i-lucide:file-stack"
-        @click="openDistributionModal"
-      >
-        <span class="sr-only">{{ $t('package.downloads.community_distribution') }}</span>
-      </ButtonBase>
+      <div class="flex items-center gap-3">
+        <LinkBase
+          :to="versionsPageRoute"
+          variant="button-secondary"
+          class="text-fg-subtle hover:text-fg transition-colors min-w-6 min-h-6 p-1 rounded"
+          :title="$t('package.versions.view_all_versions')"
+          classicon="i-lucide:history"
+          data-testid="view-all-versions-link"
+        >
+          <span class="sr-only">{{ $t('package.versions.view_all_versions') }}</span>
+        </LinkBase>
+        <ButtonBase
+          variant="secondary"
+          class="text-fg-subtle hover:text-fg transition-colors min-w-6 min-h-6 -m-1 p-1 rounded"
+          :title="$t('package.downloads.community_distribution')"
+          classicon="i-lucide:file-stack"
+          @click="openDistributionModal"
+        >
+          <span class="sr-only">{{ $t('package.downloads.community_distribution') }}</span>
+        </ButtonBase>
+      </div>
     </template>
     <div class="space-y-0.5 min-w-0">
       <!-- Semver range filter -->
@@ -556,15 +564,15 @@ function majorGroupContainsCurrent(group: (typeof otherMajorGroups.value)[0]): b
             autocomplete="off"
             class="flex-1 min-w-0"
             :class="isInvalidRange ? '!border-red-500' : ''"
-            size="small"
+            size="sm"
           />
           <TooltipApp interactive position="top">
             <span
               tabindex="0"
-              class="block cursor-help shrink-0 -m-2 p-2 -me-1 focus-visible:outline-2 focus-visible:outline-accent/70 rounded"
+              class="group/tooltip block cursor-help shrink-0 -m-2 p-2 -me-1 focus-visible:outline-2 focus-visible:outline-accent/70 rounded"
             >
               <span
-                class="block i-lucide:info w-3.5 h-3.5 text-fg-subtle"
+                class="block i-lucide:info w-3.5 h-3.5 text-fg-subtle transition-colors group-hover/tooltip:text-fg"
                 role="img"
                 :aria-label="$t('package.versions.filter_help')"
               />
@@ -775,7 +783,7 @@ function majorGroupContainsCurrent(group: (typeof otherMajorGroups.value)[0]): b
       <div class="p-1">
         <button
           type="button"
-          class="flex items-center gap-2 text-start rounded-sm w-full"
+          class="group/version-row flex items-center gap-2 text-start rounded-sm w-full"
           :class="otherVersionsContainsCurrent() ? 'bg-bg-subtle' : ''"
           :aria-expanded="otherVersionsExpanded"
           :aria-label="
@@ -801,7 +809,9 @@ function majorGroupContainsCurrent(group: (typeof otherMajorGroups.value)[0]): b
               aria-hidden="true"
             />
           </span>
-          <span class="text-xs text-fg-muted py-1.5">
+          <span
+            class="text-xs text-fg-muted py-1.5 group-hover/version-row:text-fg transition-colors"
+          >
             {{ $t('package.versions.other_versions') }}
             <span v-if="hiddenTagRows.length > 0" class="text-fg-subtle">
               ({{
