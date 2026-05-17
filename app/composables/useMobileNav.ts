@@ -1,5 +1,5 @@
 import { ref, readonly } from 'vue'
-import { useRoute } from '#imports'
+import { useRoute } from 'vue-router'
 
 export type MobileNavView = 'root' | 'docs'
 
