@@ -196,7 +196,6 @@
     "settings": "设置",
     "compare": "包对比",
     "back": "返回",
-    "menu": "菜单",
     "mobile_menu": "导航菜单",
     "open_menu": "打开菜单",
     "links": "链接",
@@ -1719,5 +1718,8 @@
       "discord_link_text": "chat.npmx.dev"
     }
   },
-  "alt_logo_kawaii": "一个圆润可爱、色彩活泼的 npmx logo 版本。"
+  "alt_logo_kawaii": "一个圆润可爱、色彩活泼的 npmx logo 版本。",
+  "changelog": {
+    "error": {}
+  }
 }

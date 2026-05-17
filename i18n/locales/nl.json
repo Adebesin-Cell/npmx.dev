@@ -193,7 +193,6 @@
     "settings": "instellingen",
     "compare": "vergelijken",
     "back": "terug",
-    "menu": "Menu",
     "mobile_menu": "Navigatie menu",
     "open_menu": "Open menu",
     "links": "Links",
@@ -383,6 +382,7 @@
       "size": "De installatiegrootte is toegenomen met {percent} ({size} groter)",
       "deps": "{count} meer dependencies"
     },
+    "size_decrease": {},
     "replacement": {
       "title": "U heeft waarschijnlijk dit niet nodig",
       "native": "Dit kan vervangen worden door {replacement}, Beschikbaar sinds node {nodeVersion}.",
@@ -436,9 +436,9 @@
       "docs": "docs",
       "fund": "Steunen",
       "compare": "vergelijk",
+      "timeline": "tijdlijn",
       "compare_this_package": "Vergelijk dit pakket",
-      "changelog": "wijzigingenoverzicht",
-      "timeline": "tijdlijn"
+      "changelog": "wijzigingenoverzicht"
     },
     "likes": {
       "like": "Dit pakket leuk vinden",
@@ -562,6 +562,11 @@
       "page_title": "Versie geschiedenis",
       "current_tags": "Huidige tags",
       "no_match_filter": "Geen versies die voldoen aan {filter}"
+    },
+    "timeline": {
+      "chart": {
+        "copy_alt": {}
+      }
     },
     "dependencies": {
       "title": "Dependency ({count}) | Dependencies ({count})",
@@ -764,6 +769,9 @@
       "button": "Download",
       "tarball": "Download Tarball als .tar.gz"
     }
+  },
+  "leaderboard": {
+    "likes": {}
   },
   "connector": {
     "modal": {

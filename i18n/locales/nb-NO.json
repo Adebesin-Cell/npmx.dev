@@ -196,7 +196,6 @@
     "settings": "innstillinger",
     "compare": "sammenlign",
     "back": "tilbake",
-    "menu": "Meny",
     "mobile_menu": "Navigasjonsmeny",
     "open_menu": "Åpne meny",
     "links": "Lenker",
@@ -1719,5 +1718,8 @@
       "discord_link_text": "chat.npmx.dev"
     }
   },
-  "alt_logo_kawaii": "En søt, avrundet og fargerik versjon av npmx-logoen."
+  "alt_logo_kawaii": "En søt, avrundet og fargerik versjon av npmx-logoen.",
+  "changelog": {
+    "error": {}
+  }
 }
