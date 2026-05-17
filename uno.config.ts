@@ -53,6 +53,7 @@ export default defineConfig({
     ...(process.env.CI ? [] : [presetRtl(), presetA11y()]),
   ].filter(Boolean),
   transformers: [transformerDirectives(), transformerVariantGroup()],
+  safelist: ['i-lucide:trophy', 'i-lucide:server'],
   theme,
   shortcuts: [
     // Layout

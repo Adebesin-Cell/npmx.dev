@@ -7,7 +7,36 @@ const emit = defineEmits<{
 }>()
 
 const docsLinks = computed(() => [
-  { label: $t('nav.docs_home'), href: NPMX_DOCS_SITE, external: true },
+  {
+    label: $t('nav.docs_home'),
+    href: NPMX_DOCS_SITE,
+    iconClass: 'i-lucide:file-text',
+    external: true,
+  },
+  {
+    label: $t('nav.docs_getting_started'),
+    href: `${NPMX_DOCS_SITE}/getting-started`,
+    iconClass: 'i-lucide:rocket',
+    external: true,
+  },
+  {
+    label: $t('nav.docs_guide'),
+    href: `${NPMX_DOCS_SITE}/guide`,
+    iconClass: 'i-lucide:book-open',
+    external: true,
+  },
+  {
+    label: $t('nav.docs_faq'),
+    href: `${NPMX_DOCS_SITE}/faq`,
+    iconClass: 'i-lucide:circle-help',
+    external: true,
+  },
+  {
+    label: $t('nav.docs_integrations'),
+    href: `${NPMX_DOCS_SITE}/integrations`,
+    iconClass: 'i-lucide:plug',
+    external: true,
+  },
 ])
 </script>
 
@@ -27,7 +56,7 @@ const docsLinks = computed(() => [
           class="flex items-center gap-3 px-3 py-2 rounded-md font-mono text-sm text-fg hover:bg-bg-subtle transition-colors duration-200"
           @click="emit('close')"
         >
-          <span class="i-lucide:file-text w-5 h-5 text-fg-muted" aria-hidden="true" />
+          <span :class="link.iconClass" class="w-5 h-5 text-fg-muted" aria-hidden="true" />
           <span class="flex-1">{{ link.label }}</span>
           <span
             v-if="link.external"

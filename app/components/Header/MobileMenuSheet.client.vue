@@ -63,7 +63,8 @@ onUnmounted(deactivate)
       <button
         v-if="isOpen"
         type="button"
-        class="sm:hidden fixed inset-0 z-30 bg-black/50 cursor-default"
+        class="sm:hidden fixed inset-0 z-[60] bg-black/50 cursor-default"
+        style="bottom: calc(3.5rem + env(safe-area-inset-bottom))"
         :aria-label="$t('common.close')"
         @click="close"
       />
@@ -83,7 +84,8 @@ onUnmounted(deactivate)
         role="dialog"
         aria-modal="true"
         :aria-label="$t('nav.mobile_menu')"
-        class="sm:hidden fixed inset-x-0 bottom-[var(--mobile-bar-height,3.5rem)] z-30 bg-bg border-t border-border flex flex-col overflow-hidden max-h-[70dvh] rounded-t-lg"
+        class="sm:hidden fixed inset-x-0 z-[70] bg-bg border-t border-border flex flex-col overflow-hidden max-h-[calc(100dvh-7rem)] rounded-t-lg"
+        style="bottom: calc(3.5rem + env(safe-area-inset-bottom))"
       >
         <div
           class="flex-1 min-h-0 flex w-[200%] transition-transform duration-200 motion-reduce:transition-none"

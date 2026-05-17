@@ -205,6 +205,11 @@
     "switch_to_light_theme": "Switch to light theme",
     "switch_to_dark_theme": "Switch to dark theme",
     "docs_home": "Docs home",
+    "docs_getting_started": "Getting started",
+    "docs_guide": "Guide",
+    "docs_faq": "FAQ",
+    "docs_integrations": "Integrations",
+    "discover": "Discover",
     "links": "Links",
     "tap_to_search": "Tap to search"
   },

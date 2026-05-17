@@ -92,6 +92,32 @@ export function useGlobalNavLinks() {
       type: 'separator',
     },
     {
+      name: 'Discover',
+      type: 'group',
+      label: $t('nav.discover'),
+      items: [
+        {
+          name: 'Likes Leaderboard',
+          label: $t('leaderboard.likes.title'),
+          to: { name: 'leaderboard-likes' },
+          type: 'link',
+          external: false,
+          iconClass: 'i-lucide:trophy',
+        },
+        {
+          name: 'PDS',
+          label: $t('pds.title'),
+          to: { name: 'pds' },
+          type: 'link',
+          external: false,
+          iconClass: 'i-lucide:server',
+        },
+      ],
+    },
+    {
+      type: 'separator',
+    },
+    {
       name: 'External Links',
       type: 'group',
       label: $t('nav.links'),

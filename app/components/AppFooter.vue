@@ -4,6 +4,7 @@ import { NPMX_DOCS_SITE } from '#shared/utils/constants'
 const route = useRoute()
 const isHome = computed(() => route.name === 'index')
 const { t } = useI18n()
+const { isOpen: isMobileNavOpen } = useMobileNav()
 
 const discord = useDiscordLink()
 const { commandPaletteShortcutLabel } = usePlatformModifierKey()
@@ -98,7 +99,8 @@ const footerSections = computed<Array<{ label: string; links: FooterLink[] }>>((
 
 <template>
   <footer
-    class="relative z-40 sm:z-auto border-t border-border sm:mt-auto sm:pt-8 duration-200 transition-all"
+    :inert="isMobileNavOpen"
+    class="border-t border-border sm:mt-auto sm:pt-8 duration-200 transition-all"
   >
     <div class="container flex flex-col gap-3">
       <!-- Desktop: Show all links. Mobile: Links are in MobileMenu -->
