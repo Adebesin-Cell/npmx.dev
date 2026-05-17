@@ -80,7 +80,8 @@ const { user: atprotoUser } = useAtproto()
     </div>
 
     <!-- Command palette -->
-    <div class="px-2 py-2">
+    <!-- Hidden on mobile: duplicate of the MobileBottomBar command palette button (always visible) -->
+    <div class="hidden sm:block px-2 py-2">
       <span class="px-3 py-2 block font-mono text-xs text-fg-subtle uppercase tracking-wider">
         {{ $t('command_palette.title') }}
       </span>

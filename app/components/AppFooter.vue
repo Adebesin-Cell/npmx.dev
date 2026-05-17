@@ -97,7 +97,9 @@ const footerSections = computed<Array<{ label: string; links: FooterLink[] }>>((
 </script>
 
 <template>
-  <footer class="border-t border-border sm:mt-auto sm:pt-8 duration-200 transition-all">
+  <footer
+    class="relative z-40 sm:z-auto border-t border-border sm:mt-auto sm:pt-8 duration-200 transition-all"
+  >
     <div class="container flex flex-col gap-3">
       <!-- Desktop: Show all links. Mobile: Links are in MobileMenu -->
       <div

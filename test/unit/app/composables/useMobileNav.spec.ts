@@ -1,11 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 
-// Mock Nuxt's useRoute
+// Mock vue-router's useRoute
 const mockRoute = { value: { path: '/' } }
-vi.mock('#imports', () => ({
+vi.mock('vue-router', () => ({
   useRoute: () => mockRoute.value,
-  ref: (v: unknown) => ({ value: v }),
-  readonly: <T>(v: T) => v,
 }))
 
 import { useMobileNav, __resetMobileNav } from '~/composables/useMobileNav'
