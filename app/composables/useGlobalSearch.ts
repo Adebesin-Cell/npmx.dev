@@ -9,11 +9,7 @@ const SEARCH_DEBOUNCE_MS = 100
 export function useGlobalSearch(place: 'header' | 'content' = 'content') {
   const { settings } = useSettings()
   const { searchProvider } = useSearchProvider()
-  const searchProviderValue = computed(() => {
-    const p = normalizeSearchParam(route.query.p)
-    if (p === 'npm' || searchProvider.value === 'npm') return 'npm'
-    return 'algolia'
-  })
+  const searchProviderValue = useEffectiveSearchProvider()
 
   const router = useRouter()
   const route = useRoute()

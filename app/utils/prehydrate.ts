@@ -75,11 +75,6 @@ export function initPreferencesOnPrehydrate() {
       document.documentElement.dataset.kbdShortcuts = 'false'
     }
 
-    // Search provider (default: algolia)
-    if (settings.searchProvider === 'npm') {
-      document.documentElement.dataset.searchProvider = 'npm'
-    }
-
     // Code font ligatures (default: true)
     if (settings.codeLigatures === false) {
       document.documentElement.dataset.codeLigatures = 'false'
