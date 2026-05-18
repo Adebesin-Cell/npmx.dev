@@ -8,7 +8,6 @@ const SEARCH_DEBOUNCE_MS = 100
 
 export function useGlobalSearch(place: 'header' | 'content' = 'content') {
   const { settings } = useSettings()
-  const { searchProvider } = useSearchProvider()
   const searchProviderValue = useEffectiveSearchProvider()
 
   const router = useRouter()
@@ -81,7 +80,7 @@ export function useGlobalSearch(place: 'header' | 'content' = 'content') {
     committedSearchQuery.value = searchQuery.value
     // When instant search is off the debounce queue is empty, so call directly
     if (!settings.value.instantSearch) {
-      updateUrlQueryImpl(searchQuery.value, searchProvider.value)
+      updateUrlQueryImpl(searchQuery.value, searchProviderValue.value)
     } else {
       updateUrlQuery.flush()
     }
@@ -98,9 +97,9 @@ export function useGlobalSearch(place: 'header' | 'content' = 'content') {
 
       // Leading debounce implementation as it doesn't work properly out of the box (https://github.com/unjs/perfect-debounce/issues/43)
       if (!updateUrlQuery.isPending()) {
-        updateUrlQueryImpl(value, searchProvider.value)
+        updateUrlQueryImpl(value, searchProviderValue.value)
       }
-      updateUrlQuery(value, searchProvider.value)
+      updateUrlQuery(value, searchProviderValue.value)
     },
   })
 

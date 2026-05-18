@@ -239,8 +239,8 @@ export function useEffectiveSearchProvider() {
     const p = normalizeSearchParam(route.query.p)
     if (p === 'npm') return 'npm'
     if (p === 'algolia') return 'algolia'
-    if (storedProviderReady.value && searchProvider.value === 'npm') return 'npm'
-    return 'algolia'
+    if (storedProviderReady.value) return searchProvider.value === 'npm' ? 'npm' : 'algolia'
+    return DEFAULT_SETTINGS.searchProvider
   })
 }
 
