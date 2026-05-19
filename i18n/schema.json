@@ -619,6 +619,21 @@
         "docs_home": {
           "type": "string"
         },
+        "docs_getting_started": {
+          "type": "string"
+        },
+        "docs_guide": {
+          "type": "string"
+        },
+        "docs_faq": {
+          "type": "string"
+        },
+        "docs_integrations": {
+          "type": "string"
+        },
+        "discover": {
+          "type": "string"
+        },
         "links": {
           "type": "string"
         },

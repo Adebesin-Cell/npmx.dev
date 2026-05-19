@@ -98,7 +98,7 @@ function handleThemeClick() {
         type="button"
         :aria-label="isOpen ? $t('nav.close_menu') : $t('nav.open_menu')"
         :aria-expanded="isOpen"
-        aria-controls="mobile-menu-sheet"
+        :aria-controls="isOpen ? 'mobile-menu-sheet' : undefined"
         :classicon="isOpen ? 'i-lucide:x' : 'i-lucide:menu'"
         @click="toggle"
       />
