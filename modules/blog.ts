@@ -172,7 +172,7 @@ export default defineNuxtModule({
 
     addVitePlugin(() =>
       Markdown({
-        include: [/\.(md|markdown)($|\?)/],
+        include: [/pages[\\/]blog[\\/].+\.(md|markdown)($|\?)/],
         wrapperComponent: 'BlogPostWrapper',
         wrapperClasses: 'text-fg-muted leading-relaxed',
         async markdownSetup(md) {

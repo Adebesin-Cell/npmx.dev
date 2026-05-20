@@ -1,38 +1,49 @@
+import type { Component } from 'vue'
+import { noodles } from '#noodles/entries'
 import NoodleKawaiiLogo from './Kawaii/Logo.vue'
 import NoodlePressLogo from './Press/Logo.vue'
 
 export type Noodle = {
-  // Unique identifier for the noodle
   key: string
-  // Timezone for the noodle (default is auto, i.e. user's timezone)
   timezone?: string
-  // Date for the noodle
   date?: string
-  // `Date to` for the noodle
   dateTo?: string
-  // Logo for the noodle - could be any component. Relative parent - intro section
   logo: Component
-  // Show npmx tagline or not (default is true)
   tagline?: boolean
 }
 
-// Permanent noodles - always shown on specific query param (e.g. ?kawaii)
-export const PERMANENT_NOODLES: Noodle[] = [
-  {
-    key: 'kawaii',
-    logo: NoodleKawaiiLogo,
-    tagline: false,
-  },
-]
+/**
+ * Logo component for each noodle, keyed by the `key` field in the matching
+ * .md file under app/pages/noodles. To add a new noodle:
+ *   1. Drop a .md file in app/pages/noodles (frontmatter drives dates + copy)
+ *   2. Add the logo here under the same key
+ */
+const NOODLE_LOGOS: Record<string, Component> = {
+  press: NoodlePressLogo,
+  kawaii: NoodleKawaiiLogo,
+}
 
-// Active noodles - shown based on date and timezone
-export const ACTIVE_NOODLES: Noodle[] = [
-  {
-    key: 'press',
-    logo: NoodlePressLogo,
-    date: '2026-05-01',
-    dateTo: '2026-05-04',
-    timezone: 'auto',
-    tagline: false,
-  },
-]
+export function resolveNoodleLogo(key: string): Component | undefined {
+  return NOODLE_LOGOS[key]
+}
+
+function entriesToNoodles(filter: (e: (typeof noodles)[number]) => boolean): Noodle[] {
+  const list: Noodle[] = []
+  for (const entry of noodles) {
+    if (!filter(entry)) continue
+    const logo = NOODLE_LOGOS[entry.key]
+    if (!logo) continue
+    list.push({
+      key: entry.key,
+      logo,
+      date: entry.date,
+      dateTo: entry.dateTo,
+      timezone: entry.timezone,
+      tagline: entry.tagline,
+    })
+  }
+  return list
+}
+
+export const PERMANENT_NOODLES: Noodle[] = entriesToNoodles(e => e.permanent)
+export const ACTIVE_NOODLES: Noodle[] = entriesToNoodles(e => !e.permanent)
