@@ -10,15 +10,25 @@ export function useMarkdown(options: MaybeRefOrGetter<UseMarkdownOptions>) {
   return computed(() => parseMarkdown(toValue(options)))
 }
 
-// Strip markdown image badges from text
+// Single alternation matches any of:
+//  - image atom: ![alt](url) OR ![alt][ref]
+//  - empty link wrapper left behind after image removal: [](url) / [][ref]
+//  - reference link definition line: [ref]: url "optional title"
+// Bounded quantifiers ({0,N}) guard against ReDoS. Compiled once at module
+// scope so reactive callers don't pay re-instantiation cost on every render.
+const STRIPPABLE_MARKDOWN =
+  /!\[[^\]]{0,500}\](?:\([^)]{0,2000}\)|\[[^\]]{0,500}\])|\[\s*\](?:\([^)]{0,2000}\)?|\[[^\]]{0,500}\])|^[ \t]*\[[^\]]{1,500}\]:[ \t]+\S{1,2000}(?:[ \t]+["'(].*?["')])?[ \t]*$/gm
+
+// Strip markdown image badges from text.
+// Each pass removes image atoms, empty link wrappers, and reference defs in a
+// single scan. Re-run to a fixed point so nested shapes like
+// `[![…][ref]][ref]` collapse without per-shape rules.
 function stripMarkdownImages(text: string): string {
-  // Remove linked images: [![alt](image-url)](link-url) - handles incomplete URLs too
-  // Using {0,500} instead of * to prevent ReDoS on pathological inputs
-  text = text.replace(/\[!\[[^\]]{0,500}\]\([^)]{0,2000}\)\]\([^)]{0,2000}\)?/g, '')
-  // Remove standalone images: ![alt](url)
-  text = text.replace(/!\[[^\]]{0,500}\]\([^)]{0,2000}\)/g, '')
-  // Remove any leftover empty links or broken markdown link syntax
-  text = text.replace(/\[\]\([^)]{0,2000}\)?/g, '')
+  let previous: string
+  do {
+    previous = text
+    text = text.replace(STRIPPABLE_MARKDOWN, '')
+  } while (text !== previous)
   return text.trim()
 }
 
