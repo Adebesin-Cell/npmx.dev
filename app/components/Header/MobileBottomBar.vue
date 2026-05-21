@@ -84,16 +84,25 @@ function handleThemeClick() {
         classicon="i-lucide:search"
         @click="handleSearchClick"
       />
-      <ButtonBase
-        type="button"
-        :aria-label="
-          colorMode.value === 'dark'
-            ? $t('nav.switch_to_light_theme')
-            : $t('nav.switch_to_dark_theme')
-        "
-        :classicon="colorMode.value === 'dark' ? 'i-lucide:sun' : 'i-lucide:moon'"
-        @click="handleThemeClick"
-      />
+      <ClientOnly>
+        <ButtonBase
+          type="button"
+          :aria-label="
+            colorMode.value === 'dark'
+              ? $t('nav.switch_to_light_theme')
+              : $t('nav.switch_to_dark_theme')
+          "
+          :classicon="colorMode.value === 'dark' ? 'i-lucide:sun' : 'i-lucide:moon'"
+          @click="handleThemeClick"
+        />
+        <template #fallback>
+          <ButtonBase
+            type="button"
+            :aria-label="$t('nav.switch_to_dark_theme')"
+            classicon="i-lucide:moon"
+          />
+        </template>
+      </ClientOnly>
       <ButtonBase
         type="button"
         :aria-label="isOpen ? $t('nav.close_menu') : $t('nav.open_menu')"
