@@ -1600,6 +1600,9 @@
             "license": {
               "type": "string"
             },
+            "version": {
+              "type": "string"
+            },
             "select": {
               "type": "string"
             },
