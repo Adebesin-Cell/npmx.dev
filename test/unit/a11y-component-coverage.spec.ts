@@ -41,7 +41,7 @@ const SKIPPED_COMPONENTS: Record<string, string> = {
   // Complex components requiring full app context or specific runtime conditions
   'Header/OrgsDropdown.vue': 'Requires connector context and API calls',
   'Header/PackagesDropdown.vue': 'Requires connector context and API calls',
-  'Header/MobileBottomBar.vue':
+  'Header/MobileBottomBar.client.vue':
     'Fixed bar using Teleport + scroll listeners — requires full app context',
   'Header/MobileMenuSheet.client.vue':
     'Full-screen sheet with Teleport, focus trap, and scroll lock — requires full app context',
