@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { AtIdentifierString } from '@atproto/lex'
 import { findNoodle } from '~/noodles'
 import { resolveNoodleLogo } from '~/components/Noodle'
+import { resolveNoodleAvatar } from '#noodles/avatars'
 
 const route = useRoute()
 const slug = computed(() => String(route.params.slug ?? ''))
@@ -8,12 +10,11 @@ const slug = computed(() => String(route.params.slug ?? ''))
 const noodle = computed(() => findNoodle(slug.value))
 const logo = computed(() => (noodle.value ? resolveNoodleLogo(noodle.value.key) : undefined))
 
-/** Map noodle authors to the shape AuthorList expects. */
 const enrichedAuthors = computed(() =>
   (noodle.value?.authors ?? []).map(a => ({
     name: a.name,
-    blueskyHandle: a.blueskyHandle as never,
-    avatar: null,
+    blueskyHandle: a.blueskyHandle as AtIdentifierString | undefined,
+    avatar: resolveNoodleAvatar(a.blueskyHandle),
     profileUrl: a.blueskyHandle ? `https://bsky.app/profile/${a.blueskyHandle}` : null,
   })),
 )
@@ -30,8 +31,6 @@ useSeoMeta({
 
 onMounted(() => {
   if (!noodle.value) {
-    // Surface a 404 status to crawlers/headless tools while still rendering
-    // the friendly inline UI to humans.
     const event = useRequestEvent()
     if (event) setResponseStatus(event, 404)
   }
@@ -45,7 +44,7 @@ if (import.meta.server && !noodle.value) {
 
 <template>
   <main class="w-full overflow-x-hidden">
-    <!-- HERO: the bowl, same look as /noodles landing -->
+    <!-- HERO -->
     <section
       class="relative overflow-hidden border-b border-border-subtle py-10 sm:py-20 px-4 sm:px-6"
     >
@@ -160,7 +159,7 @@ if (import.meta.server && !noodle.value) {
         </section>
       </template>
 
-      <!-- 404: cool "this noodle never existed" UI -->
+      <!-- 404 -->
       <template v-else>
         <header class="text-center">
           <p
