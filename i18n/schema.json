@@ -691,6 +691,60 @@
       },
       "additionalProperties": false
     },
+    "noodles": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "meta_description": {
+          "type": "string"
+        },
+        "latest": {
+          "type": "string"
+        },
+        "what_is": {
+          "type": "string"
+        },
+        "what_is_body": {
+          "type": "string"
+        },
+        "empty": {
+          "type": "string"
+        },
+        "load_more": {
+          "type": "string"
+        },
+        "dates": {
+          "type": "string"
+        },
+        "shipped_in": {
+          "type": "string"
+        },
+        "credits": {
+          "type": "string"
+        },
+        "process": {
+          "type": "string"
+        },
+        "back_to_archive": {
+          "type": "string"
+        },
+        "missing": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "body": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
     "settings": {
       "type": "object",
       "properties": {
