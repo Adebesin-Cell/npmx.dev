@@ -77,13 +77,6 @@ if (import.meta.server && !noodle.value) {
     <article class="container max-w-3xl mx-auto pb-16 sm:pb-24 pt-10 sm:pt-16">
       <template v-if="noodle">
         <header class="mb-10 sm:mb-14">
-          <AuthorList
-            v-if="enrichedAuthors.length"
-            :authors="enrichedAuthors"
-            variant="expanded"
-            class="mb-6 sm:mb-8"
-          />
-
           <h1
             class="font-mono text-3xl sm:text-5xl font-medium tracking-tight mb-3 sm:mb-4 break-words"
           >
@@ -97,7 +90,7 @@ if (import.meta.server && !noodle.value) {
           </p>
 
           <dl
-            class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
+            class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
           >
             <div>
               <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
@@ -109,6 +102,14 @@ if (import.meta.server && !noodle.value) {
                   <span class="text-fg-subtle mx-1">—</span>
                   <DateTime :datetime="noodle.dateTo" year="numeric" month="short" day="numeric" />
                 </template>
+              </dd>
+            </div>
+            <div v-if="enrichedAuthors.length">
+              <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
+                {{ $t('noodles.credits') }}
+              </dt>
+              <dd>
+                <AuthorList :authors="enrichedAuthors" variant="compact" />
               </dd>
             </div>
             <div v-if="noodle.prUrl">
