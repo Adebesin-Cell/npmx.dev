@@ -9,12 +9,10 @@ const NoodleAuthorSchema = object({
  * Noodle entry — a seasonal/event logo we ran on the homepage.
  *
  * Noodles are authored as plain TypeScript entries in app/noodles.ts.
- * The "required" set is intentionally tiny so adding a noodle is easy:
- *   - key / title / slug / date
- *   - a one-line `occasion` (the day or context — e.g. "World Press Freedom Day")
- *
- * Everything else is optional and the detail page only renders sections
- * for the fields that are actually filled in.
+ * The required set is intentionally tiny so adding a noodle is easy:
+ * key / title / slug / date. Everything else (including `occasion`) is
+ * optional — the detail page only renders sections for the fields that
+ * are actually filled in.
  */
 export const NoodleSchema = object({
   key: string(),
