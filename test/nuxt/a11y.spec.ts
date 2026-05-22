@@ -157,7 +157,8 @@ import {
   BuildEnvironment,
   ButtonBase,
   LandingIntroHeader,
-  NoodleGallery,
+  NoodleBuildLog,
+  NoodleFigures,
   NoodleKawaiiLogo,
   NoodleLightbox,
   NoodleListCard,
@@ -2868,11 +2869,27 @@ describe('component accessibility audits', () => {
     })
   })
 
-  describe('NoodleGallery', () => {
+  describe('NoodleFigures', () => {
     it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodleGallery, {
+      const component = await mountSuspended(NoodleFigures, {
         props: {
           images: ['/noodles/press/1.png', '/noodles/press/2.png'],
+          alt: 'Press noodle',
+        },
+      })
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+  })
+
+  describe('NoodleBuildLog', () => {
+    it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(NoodleBuildLog, {
+        props: {
+          items: [
+            { src: '/noodles/press/1.png', version: 'v0.1', caption: 'first sketch' },
+            { src: '/noodles/press/2.png', version: 'v1.0', caption: 'shipped', shipped: true },
+          ],
           alt: 'Press noodle',
         },
       })

@@ -238,12 +238,10 @@
     "empty": "No noodles yet.",
     "permanent_badge": "always available",
     "dates": "Active dates",
-    "credits": "Credits",
     "status": "Status",
     "status_draft": "Draft",
     "status_shipped": "Shipped",
     "figures": "Figures",
-    "gallery": "Gallery",
     "draft_banner": "This noodle write-up is still a draft.",
     "back_to_index": "Back to all noodles",
     "lightbox": {
