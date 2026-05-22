@@ -118,7 +118,10 @@ const config = {
     newConfig.plugins.push({
       name: 'ignore-internals',
       transform(_, id) {
-        if (id.includes('/app/pages/blog/') && id.endsWith('.md')) {
+        if (
+          (id.includes('/app/pages/blog/') || id.includes('/app/pages/noodles/')) &&
+          id.endsWith('.md')
+        ) {
           return 'export default {}'
         }
       },
