@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Component } from 'vue'
 import type { AtIdentifierString } from '@atproto/lex'
 import { findNoodle } from '~/noodles'
 import { resolveNoodleLogo } from '~/components/Noodle'
@@ -9,6 +10,46 @@ const slug = computed(() => String(route.params.slug ?? ''))
 
 const noodle = computed(() => findNoodle(slug.value))
 const logo = computed(() => (noodle.value ? resolveNoodleLogo(noodle.value.key) : undefined))
+
+type LensSlide = { kind: 'logo'; logo: Component } | { kind: 'image'; src: string }
+
+const lensSlides = computed<LensSlide[]>(() => {
+  const slides: LensSlide[] = []
+  if (logo.value) slides.push({ kind: 'logo', logo: logo.value })
+  for (const src of noodle.value?.processImages ?? []) {
+    slides.push({ kind: 'image', src })
+  }
+  return slides
+})
+
+const lensScroller = useTemplateRef<HTMLElement>('lensScroller')
+const activeSlide = shallowRef(0)
+const hasMultipleSlides = computed(() => lensSlides.value.length > 1)
+const atStart = computed(() => activeSlide.value === 0)
+const atEnd = computed(() => activeSlide.value >= lensSlides.value.length - 1)
+
+function lensScrollTo(index: number) {
+  const el = lensScroller.value
+  if (!el) return
+  const clamped = Math.max(0, Math.min(index, lensSlides.value.length - 1))
+  const target = el.children[clamped] as HTMLElement | undefined
+  target?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+}
+
+function onLensScroll() {
+  const el = lensScroller.value
+  if (!el) return
+  const width = el.clientWidth
+  if (width === 0) return
+  activeSlide.value = Math.round(el.scrollLeft / width)
+}
+
+function lensPrev() {
+  lensScrollTo(activeSlide.value - 1)
+}
+function lensNext() {
+  lensScrollTo(activeSlide.value + 1)
+}
 
 const enrichedAuthors = computed(() =>
   (noodle.value?.authors ?? []).map(a => ({
@@ -53,22 +94,84 @@ if (import.meta.server && !noodle.value) {
         aria-hidden="true"
       />
       <div class="relative max-w-3xl mx-auto flex flex-col items-center text-center">
-        <div
-          class="relative aspect-square w-60 sm:w-96 max-w-full flex items-center justify-center"
-        >
+        <div class="relative aspect-square w-60 sm:w-96 max-w-full">
+          <!-- The lens: bowl chrome with rounded clip. Slides scroll under it. -->
           <div
-            class="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_40px_rgb(0_0_0/0.08),0_20px_40px_-12px_rgb(0_0_0/0.15)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
-            aria-hidden="true"
+            class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
           >
-            <component :is="logo" v-if="logo" class="max-w-[70%] max-h-[70%]" />
+            <div
+              v-if="lensSlides.length"
+              ref="lensScroller"
+              class="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              :aria-label="$t('noodles.lens_label', { title: noodle?.title ?? '' })"
+              @scroll.passive="onLensScroll"
+            >
+              <div
+                v-for="(slide, index) in lensSlides"
+                :key="index"
+                class="shrink-0 w-full h-full snap-start flex items-center justify-center p-6 sm:p-10"
+              >
+                <component
+                  v-if="slide.kind === 'logo'"
+                  :is="slide.logo"
+                  class="max-w-[80%] max-h-[80%]"
+                />
+                <img
+                  v-else
+                  :src="slide.src"
+                  :alt="
+                    noodle?.title ? `${noodle.title} — ${$t('noodles.lens_slide', { index })}` : ''
+                  "
+                  loading="lazy"
+                  class="max-w-[85%] max-h-[85%] object-contain"
+                />
+              </div>
+            </div>
             <span
               v-else
-              class="font-mono text-6xl sm:text-8xl text-fg-subtle select-none"
+              class="absolute inset-0 flex items-center justify-center font-mono text-6xl sm:text-8xl text-fg-subtle select-none"
               aria-hidden="true"
               >?</span
             >
           </div>
+
+          <!-- Lens controls — only visible when there's more than one slide. -->
+          <template v-if="hasMultipleSlides">
+            <ButtonBase
+              type="button"
+              classicon="i-lucide:chevron-left"
+              class="rtl-flip absolute top-1/2 -translate-y-1/2 -inset-is-3 sm:-inset-is-6 backdrop-blur z-10"
+              :aria-label="$t('noodles.carousel_prev')"
+              :disabled="atStart"
+              @click="lensPrev"
+            />
+            <ButtonBase
+              type="button"
+              classicon="i-lucide:chevron-right"
+              class="rtl-flip absolute top-1/2 -translate-y-1/2 -inset-ie-3 sm:-inset-ie-6 backdrop-blur z-10"
+              :aria-label="$t('noodles.carousel_next')"
+              :disabled="atEnd"
+              @click="lensNext"
+            />
+          </template>
         </div>
+
+        <ol
+          v-if="hasMultipleSlides"
+          class="flex justify-center gap-2 mt-6 list-none p-0 m-0"
+          :aria-label="$t('noodles.carousel_dots')"
+        >
+          <li v-for="(_, index) in lensSlides" :key="index">
+            <button
+              type="button"
+              class="block w-2 h-2 rounded-full transition-colors cursor-pointer"
+              :class="index === activeSlide ? 'bg-fg' : 'bg-fg-subtle/40 hover:bg-fg-subtle'"
+              :aria-label="$t('noodles.carousel_jump', { index: index + 1 })"
+              :aria-current="index === activeSlide ? 'true' : undefined"
+              @click="lensScrollTo(index)"
+            />
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -131,13 +234,6 @@ if (import.meta.server && !noodle.value) {
           <p class="text-fg-muted text-base sm:text-lg leading-relaxed whitespace-pre-line">
             {{ noodle.description }}
           </p>
-        </section>
-
-        <section v-if="noodle.processImages?.length" class="mb-12 sm:mb-16">
-          <h2 class="font-mono text-xl font-semibold uppercase text-fg leading-none mb-6">
-            {{ $t('noodles.process') }}
-          </h2>
-          <NoodleCarousel :images="noodle.processImages" :alt="noodle.title" />
         </section>
       </template>
 

@@ -44,15 +44,14 @@ function loadMore() {
           class="relative aspect-square w-60 sm:w-96 max-w-full flex items-center justify-center"
         >
           <div
-            class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_40px_rgb(0_0_0/0.08),0_20px_40px_-12px_rgb(0_0_0/0.15)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
+            class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
             aria-hidden="true"
           >
             <img
-              v-if="colorMode.value !== 'light'"
               :src="moonSrc"
               alt=""
               aria-hidden="true"
-              class="absolute bottom-0 inset-is-1/2 -translate-x-1/2 w-[88%] pointer-events-none select-none mix-blend-lighten"
+              class="absolute bottom-0 inset-is-1/2 -translate-x-1/2 w-[88%] pointer-events-none select-none mix-blend-darken dark:mix-blend-lighten"
             />
           </div>
           <h1 class="relative font-mono text-3xl sm:text-6xl font-medium z-10">

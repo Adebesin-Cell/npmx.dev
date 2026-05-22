@@ -727,6 +727,24 @@
         "process": {
           "type": "string"
         },
+        "carousel_prev": {
+          "type": "string"
+        },
+        "carousel_next": {
+          "type": "string"
+        },
+        "carousel_dots": {
+          "type": "string"
+        },
+        "carousel_jump": {
+          "type": "string"
+        },
+        "lens_label": {
+          "type": "string"
+        },
+        "lens_slide": {
+          "type": "string"
+        },
         "back_to_archive": {
           "type": "string"
         },
