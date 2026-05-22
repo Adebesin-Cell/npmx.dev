@@ -28,6 +28,8 @@ const lensSlides = computed<LensSlide[]>(() => {
 const slideCount = computed(() => lensSlides.value.length)
 const hasMultipleSlides = computed(() => slideCount.value > 1)
 
+const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+
 const lensScroller = useTemplateRef<HTMLElement>('lensScroller')
 // `activeSlide` is the canonical index (0..N-1). `rawIndex` tracks position in
 // the tripled slide list (0..3N-1) — used internally for the loop snap-back.
@@ -69,7 +71,11 @@ function lensScrollTo(canonicalIndex: number) {
   let delta = (((canonicalIndex - activeSlide.value) % n) + n) % n
   if (delta > n / 2) delta -= n
   const target = el.children[rawIndex + delta] as HTMLElement | undefined
-  target?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+  target?.scrollIntoView({
+    behavior: prefersReducedMotion.value ? 'auto' : 'smooth',
+    block: 'nearest',
+    inline: 'start',
+  })
 }
 
 function lensPrev() {
@@ -254,7 +260,7 @@ if (import.meta.server && !noodle.value) {
           <li v-for="(_, index) in lensSlides" :key="index">
             <button
               type="button"
-              class="block w-2 h-2 rounded-full transition-colors cursor-pointer"
+              class="block w-2 h-2 rounded-full transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
               :class="index === activeSlide ? 'bg-fg' : 'bg-fg-subtle/40 hover:bg-fg-subtle'"
               :aria-label="$t('noodles.carousel_jump', { index: index + 1 })"
               :aria-current="index === activeSlide ? 'true' : undefined"
@@ -262,6 +268,10 @@ if (import.meta.server && !noodle.value) {
             />
           </li>
         </ol>
+
+        <div v-if="hasMultipleSlides" class="sr-only" aria-live="polite" aria-atomic="true">
+          {{ $t('noodles.lens_slide_position', { index: activeSlide + 1, total: slideCount }) }}
+        </div>
       </div>
     </section>
 
@@ -330,10 +340,7 @@ if (import.meta.server && !noodle.value) {
       <!-- 404 -->
       <template v-else>
         <header class="text-center">
-          <p
-            class="font-mono text-xs tracking-widest uppercase text-fg-subtle mb-3"
-            aria-label="404"
-          >
+          <p class="font-mono text-xs tracking-widest uppercase text-fg-subtle mb-3">
             404 — empty bowl
           </p>
           <h1 class="font-mono text-3xl sm:text-4xl font-medium tracking-tight mb-4">
