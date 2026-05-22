@@ -32,16 +32,19 @@ export function resolveNoodleLogo(key: string): Component | undefined {
   return NOODLE_LOGOS[key]
 }
 
-export const NOODLES: Noodle[] = noodles.reduce<Noodle[]>((acc, entry) => {
+export const NOODLES: Noodle[] = noodles.map(entry => {
   const logo = NOODLE_LOGOS[entry.key]
-  if (!logo) return acc
-  acc.push({
+  if (!logo) {
+    throw new Error(
+      `Missing logo registration for noodle key "${entry.key}". Add it to NOODLE_LOGOS in app/components/Noodle/index.ts.`,
+    )
+  }
+  return {
     key: entry.key,
     logo,
     date: entry.date,
     dateTo: entry.dateTo,
     timezone: entry.timezone,
     tagline: entry.tagline,
-  })
-  return acc
-}, [])
+  }
+})
