@@ -173,13 +173,15 @@ if (import.meta.server && !noodle.value) {
 
 <template>
   <main class="w-full flex-1 flex flex-col overflow-x-hidden">
-    <section class="relative flex-1 pt-6 pb-10 sm:pt-8 sm:pb-16 lg:pb-20 px-4 sm:px-6">
+    <section
+      class="relative flex-1 flex flex-col pt-6 pb-10 sm:pt-8 sm:pb-16 lg:pb-20 px-4 sm:px-6"
+    >
       <div
         class="absolute inset-0 [background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.04)_0_22px,transparent_22px_80px)] dark:[background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.35)_0_22px,transparent_22px_80px)]"
         aria-hidden="true"
       />
 
-      <nav class="relative max-w-6xl mx-auto mb-10 sm:mb-14 lg:mb-16">
+      <nav class="relative max-w-6xl w-full mx-auto mb-10 sm:mb-14 lg:mb-16">
         <NuxtLink
           to="/noodles"
           class="inline-flex items-center gap-2 text-sm font-mono text-fg-muted hover:text-fg transition-colors"
@@ -190,7 +192,7 @@ if (import.meta.server && !noodle.value) {
       </nav>
 
       <div
-        class="relative max-w-6xl mx-auto grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-y-10 gap-x-16 xl:gap-x-24 items-start"
+        class="relative flex-1 max-w-6xl w-full mx-auto grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-y-10 gap-x-16 xl:gap-x-24 items-start xl:items-center content-center"
       >
         <!-- LENS COLUMN -->
         <div class="xl:sticky xl:top-24 flex flex-col items-center justify-self-center">
