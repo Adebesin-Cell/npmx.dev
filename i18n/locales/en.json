@@ -247,6 +247,7 @@
     "carousel_jump": "Go to image {index}",
     "lens_label": "{title} — image reel",
     "lens_slide": "image {index}",
+    "lens_slide_position": "Slide {index} of {total}",
     "back_to_archive": "Back to all noodles",
     "missing": {
       "title": "This noodle never made it out of the bowl.",

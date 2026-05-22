@@ -745,6 +745,9 @@
         "lens_slide": {
           "type": "string"
         },
+        "lens_slide_position": {
+          "type": "string"
+        },
         "back_to_archive": {
           "type": "string"
         },
