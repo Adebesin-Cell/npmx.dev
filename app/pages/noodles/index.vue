@@ -41,7 +41,7 @@ const moonSrc = computed(() =>
               :src="moonSrc"
               alt=""
               aria-hidden="true"
-              class="absolute bottom-0 inset-is-1/2 -translate-x-1/2 w-[88%] pointer-events-none select-none"
+              class="absolute bottom-0 inset-is-1/2 -translate-x-1/2 w-[88%] pointer-events-none select-none mix-blend-lighten light:mix-blend-darken"
             />
           </div>
           <h1 class="relative font-mono text-4xl sm:text-6xl font-medium z-10">

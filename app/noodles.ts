@@ -14,12 +14,13 @@ import type { Noodle } from '#shared/schemas/noodle'
 const entries: Noodle[] = [
   {
     key: 'press',
-    title: 'Press',
+    title: 'Press Freedom Day',
     slug: 'press',
     date: '2026-05-01',
     dateTo: '2026-05-04',
     timezone: 'auto',
     tagline: false,
+    prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2666',
   },
   {
     key: 'kawaii',
@@ -29,6 +30,16 @@ const entries: Noodle[] = [
     dateTo: '2026-04-07',
     timezone: 'auto',
     tagline: false,
+  },
+  {
+    key: 'artemis',
+    title: 'Artemis',
+    slug: 'artemis',
+    date: '2026-04-08',
+    dateTo: '2026-04-12',
+    timezone: 'America/Los_Angeles',
+    tagline: true,
+    prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2421',
   },
 ]
 

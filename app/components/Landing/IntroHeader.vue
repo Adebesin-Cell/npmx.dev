@@ -24,25 +24,7 @@ onPrehydrate(el => {
     return
   }
 
-  const activate = (noodle: Noodle) => {
-    const noodleLogo = el.querySelector<HTMLElement>(`#intro-header-noodle-${noodle.key}`)
-    if (!noodleLogo) return
-    defaultLogo.style.display = 'none'
-    noodleLogo.style.display = 'block'
-    if (noodle.tagline === false) {
-      tagline.style.display = 'none'
-    }
-  }
-
-  // Query param activates any noodle, regardless of date.
-  const params = new URLSearchParams(window.location.search)
-  const triggered = noodles.find(noodle => params.has(noodle.key))
-  if (triggered) {
-    activate(triggered)
-    return
-  }
-
-  // Otherwise, activate any noodle currently in its date window.
+  // A noodle is active iff today falls inside its date window.
   const currentNoodles = noodles.filter(noodle => {
     const todayDate = new Date()
     const todayDateRaw = new Intl.DateTimeFormat('en-US', {
@@ -70,7 +52,16 @@ onPrehydrate(el => {
 
   const roll = Math.floor(Math.random() * currentNoodles.length)
   const selectedNoodle = currentNoodles[roll]
-  if (selectedNoodle) activate(selectedNoodle)
+  if (!selectedNoodle) return
+
+  const noodleLogo = el.querySelector<HTMLElement>(`#intro-header-noodle-${selectedNoodle.key}`)
+  if (!noodleLogo) return
+
+  defaultLogo.style.display = 'none'
+  noodleLogo.style.display = 'block'
+  if (selectedNoodle.tagline === false) {
+    tagline.style.display = 'none'
+  }
 })
 </script>
 
