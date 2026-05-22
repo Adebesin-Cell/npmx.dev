@@ -28,6 +28,13 @@ const entries: Noodle[] = [
     occasion: 'World Press Freedom Day, 3 May.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2666',
     authors: [ALEX, ALFON],
+    // DUMMY — lets us preview the carousel. Replace with real iteration shots.
+    processImages: [
+      '/extra/npmx-light-press.png',
+      '/extra/npmx-dark-press.png',
+      '/extra/npmx-sticker.png',
+      '/extra/npmx-cute.svg',
+    ],
   },
   {
     key: 'kawaii',

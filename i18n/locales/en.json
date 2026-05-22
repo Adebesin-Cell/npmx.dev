@@ -241,6 +241,10 @@
     "shipped_in": "Shipped in",
     "credits": "Credits",
     "process": "Process",
+    "carousel_prev": "Previous image",
+    "carousel_next": "Next image",
+    "carousel_dots": "Process image navigation",
+    "carousel_jump": "Go to image {index}",
     "back_to_archive": "Back to all noodles",
     "missing": {
       "title": "This noodle never made it out of the bowl.",

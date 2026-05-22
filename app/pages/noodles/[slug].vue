@@ -137,25 +137,7 @@ if (import.meta.server && !noodle.value) {
           <h2 class="font-mono text-xl font-semibold uppercase text-fg leading-none mb-6">
             {{ $t('noodles.process') }}
           </h2>
-          <figure
-            v-for="(image, index) in noodle.processImages"
-            :key="image"
-            class="m-0 mb-8 sm:mb-12 last:mb-0"
-          >
-            <div
-              class="relative aspect-[16/10] overflow-hidden rounded-md border border-border bg-bg-elevated"
-            >
-              <img
-                :src="image"
-                :alt="`${noodle.title} — process ${index + 1}`"
-                loading="lazy"
-                class="absolute inset-0 w-full h-full object-cover"
-              />
-            </div>
-            <figcaption class="mt-3 font-mono text-xs text-fg-subtle uppercase tracking-widest">
-              {{ `Fig. ${String(index + 1).padStart(2, '0')}` }}
-            </figcaption>
-          </figure>
+          <NoodleCarousel :images="noodle.processImages" :alt="noodle.title" />
         </section>
       </template>
 
