@@ -3,7 +3,10 @@ type: noodle
 key: kawaii
 slug: kawaii
 title: Kawaii
-excerpt: A permanent noodle hidden behind the ?kawaii query parameter.
+excerpt: A noodle hidden behind the ?kawaii query parameter during its run.
+date: '2026-04-01'
+dateTo: '2026-04-07'
+timezone: auto
 tagline: false
 gallery: []
 authors:
@@ -13,6 +16,5 @@ draft: true
 
 ## About this noodle
 
-Kawaii is a permanent noodle — it's not tied to a date. You can summon it at
-any time by visiting [npmx.dev/?kawaii](/?kawaii). Replace this stub with the
-real story behind it.
+Replace this stub with the real story behind the noodle — what we were going
+for, what we tried, what we cut.

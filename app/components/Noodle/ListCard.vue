@@ -20,7 +20,7 @@ const logo = computed(() => resolveNoodleLogo(props.noodle.key))
       <span v-else class="i-lucide:sparkles w-12 h-12 text-fg-subtle" aria-hidden="true" />
     </div>
     <div class="absolute top-3 inset-ie-3 text-fg-subtle group-hover:text-fg transition-colors">
-      <span class="i-lucide:maximize-2 w-4 h-4" aria-hidden="true" />
+      <span class="i-lucide:arrow-up-right rtl-flip w-4 h-4" aria-hidden="true" />
     </div>
     <div
       class="border-t border-border px-4 py-3 flex items-center gap-2 text-xs text-fg-muted font-mono"
