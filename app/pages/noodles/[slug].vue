@@ -31,9 +31,8 @@ const hasMultipleSlides = computed(() => slideCount.value > 1)
 const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
 
 const lensScroller = useTemplateRef<HTMLElement>('lensScroller')
-// `activeSlide` is the canonical index (0..N-1). `rawIndex` tracks position in
-// the tripled slide list (0..3N-1) — used internally for the loop snap-back.
 const activeSlide = shallowRef(0)
+// Position in the 3× slide list — keeps the snap-back loop in sync with `activeSlide`.
 let rawIndex = 0
 
 function snapBackIfNeeded() {
@@ -66,8 +65,7 @@ function lensScrollTo(canonicalIndex: number) {
   if (!el) return
   const n = slideCount.value
   if (n === 0) return
-  // Pick the shortest-path target so navigation always feels like one step,
-  // even when wrapping across the loop seam.
+  // Shortest signed delta so wrapping across the loop seam still feels like one step.
   let delta = (((canonicalIndex - activeSlide.value) % n) + n) % n
   if (delta > n / 2) delta -= n
   const target = el.children[rawIndex + delta] as HTMLElement | undefined
@@ -107,8 +105,7 @@ function onLensKeydown(event: KeyboardEvent) {
   }
 }
 
-// Position scroll in the middle copy on mount so we can loop in both
-// directions without flashing through the wrap point on first interaction.
+// Start in the middle copy so both edges can be reached before a snap-back.
 onMounted(() => {
   if (!hasMultipleSlides.value) return
   const el = lensScroller.value
@@ -139,6 +136,27 @@ useSeoMeta({
   ogDescription: () => noodle.value?.occasion,
 })
 
+if (noodle.value?.posterImage) {
+  defineOgImage(
+    'Noodle.takumi',
+    {
+      title: noodle.value.title,
+      occasion: noodle.value.occasion ?? '',
+      poster: noodle.value.posterImage,
+    },
+    { alt: `${noodle.value.title} — npmx` },
+  )
+} else {
+  defineOgImage(
+    'Page.takumi',
+    {
+      title: () => noodle.value?.title ?? $t('noodles.missing.title'),
+      description: () => noodle.value?.occasion ?? $t('noodles.title'),
+    },
+    { alt: () => `${noodle.value?.title ?? $t('noodles.missing.title')} — npmx` },
+  )
+}
+
 onMounted(() => {
   if (!noodle.value) {
     const event = useRequestEvent()
@@ -154,7 +172,6 @@ if (import.meta.server && !noodle.value) {
 
 <template>
   <main class="w-full overflow-x-hidden">
-    <!-- HERO -->
     <section
       class="relative overflow-hidden border-b border-border-subtle py-10 sm:py-20 px-4 sm:px-6"
     >
@@ -164,16 +181,10 @@ if (import.meta.server && !noodle.value) {
       />
       <div class="relative max-w-3xl mx-auto flex flex-col items-center text-center">
         <div class="relative aspect-square w-60 sm:w-96 max-w-full">
-          <!-- The lens: bowl chrome with rounded clip. Slides scroll under it. -->
           <div
             class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
           >
-            <!--
-              Carousel only renders when the noodle has process images.
-              Slides are repeated 3× so native scroll-snap can loop seamlessly:
-              the user starts in the middle copy and we instantly snap back
-              after they cross either edge.
-            -->
+            <!-- 3× copies + snap-back is the loop trick. See onLensScroll/snapBackIfNeeded. -->
             <div
               v-if="hasProcessImages"
               ref="lensScroller"
@@ -233,19 +244,18 @@ if (import.meta.server && !noodle.value) {
             </div>
           </div>
 
-          <!-- Lens controls — only visible when there's more than one slide. -->
           <template v-if="hasMultipleSlides">
             <ButtonBase
               type="button"
               classicon="i-lucide:chevron-left"
-              class="rtl-flip absolute top-1/2 -translate-y-1/2 -inset-is-3 sm:-inset-is-6 backdrop-blur z-10"
+              class="hidden sm:inline-flex rtl-flip absolute top-1/2 -translate-y-1/2 -inset-is-16 lg:-inset-is-24 text-3xl !p-3 z-10"
               :aria-label="$t('noodles.carousel_prev')"
               @click="lensPrev"
             />
             <ButtonBase
               type="button"
               classicon="i-lucide:chevron-right"
-              class="rtl-flip absolute top-1/2 -translate-y-1/2 -inset-ie-3 sm:-inset-ie-6 backdrop-blur z-10"
+              class="hidden sm:inline-flex rtl-flip absolute top-1/2 -translate-y-1/2 -inset-ie-16 lg:-inset-ie-24 text-3xl !p-3 z-10"
               :aria-label="$t('noodles.carousel_next')"
               @click="lensNext"
             />
@@ -275,7 +285,6 @@ if (import.meta.server && !noodle.value) {
       </div>
     </section>
 
-    <!-- BODY -->
     <article class="container max-w-3xl mx-auto pb-16 sm:pb-24 pt-10 sm:pt-16">
       <template v-if="noodle">
         <header class="mb-10 sm:mb-14">
@@ -337,7 +346,6 @@ if (import.meta.server && !noodle.value) {
         </section>
       </template>
 
-      <!-- 404 -->
       <template v-else>
         <header class="text-center">
           <p class="font-mono text-xs tracking-widest uppercase text-fg-subtle mb-3">

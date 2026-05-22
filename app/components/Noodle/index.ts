@@ -14,13 +14,7 @@ export type Noodle = {
   tagline?: boolean
 }
 
-/**
- * Logo component for each noodle, keyed by the entry's `key` in app/noodles.ts.
- * To add a new noodle:
- *   1. Drop a logo in app/components/Noodle/<Name>/Logo.vue
- *   2. Register it here under the same key
- *   3. Add an entry to app/noodles.ts
- */
+// Keyed by the entry's `key` in app/noodles.ts.
 const NOODLE_LOGOS: Record<string, Component> = {
   'press': NoodlePressLogo,
   'kawaii': NoodleKawaiiLogo,

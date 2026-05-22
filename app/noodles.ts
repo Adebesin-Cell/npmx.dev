@@ -1,18 +1,8 @@
 import type { Noodle } from '#shared/schemas/noodle'
 
-/**
- * The noodle archive — every seasonal/event logo we've shown on the homepage.
- *
- * To add a new noodle:
- *   1. Drop a logo component in app/components/Noodle/<Name>/Logo.vue
- *   2. Register it in app/components/Noodle/index.ts under the same `key`
- *   3. Add an entry below — `key`, `title`, `slug`, `date`, and an `occasion`
- *      one-liner are enough. Everything else is optional and the detail
- *      page only renders sections for the fields you fill in.
- *
- * All noodles are historical: a noodle runs automatically on the homepage
- * during its date range.
- */
+// To add a noodle: drop a Logo.vue under app/components/Noodle/<Name>/,
+// register the key in app/components/Noodle/index.ts, then append an entry below.
+
 const ALEX = { name: 'Alex Savelyev', blueskyHandle: 'alexdln.com' }
 const ALFON = { name: 'Alfon', blueskyHandle: 'alfon.dev' }
 
@@ -28,6 +18,7 @@ const entries: Noodle[] = [
     occasion: 'World Press Freedom Day, 3 May.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2666',
     authors: [ALEX, ALFON],
+    posterImage: '/extra/npmx-dark-press.png',
     // DUMMY — lets us preview the carousel. Replace with real iteration shots.
     processImages: [
       '/extra/npmx-light-press.png',
@@ -46,6 +37,7 @@ const entries: Noodle[] = [
     occasion: "April Fools' — the original soft, cute pink/peach take on the npmx logo.",
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2346',
     authors: [ALEX, ALFON],
+    posterImage: '/extra/npmx-cute.svg',
   },
   {
     key: 'kawaii-pride',
@@ -58,6 +50,7 @@ const entries: Noodle[] = [
       'Same-day revision of the kawaii noodle — re-coloured to the trans pride flag stripes.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2349',
     authors: [ALEX, ALFON],
+    posterImage: '/extra/npmx-cute-transgender.svg',
   },
   {
     key: 'artemis',
@@ -70,10 +63,10 @@ const entries: Noodle[] = [
     occasion: "NASA's Artemis Moon program — a quiet salute during the mission window.",
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2421',
     authors: [ALEX],
+    posterImage: '/extra/npmx-dark-artemis.svg',
   },
 ]
 
-/** Latest first. */
 export const noodles: Noodle[] = [...entries].sort(
   (a, b) => Date.parse(b.date) - Date.parse(a.date),
 )

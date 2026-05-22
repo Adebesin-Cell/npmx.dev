@@ -14,6 +14,15 @@ useSeoMeta({
   twitterDescription: () => $t('noodles.meta_description'),
 })
 
+defineOgImage(
+  'Page.takumi',
+  {
+    title: () => $t('noodles.title'),
+    description: () => $t('noodles.meta_description'),
+  },
+  { alt: () => `${$t('noodles.title')} — npmx` },
+)
+
 const colorMode = useColorMode()
 const moonSrc = computed(() =>
   colorMode.value === 'light' ? '/extra/moon-light.png' : '/extra/moon-dark.png',

@@ -41,9 +41,7 @@ async function fetchBlueskyAvatars(
           signal: AbortSignal.timeout(AVATAR_FETCH_TIMEOUT_MS),
         })
         if (!res.ok || !res.body) continue
-        // Avatars are tiny — buffer the whole body so writeFile gets a
-        // type it definitely accepts (avoids Web/Node ReadableStream
-        // typing mismatches across runtimes).
+        // Avatars are tiny; buffering sidesteps the Web/Node ReadableStream type mismatch.
         await writeFile(dest, Buffer.from(await res.arrayBuffer()))
       }
       avatarMap.set(profile.handle, `/noodle-avatar/${hash}.png`)
