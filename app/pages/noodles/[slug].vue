@@ -48,7 +48,7 @@ if (import.meta.server && !noodle.value) {
           class="relative aspect-square w-72 sm:w-96 max-w-full flex items-center justify-center"
         >
           <div
-            class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[14px] border-border [box-shadow:inset_0_0_40px_rgb(0_0_0/0.08),0_20px_40px_-12px_rgb(0_0_0/0.15)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
+            class="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center bg-bg-subtle border-[14px] border-border [box-shadow:inset_0_0_40px_rgb(0_0_0/0.08),0_20px_40px_-12px_rgb(0_0_0/0.15)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
             aria-hidden="true"
           >
             <component :is="logo" v-if="logo" class="max-w-[70%] max-h-[70%]" />

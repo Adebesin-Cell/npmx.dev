@@ -2,6 +2,7 @@ import type { Component } from 'vue'
 import { noodles } from '~/noodles'
 import NoodleArtemisLogo from './Artemis/Logo.vue'
 import NoodleKawaiiLogo from './Kawaii/Logo.vue'
+import NoodleKawaiiPrideLogo from './KawaiiPride/Logo.vue'
 import NoodlePressLogo from './Press/Logo.vue'
 
 export type Noodle = {
@@ -21,9 +22,10 @@ export type Noodle = {
  *   3. Add an entry to app/noodles.ts
  */
 const NOODLE_LOGOS: Record<string, Component> = {
-  press: NoodlePressLogo,
-  kawaii: NoodleKawaiiLogo,
-  artemis: NoodleArtemisLogo,
+  'press': NoodlePressLogo,
+  'kawaii': NoodleKawaiiLogo,
+  'kawaii-pride': NoodleKawaiiPrideLogo,
+  'artemis': NoodleArtemisLogo,
 }
 
 export function resolveNoodleLogo(key: string): Component | undefined {
