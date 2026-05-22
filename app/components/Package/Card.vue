@@ -93,18 +93,18 @@ const numberFormatter = useNumberFormatter()
             v{{ result.package.version }}
           </dd>
         </div>
+        <div v-if="result.package.date" class="flex items-center gap-1.5">
+          <dt class="sr-only">{{ $t('package.card.published') }}</dt>
+          <dd>
+            <DateTime :datetime="result.package.date" year="numeric" month="short" day="numeric" />
+          </dd>
+        </div>
         <div
           v-if="showPublisher && result.package.publisher?.username"
           class="flex items-center gap-1.5"
         >
           <dt class="sr-only">{{ $t('package.card.publisher') }}</dt>
           <dd class="font-mono">{{ result.package.publisher.username }}</dd>
-        </div>
-        <div v-if="result.package.date" class="flex items-center gap-1.5">
-          <dt class="sr-only">{{ $t('package.card.published') }}</dt>
-          <dd>
-            <DateTime :datetime="result.package.date" year="numeric" month="short" day="numeric" />
-          </dd>
         </div>
         <div v-if="result.package.license" class="flex items-center gap-1.5">
           <dt class="sr-only">{{ $t('package.card.license') }}</dt>
