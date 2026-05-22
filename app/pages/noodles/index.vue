@@ -67,7 +67,7 @@ function loadMore() {
       </div>
     </section>
 
-    <article class="max-w-5xl mx-auto pb-16 sm:pb-24">
+    <article class="max-w-5xl mx-auto pb-16 sm:pb-24 px-4 sm:px-6">
       <header class="mb-6">
         <h2 class="font-mono text-lg sm:text-xl font-semibold uppercase text-fg leading-none">
           {{ $t('noodles.latest') }}

@@ -44,7 +44,7 @@ if (import.meta.server && !noodle.value) {
 </script>
 
 <template>
-  <main class="w-full overflow-x-hidden px-4 sm:px-6">
+  <main class="w-full overflow-x-hidden">
     <!-- HERO: the bowl, same look as /noodles landing -->
     <section
       class="relative overflow-hidden border-b border-border-subtle py-10 sm:py-20 px-4 sm:px-6"
@@ -90,7 +90,7 @@ if (import.meta.server && !noodle.value) {
           </p>
 
           <dl
-            class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
+            class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
           >
             <div>
               <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
@@ -104,14 +104,6 @@ if (import.meta.server && !noodle.value) {
                 </template>
               </dd>
             </div>
-            <div v-if="enrichedAuthors.length">
-              <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
-                {{ $t('noodles.credits') }}
-              </dt>
-              <dd>
-                <AuthorList :authors="enrichedAuthors" variant="compact" />
-              </dd>
-            </div>
             <div v-if="noodle.prUrl">
               <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
                 {{ $t('noodles.shipped_in') }}
@@ -120,6 +112,17 @@ if (import.meta.server && !noodle.value) {
                 <LinkBase :to="noodle.prUrl" no-new-tab-icon class="text-fg-muted">
                   {{ noodle.prUrl.split('/').pop() ? `#${noodle.prUrl.split('/').pop()}` : 'PR' }}
                 </LinkBase>
+              </dd>
+            </div>
+            <div
+              v-if="enrichedAuthors.length"
+              class="sm:col-span-2 pt-4 sm:pt-2 border-t border-border-subtle sm:border-t-0"
+            >
+              <dt class="text-fg-subtle uppercase tracking-widest mb-2">
+                {{ $t('noodles.credits') }}
+              </dt>
+              <dd>
+                <AuthorList :authors="enrichedAuthors" variant="expanded" />
               </dd>
             </div>
           </dl>
