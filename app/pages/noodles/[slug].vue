@@ -173,202 +173,13 @@ if (import.meta.server && !noodle.value) {
 
 <template>
   <main class="w-full overflow-x-hidden">
-    <section
-      class="relative overflow-hidden border-b border-border-subtle py-10 sm:py-20 px-4 sm:px-6"
-    >
+    <section class="relative pt-6 pb-10 sm:pt-8 sm:pb-16 lg:pb-20 px-4 sm:px-6">
       <div
         class="absolute inset-0 [background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.04)_0_22px,transparent_22px_80px)] dark:[background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.35)_0_22px,transparent_22px_80px)]"
         aria-hidden="true"
       />
-      <div class="relative max-w-3xl mx-auto flex flex-col items-center text-center">
-        <div class="relative aspect-square w-60 sm:w-96 max-w-full">
-          <div
-            class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
-          >
-            <!-- 3× copies + snap-back is the loop trick. See onLensScroll/snapBackIfNeeded. -->
-            <div
-              v-if="hasProcessImages"
-              ref="lensScroller"
-              tabindex="0"
-              role="region"
-              aria-roledescription="carousel"
-              class="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
-              :aria-label="$t('noodles.lens_label', { title: noodle?.title ?? '' })"
-              @scroll.passive="onLensScroll"
-              @scrollend.passive="snapBackIfNeeded"
-              @keydown="onLensKeydown"
-            >
-              <template v-for="copy in 3" :key="`copy-${copy}`">
-                <div
-                  v-for="(slide, index) in lensSlides"
-                  :key="`${copy}-${index}`"
-                  class="shrink-0 w-full h-full snap-start flex items-center justify-center p-6 sm:p-10"
-                  :role="copy === 2 ? 'group' : undefined"
-                  :aria-roledescription="copy === 2 ? 'slide' : undefined"
-                  :aria-label="
-                    copy === 2
-                      ? $t('noodles.lens_slide_position', {
-                          index: index + 1,
-                          total: slideCount,
-                        })
-                      : undefined
-                  "
-                  :aria-hidden="copy !== 2 ? 'true' : undefined"
-                >
-                  <component
-                    v-if="slide.kind === 'logo'"
-                    :is="slide.logo"
-                    class="max-w-[80%] max-h-[80%]"
-                  />
-                  <img
-                    v-else
-                    :src="slide.src"
-                    :alt="
-                      copy === 2 && noodle?.title
-                        ? `${noodle.title} — ${$t('noodles.lens_slide', { index })}`
-                        : ''
-                    "
-                    loading="lazy"
-                    class="max-w-[85%] max-h-[85%] object-contain"
-                  />
-                </div>
-              </template>
-            </div>
-            <div v-else class="absolute inset-0 flex items-center justify-center p-6 sm:p-10">
-              <component :is="logo" v-if="logo" class="max-w-[80%] max-h-[80%]" />
-              <span
-                v-else
-                class="font-mono text-6xl sm:text-8xl text-fg-subtle select-none"
-                aria-hidden="true"
-                >?</span
-              >
-            </div>
-          </div>
 
-          <template v-if="hasMultipleSlides">
-            <ButtonBase
-              type="button"
-              classicon="i-lucide:chevron-left"
-              class="hidden sm:inline-flex rtl-flip absolute top-1/2 -translate-y-1/2 -inset-is-16 lg:-inset-is-24 text-3xl !p-3 z-10"
-              :aria-label="$t('noodles.carousel_prev')"
-              @click="lensPrev"
-            />
-            <ButtonBase
-              type="button"
-              classicon="i-lucide:chevron-right"
-              class="hidden sm:inline-flex rtl-flip absolute top-1/2 -translate-y-1/2 -inset-ie-16 lg:-inset-ie-24 text-3xl !p-3 z-10"
-              :aria-label="$t('noodles.carousel_next')"
-              @click="lensNext"
-            />
-          </template>
-        </div>
-
-        <ol
-          v-if="hasMultipleSlides"
-          class="flex justify-center gap-2 mt-6 list-none p-0 m-0"
-          :aria-label="$t('noodles.carousel_dots')"
-        >
-          <li v-for="(_, index) in lensSlides" :key="index">
-            <button
-              type="button"
-              class="block w-2 h-2 rounded-full transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-              :class="index === activeSlide ? 'bg-fg' : 'bg-fg-subtle/40 hover:bg-fg-subtle'"
-              :aria-label="$t('noodles.carousel_jump', { index: index + 1 })"
-              :aria-current="index === activeSlide ? 'true' : undefined"
-              @click="lensScrollTo(index)"
-            />
-          </li>
-        </ol>
-
-        <div v-if="hasMultipleSlides" class="sr-only" aria-live="polite" aria-atomic="true">
-          {{ $t('noodles.lens_slide_position', { index: activeSlide + 1, total: slideCount }) }}
-        </div>
-      </div>
-    </section>
-
-    <article class="container max-w-3xl mx-auto pb-16 sm:pb-24 pt-10 sm:pt-16">
-      <template v-if="noodle">
-        <header class="mb-10 sm:mb-14">
-          <h1
-            class="font-mono text-3xl sm:text-5xl font-medium tracking-tight mb-3 sm:mb-4 break-words"
-          >
-            {{ noodle.title }}
-          </h1>
-          <p
-            v-if="noodle.occasion"
-            class="text-fg-muted text-base sm:text-xl leading-relaxed mb-6 sm:mb-8"
-          >
-            {{ noodle.occasion }}
-          </p>
-
-          <dl
-            class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
-          >
-            <div>
-              <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
-                {{ $t('noodles.dates') }}
-              </dt>
-              <dd class="text-fg-muted">
-                <DateTime :datetime="noodle.date" year="numeric" month="short" day="numeric" />
-                <template v-if="noodle.dateTo">
-                  <span class="text-fg-subtle mx-1">—</span>
-                  <DateTime :datetime="noodle.dateTo" year="numeric" month="short" day="numeric" />
-                </template>
-              </dd>
-            </div>
-            <div v-if="noodle.prUrl">
-              <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
-                {{ $t('noodles.shipped_in') }}
-              </dt>
-              <dd>
-                <LinkBase :to="noodle.prUrl" no-new-tab-icon class="text-fg-muted">
-                  {{ noodle.prUrl.split('/').pop() ? `#${noodle.prUrl.split('/').pop()}` : 'PR' }}
-                </LinkBase>
-              </dd>
-            </div>
-            <div
-              v-if="enrichedAuthors.length"
-              class="sm:col-span-2 pt-4 sm:pt-2 border-t border-border-subtle sm:border-t-0"
-            >
-              <dt class="text-fg-subtle uppercase tracking-widest mb-2">
-                {{ $t('noodles.credits') }}
-              </dt>
-              <dd>
-                <AuthorList :authors="enrichedAuthors" variant="expanded" />
-              </dd>
-            </div>
-          </dl>
-        </header>
-
-        <section v-if="noodle.description" class="mb-12 sm:mb-16">
-          <p class="text-fg-muted text-base sm:text-lg leading-relaxed whitespace-pre-line">
-            {{ noodle.description }}
-          </p>
-        </section>
-      </template>
-
-      <template v-else>
-        <header class="text-center">
-          <p class="font-mono text-xs tracking-widest uppercase text-fg-subtle mb-3">
-            404 — empty bowl
-          </p>
-          <h1 class="font-mono text-3xl sm:text-4xl font-medium tracking-tight mb-4">
-            {{ $t('noodles.missing.title') }}
-          </h1>
-          <p class="text-fg-muted text-base sm:text-lg leading-relaxed max-w-prose mx-auto mb-8">
-            {{ $t('noodles.missing.body', { slug: slug }) }}
-          </p>
-          <NuxtLink
-            to="/noodles"
-            class="inline-flex items-center gap-2 text-sm font-mono text-fg-muted hover:text-fg transition-colors"
-          >
-            <span class="i-lucide:arrow-left rtl-flip w-4 h-4" aria-hidden="true" />
-            {{ $t('noodles.back_to_archive') }}
-          </NuxtLink>
-        </header>
-      </template>
-
-      <footer v-if="noodle" class="mt-12 pt-8 border-t border-border-subtle">
+      <nav class="relative max-w-6xl mx-auto mb-10 sm:mb-14 lg:mb-16">
         <NuxtLink
           to="/noodles"
           class="inline-flex items-center gap-2 text-sm font-mono text-fg-muted hover:text-fg transition-colors"
@@ -376,7 +187,192 @@ if (import.meta.server && !noodle.value) {
           <span class="i-lucide:arrow-left rtl-flip w-4 h-4" aria-hidden="true" />
           {{ $t('noodles.back_to_archive') }}
         </NuxtLink>
-      </footer>
-    </article>
+      </nav>
+
+      <div
+        class="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-y-10 gap-x-16 lg:gap-x-24 items-start"
+      >
+        <!-- LENS COLUMN -->
+        <div class="lg:sticky lg:top-24 flex flex-col items-center justify-self-center">
+          <div class="relative aspect-square w-60 sm:w-80 lg:w-96 max-w-full">
+            <div
+              class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
+            >
+              <!-- 3× copies + snap-back is the loop trick. See onLensScroll/snapBackIfNeeded. -->
+              <div
+                v-if="hasProcessImages"
+                ref="lensScroller"
+                tabindex="0"
+                role="region"
+                aria-roledescription="carousel"
+                class="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+                :aria-label="$t('noodles.lens_label', { title: noodle?.title ?? '' })"
+                @scroll.passive="onLensScroll"
+                @scrollend.passive="snapBackIfNeeded"
+                @keydown="onLensKeydown"
+              >
+                <template v-for="copy in 3" :key="`copy-${copy}`">
+                  <div
+                    v-for="(slide, index) in lensSlides"
+                    :key="`${copy}-${index}`"
+                    class="shrink-0 w-full h-full snap-start flex items-center justify-center p-6 sm:p-10"
+                    :role="copy === 2 ? 'group' : undefined"
+                    :aria-roledescription="copy === 2 ? 'slide' : undefined"
+                    :aria-label="
+                      copy === 2
+                        ? $t('noodles.lens_slide_position', {
+                            index: index + 1,
+                            total: slideCount,
+                          })
+                        : undefined
+                    "
+                    :aria-hidden="copy !== 2 ? 'true' : undefined"
+                  >
+                    <component
+                      v-if="slide.kind === 'logo'"
+                      :is="slide.logo"
+                      class="max-w-[80%] max-h-[80%]"
+                    />
+                    <img
+                      v-else
+                      :src="slide.src"
+                      :alt="
+                        copy === 2 && noodle?.title
+                          ? `${noodle.title} — ${$t('noodles.lens_slide', { index })}`
+                          : ''
+                      "
+                      loading="lazy"
+                      class="max-w-[85%] max-h-[85%] object-contain"
+                    />
+                  </div>
+                </template>
+              </div>
+              <div v-else class="absolute inset-0 flex items-center justify-center p-6 sm:p-10">
+                <component :is="logo" v-if="logo" class="max-w-[80%] max-h-[80%]" />
+                <span
+                  v-else
+                  class="font-mono text-6xl sm:text-8xl text-fg-subtle select-none"
+                  aria-hidden="true"
+                  >?</span
+                >
+              </div>
+            </div>
+
+            <template v-if="hasMultipleSlides">
+              <ButtonBase
+                type="button"
+                classicon="i-lucide:chevron-left"
+                class="hidden sm:inline-flex rtl-flip absolute top-1/2 -translate-y-1/2 -inset-is-16 lg:-inset-is-20 text-3xl !p-3 z-10"
+                :aria-label="$t('noodles.carousel_prev')"
+                @click="lensPrev"
+              />
+              <ButtonBase
+                type="button"
+                classicon="i-lucide:chevron-right"
+                class="hidden sm:inline-flex rtl-flip absolute top-1/2 -translate-y-1/2 -inset-ie-16 lg:-inset-ie-20 text-3xl !p-3 z-10"
+                :aria-label="$t('noodles.carousel_next')"
+                @click="lensNext"
+              />
+            </template>
+          </div>
+
+          <ol
+            v-if="hasMultipleSlides"
+            class="flex justify-center gap-2 mt-6 list-none p-0 m-0"
+            :aria-label="$t('noodles.carousel_dots')"
+          >
+            <li v-for="(_, index) in lensSlides" :key="index">
+              <button
+                type="button"
+                class="block w-2 h-2 rounded-full transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                :class="index === activeSlide ? 'bg-fg' : 'bg-fg-subtle/40 hover:bg-fg-subtle'"
+                :aria-label="$t('noodles.carousel_jump', { index: index + 1 })"
+                :aria-current="index === activeSlide ? 'true' : undefined"
+                @click="lensScrollTo(index)"
+              />
+            </li>
+          </ol>
+
+          <div v-if="hasMultipleSlides" class="sr-only" aria-live="polite" aria-atomic="true">
+            {{ $t('noodles.lens_slide_position', { index: activeSlide + 1, total: slideCount }) }}
+          </div>
+        </div>
+
+        <!-- CONTENT CARD -->
+        <article
+          class="rounded-2xl bg-bg-elevated/40 border border-border-subtle p-6 sm:p-10 backdrop-blur-sm"
+        >
+          <template v-if="noodle">
+            <h1
+              class="font-mono text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-3 sm:mb-4 break-words"
+            >
+              {{ noodle.title }}
+            </h1>
+            <p v-if="noodle.occasion" class="text-fg-muted text-base sm:text-lg leading-relaxed">
+              {{ noodle.occasion }}
+            </p>
+
+            <p
+              v-if="noodle.description"
+              class="text-fg-muted text-base leading-relaxed whitespace-pre-line mt-6 sm:mt-8"
+            >
+              {{ noodle.description }}
+            </p>
+
+            <hr class="border-0 border-t border-border-subtle my-8 sm:my-10" />
+
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6 text-xs font-mono m-0">
+              <div>
+                <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
+                  {{ $t('noodles.dates') }}
+                </dt>
+                <dd class="text-fg-muted">
+                  <DateTime :datetime="noodle.date" year="numeric" month="short" day="numeric" />
+                  <template v-if="noodle.dateTo">
+                    <span class="text-fg-subtle mx-1">—</span>
+                    <DateTime
+                      :datetime="noodle.dateTo"
+                      year="numeric"
+                      month="short"
+                      day="numeric"
+                    />
+                  </template>
+                </dd>
+              </div>
+              <div v-if="noodle.prUrl">
+                <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
+                  {{ $t('noodles.shipped_in') }}
+                </dt>
+                <dd>
+                  <LinkBase :to="noodle.prUrl" no-new-tab-icon class="text-fg-muted">
+                    {{ noodle.prUrl.split('/').pop() ? `#${noodle.prUrl.split('/').pop()}` : 'PR' }}
+                  </LinkBase>
+                </dd>
+              </div>
+              <div v-if="enrichedAuthors.length" class="sm:col-span-2">
+                <dt class="text-fg-subtle uppercase tracking-widest mb-3">
+                  {{ $t('noodles.credits') }}
+                </dt>
+                <dd>
+                  <AuthorList :authors="enrichedAuthors" variant="expanded" />
+                </dd>
+              </div>
+            </dl>
+          </template>
+
+          <template v-else>
+            <p class="font-mono text-xs tracking-widest uppercase text-fg-subtle mb-3">
+              404 — empty bowl
+            </p>
+            <h1 class="font-mono text-3xl sm:text-4xl font-medium tracking-tight mb-4">
+              {{ $t('noodles.missing.title') }}
+            </h1>
+            <p class="text-fg-muted text-base sm:text-lg leading-relaxed">
+              {{ $t('noodles.missing.body', { slug: slug }) }}
+            </p>
+          </template>
+        </article>
+      </div>
+    </section>
   </main>
 </template>
