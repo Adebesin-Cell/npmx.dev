@@ -2875,7 +2875,6 @@ describe('component accessibility audits', () => {
             title: 'Press',
             date: '2026-05-01',
             dateTo: '2026-05-04',
-            permanent: false,
           },
         },
       })

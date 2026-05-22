@@ -6,12 +6,12 @@ import type { Noodle } from '#shared/schemas/noodle'
  * To add a new noodle:
  *   1. Drop a logo component in app/components/Noodle/<Name>/Logo.vue
  *   2. Register it in app/components/Noodle/index.ts under the same `key`
- *   3. Add an entry below
+ *   3. Add an entry below — `key`, `title`, `slug`, `date` are enough.
  *
- * Keep it minimal — `key`, `title`, and `slug` are enough. Add dates if the
- * noodle ran on a schedule, or `prUrl` to point readers at the shipping PR.
+ * All noodles are historical: a noodle runs automatically on the homepage
+ * during its date range, and can also be triggered any time via `?<key>`.
  */
-const entries: Array<Omit<Noodle, 'permanent'>> = [
+const entries: Noodle[] = [
   {
     key: 'press',
     title: 'Press',
@@ -32,14 +32,7 @@ const entries: Array<Omit<Noodle, 'permanent'>> = [
   },
 ]
 
-function withPermanent(entry: (typeof entries)[number]): Noodle {
-  return Object.assign(entry, { permanent: !entry.date })
-}
-
-/** Latest first; permanent noodles (no `date`) sort to the bottom. */
-export const noodles: Noodle[] = entries.map(withPermanent).sort((a, b) => {
-  if (a.permanent && !b.permanent) return 1
-  if (!a.permanent && b.permanent) return -1
-  if (a.permanent && b.permanent) return a.title.localeCompare(b.title)
-  return Date.parse(b.date!) - Date.parse(a.date!)
-})
+/** Latest first. */
+export const noodles: Noodle[] = [...entries].sort(
+  (a, b) => Date.parse(b.date) - Date.parse(a.date),
+)
