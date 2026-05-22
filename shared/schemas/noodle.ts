@@ -1,5 +1,13 @@
 import { array, object, optional, string, boolean, type InferOutput } from 'valibot'
 
+/** Minimal author record — name + optional Bluesky handle. */
+export const NoodleAuthorSchema = object({
+  name: string(),
+  blueskyHandle: optional(string()),
+})
+
+export type NoodleAuthor = InferOutput<typeof NoodleAuthorSchema>
+
 /**
  * Noodle entry — a seasonal/event logo we ran on the homepage.
  *
@@ -34,6 +42,8 @@ export const NoodleSchema = object({
   processImages: optional(array(string())),
   /** Optional link to the PR / context where the noodle shipped. */
   prUrl: optional(string()),
+  /** Designers / engineers who shipped the noodle. */
+  authors: optional(array(NoodleAuthorSchema)),
 })
 
 export type Noodle = InferOutput<typeof NoodleSchema>

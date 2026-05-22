@@ -13,6 +13,9 @@ import type { Noodle } from '#shared/schemas/noodle'
  * All noodles are historical: a noodle runs automatically on the homepage
  * during its date range.
  */
+const ALEX = { name: 'Alex Savelyev', blueskyHandle: 'alexdln.com' }
+const ALFON = { name: 'Alfon', blueskyHandle: 'alfon.dev' }
+
 const entries: Noodle[] = [
   {
     key: 'press',
@@ -24,6 +27,7 @@ const entries: Noodle[] = [
     tagline: false,
     occasion: 'World Press Freedom Day, 3 May.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2666',
+    authors: [ALEX, ALFON],
   },
   {
     key: 'kawaii',
@@ -34,6 +38,7 @@ const entries: Noodle[] = [
     tagline: false,
     occasion: "April Fools' — the original soft, cute pink/peach take on the npmx logo.",
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2346',
+    authors: [ALEX, ALFON],
   },
   {
     key: 'kawaii-pride',
@@ -45,6 +50,7 @@ const entries: Noodle[] = [
     occasion:
       'Same-day revision of the kawaii noodle — re-coloured to the trans pride flag stripes.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2349',
+    authors: [ALEX, ALFON],
   },
   {
     key: 'artemis',
@@ -56,6 +62,7 @@ const entries: Noodle[] = [
     tagline: true,
     occasion: "NASA's Artemis Moon program — a quiet salute during the mission window.",
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2421',
+    authors: [ALEX],
   },
 ]
 

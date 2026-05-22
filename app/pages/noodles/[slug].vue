@@ -37,7 +37,7 @@ if (import.meta.server && !noodle.value) {
   <main class="w-full overflow-x-hidden">
     <!-- HERO: the bowl, same look as /noodles landing -->
     <section
-      class="relative overflow-hidden border-b border-border-subtle py-12 sm:py-20 px-4 sm:px-6"
+      class="relative overflow-hidden border-b border-border-subtle py-10 sm:py-20 px-4 sm:px-6"
     >
       <div
         class="absolute inset-0 [background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.04)_0_22px,transparent_22px_80px)] dark:[background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.35)_0_22px,transparent_22px_80px)]"
@@ -45,10 +45,10 @@ if (import.meta.server && !noodle.value) {
       />
       <div class="relative max-w-3xl mx-auto flex flex-col items-center text-center">
         <div
-          class="relative aspect-square w-72 sm:w-96 max-w-full flex items-center justify-center"
+          class="relative aspect-square w-60 sm:w-96 max-w-full flex items-center justify-center"
         >
           <div
-            class="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center bg-bg-subtle border-[14px] border-border [box-shadow:inset_0_0_40px_rgb(0_0_0/0.08),0_20px_40px_-12px_rgb(0_0_0/0.15)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
+            class="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_40px_rgb(0_0_0/0.08),0_20px_40px_-12px_rgb(0_0_0/0.15)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
             aria-hidden="true"
           >
             <component :is="logo" v-if="logo" class="max-w-[70%] max-h-[70%]" />
@@ -64,18 +64,23 @@ if (import.meta.server && !noodle.value) {
     </section>
 
     <!-- BODY -->
-    <article class="container max-w-3xl mx-auto pb-16 sm:pb-24 pt-12 sm:pt-16">
+    <article class="container max-w-3xl mx-auto pb-16 sm:pb-24 pt-10 sm:pt-16">
       <template v-if="noodle">
         <header class="mb-10 sm:mb-14">
-          <h1 class="font-mono text-4xl sm:text-5xl font-medium tracking-tight mb-4">
+          <h1
+            class="font-mono text-3xl sm:text-5xl font-medium tracking-tight mb-3 sm:mb-4 break-words"
+          >
             {{ noodle.title }}
           </h1>
-          <p v-if="noodle.occasion" class="text-fg-muted text-lg sm:text-xl leading-relaxed mb-8">
+          <p
+            v-if="noodle.occasion"
+            class="text-fg-muted text-base sm:text-xl leading-relaxed mb-6 sm:mb-8"
+          >
             {{ noodle.occasion }}
           </p>
 
           <dl
-            class="grid grid-cols-2 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
+            class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
           >
             <div>
               <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
@@ -87,6 +92,30 @@ if (import.meta.server && !noodle.value) {
                   <span class="text-fg-subtle mx-1">—</span>
                   <DateTime :datetime="noodle.dateTo" year="numeric" month="short" day="numeric" />
                 </template>
+              </dd>
+            </div>
+            <div v-if="noodle.authors?.length">
+              <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
+                {{ $t('noodles.credits') }}
+              </dt>
+              <dd class="text-fg-muted">
+                <ul class="list-none p-0 m-0 flex flex-wrap gap-x-3 gap-y-1">
+                  <li
+                    v-for="author in noodle.authors"
+                    :key="author.name"
+                    class="flex items-baseline gap-1"
+                  >
+                    <span>{{ author.name }}</span>
+                    <LinkBase
+                      v-if="author.blueskyHandle"
+                      :to="`https://bsky.app/profile/${author.blueskyHandle}`"
+                      no-new-tab-icon
+                      class="text-fg-subtle hover:text-fg"
+                    >
+                      @{{ author.blueskyHandle }}
+                    </LinkBase>
+                  </li>
+                </ul>
               </dd>
             </div>
             <div v-if="noodle.prUrl">

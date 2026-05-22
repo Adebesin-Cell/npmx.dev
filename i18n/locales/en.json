@@ -234,10 +234,12 @@
     "meta_description": "Every noodle we've ever shown on npmx — the seasonal logos, easter eggs, and the stories behind them.",
     "latest": "Latest noodles",
     "what_is": "What is noodles",
-    "what_is_body": "Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages. Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages. Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages. Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages.Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages.",
+    "what_is_body": "Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages.",
     "empty": "No noodles yet.",
+    "load_more": "Load {count} more",
     "dates": "Active dates",
     "shipped_in": "Shipped in",
+    "credits": "Credits",
     "process": "Process",
     "back_to_archive": "Back to all noodles",
     "missing": {
