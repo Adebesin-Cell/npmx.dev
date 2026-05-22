@@ -724,9 +724,6 @@
         "credits": {
           "type": "string"
         },
-        "process": {
-          "type": "string"
-        },
         "carousel_prev": {
           "type": "string"
         },
