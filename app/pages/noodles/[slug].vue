@@ -172,8 +172,8 @@ if (import.meta.server && !noodle.value) {
 </script>
 
 <template>
-  <main class="w-full overflow-x-hidden">
-    <section class="relative pt-6 pb-10 sm:pt-8 sm:pb-16 lg:pb-20 px-4 sm:px-6">
+  <main class="w-full flex-1 flex flex-col overflow-x-hidden">
+    <section class="relative flex-1 pt-6 pb-10 sm:pt-8 sm:pb-16 lg:pb-20 px-4 sm:px-6">
       <div
         class="absolute inset-0 [background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.04)_0_22px,transparent_22px_80px)] dark:[background-image:repeating-linear-gradient(115deg,rgb(0_0_0/0.35)_0_22px,transparent_22px_80px)]"
         aria-hidden="true"
@@ -190,10 +190,10 @@ if (import.meta.server && !noodle.value) {
       </nav>
 
       <div
-        class="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-y-10 gap-x-16 lg:gap-x-24 items-start"
+        class="relative max-w-6xl mx-auto grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-y-10 gap-x-16 xl:gap-x-24 items-start"
       >
         <!-- LENS COLUMN -->
-        <div class="lg:sticky lg:top-24 flex flex-col items-center justify-self-center">
+        <div class="xl:sticky xl:top-24 flex flex-col items-center justify-self-center">
           <div class="relative aspect-square w-60 sm:w-80 lg:w-96 max-w-full">
             <div
               class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
