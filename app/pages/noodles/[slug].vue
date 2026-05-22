@@ -172,7 +172,7 @@ if (import.meta.server && !noodle.value) {
 </script>
 
 <template>
-  <main class="w-full flex-1 flex flex-col overflow-x-hidden">
+  <main class="w-full flex-1 flex flex-col">
     <section
       class="relative flex-1 flex flex-col pt-6 pb-10 sm:pt-8 sm:pb-16 lg:pb-20 px-4 sm:px-6"
     >
