@@ -16,6 +16,8 @@ const entries: Noodle[] = [
     timezone: 'auto',
     tagline: false,
     occasion: 'World Press Freedom Day, 3 May.',
+    description:
+      'We wanted something that felt like the npmx logo had been clipped out of a newspaper — a quiet salute to journalists keeping the record honest. The wordmark sits over a halftone scan of front pages, taped down with a strip of gaffer, like a press kit pinned to a board.\n\nWe went through a few rounds: an early version leaned too cute, another felt too editorial. The shipped take landed on a single restrained composition — high contrast, just enough texture, no extra ornament — so it reads at logo size in the header without competing with the search bar.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2666',
     authors: [ALEX, ALFON],
     posterImage: '/extra/npmx-dark-press.png',

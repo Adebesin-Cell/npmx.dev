@@ -192,10 +192,10 @@ if (import.meta.server && !noodle.value) {
       </nav>
 
       <div
-        class="relative flex-1 max-w-6xl w-full mx-auto grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-y-10 gap-x-16 xl:gap-x-24 items-start xl:items-center content-center"
+        class="relative max-w-6xl w-full mx-auto grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-y-10 gap-x-16 xl:gap-x-24 items-start"
       >
         <!-- LENS COLUMN -->
-        <div class="xl:sticky xl:top-24 flex flex-col items-center justify-self-center">
+        <div class="xl:sticky xl:top-24 flex flex-col items-center justify-self-center self-start">
           <div class="relative aspect-square w-60 sm:w-80 lg:w-96 max-w-full">
             <div
               class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
