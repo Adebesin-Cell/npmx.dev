@@ -143,6 +143,7 @@ if (noodle.value?.posterImage) {
       title: noodle.value.title,
       occasion: noodle.value.occasion ?? '',
       poster: noodle.value.posterImage,
+      backdrop: noodle.value.posterBackdrop ?? '',
     },
     { alt: `${noodle.value.title} — npmx` },
   )

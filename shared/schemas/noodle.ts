@@ -25,6 +25,8 @@ export const NoodleSchema = object({
   authors: optional(array(NoodleAuthorSchema)),
   // Public path to the OG-image hero asset.
   posterImage: optional(string()),
+  // Optional image rendered behind `posterImage` (e.g. a backdrop the wordmark sits on).
+  posterBackdrop: optional(string()),
 })
 
 export type Noodle = InferOutput<typeof NoodleSchema>

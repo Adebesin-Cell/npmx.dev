@@ -3,6 +3,7 @@ defineProps<{
   title: string
   occasion?: string
   poster?: string
+  backdrop?: string
 }>()
 
 // Aspect-locked dimensions for the inline npmx wordmark (height × 602/170).
@@ -38,13 +39,32 @@ const BRAND_WIDTH = 142
 
       <div
         v-if="poster"
-        class="shrink-0 flex items-center justify-center"
+        class="shrink-0 relative flex items-center justify-center overflow-hidden"
         :style="{ width: '360px', height: '360px' }"
       >
         <img
+          v-if="backdrop"
+          :src="backdrop"
+          alt=""
+          :style="{
+            position: 'absolute',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            width: '100%',
+            height: 'auto',
+            objectFit: 'cover',
+          }"
+        />
+        <img
           :src="poster"
           alt=""
-          :style="{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }"
+          :style="{
+            position: 'relative',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+          }"
         />
       </div>
     </div>

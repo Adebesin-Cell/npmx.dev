@@ -63,7 +63,7 @@ const entries: Noodle[] = [
     occasion: "NASA's Artemis Moon program — a quiet salute during the mission window.",
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2421',
     authors: [ALEX],
-    posterImage: '/extra/moon-dark.png',
+    posterImage: '/extra/npmx-dark-artemis.svg',
   },
 ]
 
