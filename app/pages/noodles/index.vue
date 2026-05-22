@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { noodles } from '#noodles/entries'
+import { noodles } from '~/noodles'
 
 definePageMeta({
   name: 'noodles',
@@ -75,15 +75,6 @@ const moonSrc = computed(() =>
       <p v-else class="text-fg-subtle text-center py-20">
         {{ $t('noodles.empty') }}
       </p>
-
-      <section class="mt-16 sm:mt-20">
-        <h2 class="font-mono text-xl font-semibold uppercase text-fg leading-none mb-4">
-          {{ $t('noodles.what_is') }}
-        </h2>
-        <div class="text-fg-muted text-base leading-relaxed space-y-4">
-          <p>{{ $t('noodles.what_is_body') }}</p>
-        </div>
-      </section>
     </article>
   </main>
 </template>

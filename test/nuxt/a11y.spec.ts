@@ -157,12 +157,8 @@ import {
   BuildEnvironment,
   ButtonBase,
   LandingIntroHeader,
-  NoodleBuildLog,
-  NoodleFigures,
   NoodleKawaiiLogo,
-  NoodleLightbox,
   NoodleListCard,
-  NoodlePostWrapper,
   NoodlePressLogo,
   LinkBase,
   CallToAction,
@@ -2869,90 +2865,19 @@ describe('component accessibility audits', () => {
     })
   })
 
-  describe('NoodleFigures', () => {
-    it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodleFigures, {
-        props: {
-          images: ['/noodles/press/1.png', '/noodles/press/2.png'],
-          alt: 'Press noodle',
-        },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-  })
-
-  describe('NoodleBuildLog', () => {
-    it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodleBuildLog, {
-        props: {
-          items: [
-            { src: '/noodles/press/1.png', version: 'v0.1', caption: 'first sketch' },
-            { src: '/noodles/press/2.png', version: 'v1.0', caption: 'shipped', shipped: true },
-          ],
-          alt: 'Press noodle',
-        },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-  })
-
-  describe('NoodleLightbox', () => {
-    it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodleLightbox, {
-        props: {
-          images: ['/noodles/press/1.png'],
-          open: false,
-          alt: 'Press noodle',
-        },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-  })
-
   describe('NoodleListCard', () => {
     it('should have no accessibility violations', async () => {
       const component = await mountSuspended(NoodleListCard, {
         props: {
           noodle: {
-            type: 'noodle',
             key: 'press',
             slug: 'press',
-            path: '/noodles/press',
             title: 'Press',
-            excerpt: 'A nod to the launch press cycle.',
-            authors: [],
-            gallery: [],
             date: '2026-05-01',
             dateTo: '2026-05-04',
             permanent: false,
           },
         },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-  })
-
-  describe('NoodlePostWrapper', () => {
-    it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodlePostWrapper, {
-        props: {
-          frontmatter: {
-            type: 'noodle',
-            key: 'press',
-            slug: 'press',
-            title: 'Press',
-            excerpt: 'A nod to the launch press cycle.',
-            date: '2026-05-01',
-            dateTo: '2026-05-04',
-            authors: [],
-            gallery: [],
-          },
-        },
-        slots: { default: '<p>Noodle story content.</p>' },
       })
       const results = await runAxe(component)
       expect(results.violations).toEqual([])

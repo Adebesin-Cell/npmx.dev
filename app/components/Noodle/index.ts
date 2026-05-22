@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import { noodles } from '#noodles/entries'
+import { noodles } from '~/noodles'
 import NoodleKawaiiLogo from './Kawaii/Logo.vue'
 import NoodlePressLogo from './Press/Logo.vue'
 
@@ -13,10 +13,11 @@ export type Noodle = {
 }
 
 /**
- * Logo component for each noodle, keyed by the `key` field in the matching
- * .md file under app/pages/noodles. To add a new noodle:
- *   1. Drop a .md file in app/pages/noodles (frontmatter drives dates + copy)
- *   2. Add the logo here under the same key
+ * Logo component for each noodle, keyed by the entry's `key` in app/noodles.ts.
+ * To add a new noodle:
+ *   1. Drop a logo in app/components/Noodle/<Name>/Logo.vue
+ *   2. Register it here under the same key
+ *   3. Add an entry to app/noodles.ts
  */
 const NOODLE_LOGOS: Record<string, Component> = {
   press: NoodlePressLogo,

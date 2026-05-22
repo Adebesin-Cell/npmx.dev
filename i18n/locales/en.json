@@ -235,21 +235,7 @@
     "latest": "Latest noodles",
     "what_is": "What is noodles",
     "what_is_body": "Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages. Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages. Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages. Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages.Noodles are the playful variants of the npmx logo we run on the homepage to mark releases, holidays, events, and other moments worth celebrating. Think of them like Google Doodles, but for npm packages.",
-    "empty": "No noodles yet.",
-    "permanent_badge": "always available",
-    "dates": "Active dates",
-    "status": "Status",
-    "status_draft": "Draft",
-    "status_shipped": "Shipped",
-    "figures": "Figures",
-    "draft_banner": "This noodle write-up is still a draft.",
-    "back_to_index": "Back to all noodles",
-    "lightbox": {
-      "label": "Noodle gallery preview",
-      "close": "Close preview",
-      "prev": "Previous image",
-      "next": "Next image"
-    }
+    "empty": "No noodles yet."
   },
   "settings": {
     "title": "settings",

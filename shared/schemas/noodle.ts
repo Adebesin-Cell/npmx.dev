@@ -1,15 +1,16 @@
-import { array, boolean, literal, object, optional, string, type InferOutput } from 'valibot'
-import { AuthorSchema, ResolvedAuthorSchema } from './blog'
+import { boolean, object, optional, string, type InferOutput } from 'valibot'
 
-/** Raw frontmatter as authored in a noodle .md file. */
-export const RawNoodlePostSchema = object({
-  type: literal('noodle'),
+/**
+ * Noodle entry — a seasonal/event logo we ran on the homepage.
+ *
+ * Noodles are authored as plain TypeScript entries in app/noodles.ts.
+ * Keep the shape minimal so each noodle is easy to add — only `key`,
+ * `title`, and `slug` are required.
+ */
+export const NoodleSchema = object({
   key: string(),
   title: string(),
   slug: string(),
-  excerpt: optional(string()),
-  authors: optional(array(AuthorSchema)),
-  gallery: optional(array(string())),
   /** ISO date (YYYY-MM-DD). Absence = permanent noodle (query-param triggered). */
   date: optional(string()),
   /** ISO date (YYYY-MM-DD). Last day the noodle is active (inclusive). */
@@ -18,28 +19,16 @@ export const RawNoodlePostSchema = object({
   timezone: optional(string()),
   /** Whether the npmx tagline is hidden while this noodle is active. */
   tagline: optional(boolean()),
-  draft: optional(boolean()),
-  path: optional(string()),
-})
-
-/** Frontmatter after build-time enrichment (authors resolved, defaults applied). */
-export const NoodlePostSchema = object({
-  type: literal('noodle'),
-  key: string(),
-  title: string(),
-  slug: string(),
-  path: string(),
-  excerpt: optional(string()),
-  authors: array(ResolvedAuthorSchema),
-  gallery: array(string()),
-  date: optional(string()),
-  dateTo: optional(string()),
-  timezone: optional(string()),
-  tagline: optional(boolean()),
-  draft: optional(boolean()),
+  /** Optional link to the PR / context where the noodle shipped. */
+  prUrl: optional(string()),
   /** Derived: true when no `date` is set (visible via query param only). */
   permanent: boolean(),
 })
 
-export type RawNoodlePostFrontmatter = InferOutput<typeof RawNoodlePostSchema>
-export type NoodlePostFrontmatter = InferOutput<typeof NoodlePostSchema>
+export type Noodle = InferOutput<typeof NoodleSchema>
+
+/**
+ * @deprecated — kept as an alias during the transition away from .md-authored
+ * noodles. Use `Noodle` going forward.
+ */
+export type NoodlePostFrontmatter = Noodle
