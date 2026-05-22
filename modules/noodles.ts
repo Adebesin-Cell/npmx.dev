@@ -1,9 +1,13 @@
 import { join } from 'node:path'
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { Readable } from 'node:stream'
 import crypto from 'node:crypto'
 import { addTemplate, defineNuxtModule, useNuxt, createResolver } from 'nuxt/kit'
 import { BLUESKY_API } from '../shared/utils/constants'
+
+const PROFILE_FETCH_TIMEOUT_MS = 10_000
+const AVATAR_FETCH_TIMEOUT_MS = 15_000
 
 async function fetchBlueskyAvatars(
   imagesDir: string,
@@ -18,6 +22,7 @@ async function fetchBlueskyAvatars(
 
     const response = await fetch(
       `${BLUESKY_API}/xrpc/app.bsky.actor.getProfiles?${params.toString()}`,
+      { signal: AbortSignal.timeout(PROFILE_FETCH_TIMEOUT_MS) },
     )
     if (!response.ok) {
       console.warn(`[noodles] Failed to fetch Bluesky profiles: ${response.status}`)
@@ -32,9 +37,12 @@ async function fetchBlueskyAvatars(
       const hash = crypto.createHash('sha256').update(profile.avatar).digest('hex')
       const dest = join(imagesDir, `${hash}.png`)
       if (!existsSync(dest)) {
-        const res = await fetch(`${profile.avatar}@png`)
+        const res = await fetch(`${profile.avatar}@png`, {
+          signal: AbortSignal.timeout(AVATAR_FETCH_TIMEOUT_MS),
+        })
         if (!res.ok || !res.body) continue
-        await writeFile(dest, res.body)
+        // Web ReadableStream → Node Readable so writeFile streams it safely.
+        await writeFile(dest, Readable.fromWeb(res.body))
       }
       avatarMap.set(profile.handle, `/noodle-avatar/${hash}.png`)
     }
