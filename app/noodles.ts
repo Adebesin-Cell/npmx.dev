@@ -6,10 +6,12 @@ import type { Noodle } from '#shared/schemas/noodle'
  * To add a new noodle:
  *   1. Drop a logo component in app/components/Noodle/<Name>/Logo.vue
  *   2. Register it in app/components/Noodle/index.ts under the same `key`
- *   3. Add an entry below — `key`, `title`, `slug`, `date` are enough.
+ *   3. Add an entry below — `key`, `title`, `slug`, `date`, and an `occasion`
+ *      one-liner are enough. Everything else is optional and the detail
+ *      page only renders sections for the fields you fill in.
  *
  * All noodles are historical: a noodle runs automatically on the homepage
- * during its date range, and can also be triggered any time via `?<key>`.
+ * during its date range.
  */
 const entries: Noodle[] = [
   {
@@ -20,6 +22,7 @@ const entries: Noodle[] = [
     dateTo: '2026-05-04',
     timezone: 'auto',
     tagline: false,
+    occasion: 'World Press Freedom Day, 3 May.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2666',
   },
   {
@@ -30,6 +33,9 @@ const entries: Noodle[] = [
     dateTo: '2026-04-07',
     timezone: 'auto',
     tagline: false,
+    occasion:
+      "April Fools' — a soft, cute variant of the npmx logo (with a trans-flag colourway revision shipped a week later).",
+    prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2346',
   },
   {
     key: 'artemis',
@@ -39,6 +45,7 @@ const entries: Noodle[] = [
     dateTo: '2026-04-12',
     timezone: 'America/Los_Angeles',
     tagline: true,
+    occasion: "NASA's Artemis Moon program — a quiet salute during the mission window.",
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2421',
   },
 ]
@@ -47,3 +54,7 @@ const entries: Noodle[] = [
 export const noodles: Noodle[] = [...entries].sort(
   (a, b) => Date.parse(b.date) - Date.parse(a.date),
 )
+
+export function findNoodle(slug: string): Noodle | undefined {
+  return noodles.find(n => n.slug === slug)
+}

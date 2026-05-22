@@ -1,13 +1,15 @@
-import { object, optional, string, boolean, type InferOutput } from 'valibot'
+import { array, object, optional, string, boolean, type InferOutput } from 'valibot'
 
 /**
  * Noodle entry — a seasonal/event logo we ran on the homepage.
  *
  * Noodles are authored as plain TypeScript entries in app/noodles.ts.
- * Keep the shape minimal so each noodle is easy to add — only `key`,
- * `title`, `slug`, and `date` are required. All noodles are historical
- * (date-anchored); a noodle is "active" on the homepage during its date
- * range, or any time it's triggered via the matching `?<key>` query param.
+ * The "required" set is intentionally tiny so adding a noodle is easy:
+ *   - key / title / slug / date
+ *   - a one-line `occasion` (the day or context — e.g. "World Press Freedom Day")
+ *
+ * Everything else is optional and the detail page only renders sections
+ * for the fields that are actually filled in.
  */
 export const NoodleSchema = object({
   key: string(),
@@ -21,6 +23,15 @@ export const NoodleSchema = object({
   timezone: optional(string()),
   /** Whether the npmx tagline is hidden while this noodle is active. */
   tagline: optional(boolean()),
+  /** Short one-liner — the day/event the noodle marked. */
+  occasion: optional(string()),
+  /** Longer write-up. Renders as a paragraph on the detail page when present. */
+  description: optional(string()),
+  /**
+   * Optional process / draft images. Each is a path under public/.
+   * Rendered as a stacked figure list when present.
+   */
+  processImages: optional(array(string())),
   /** Optional link to the PR / context where the noodle shipped. */
   prUrl: optional(string()),
 })
