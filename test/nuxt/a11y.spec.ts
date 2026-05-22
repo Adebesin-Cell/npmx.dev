@@ -157,7 +157,9 @@ import {
   BuildEnvironment,
   ButtonBase,
   LandingIntroHeader,
+  NoodleArtemisLogo,
   NoodleKawaiiLogo,
+  NoodleKawaiiPrideLogo,
   NoodleListCard,
   NoodlePressLogo,
   LinkBase,
@@ -375,7 +377,19 @@ describe('component accessibility audits', () => {
     })
 
     it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(NoodleKawaiiPrideLogo)
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+
+    it('should have no accessibility violations', async () => {
       const component = await mountSuspended(NoodlePressLogo)
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+
+    it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(NoodleArtemisLogo)
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })

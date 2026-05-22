@@ -1,12 +1,9 @@
 import { array, object, optional, string, boolean, type InferOutput } from 'valibot'
 
-/** Minimal author record — name + optional Bluesky handle. */
-export const NoodleAuthorSchema = object({
+const NoodleAuthorSchema = object({
   name: string(),
   blueskyHandle: optional(string()),
 })
-
-export type NoodleAuthor = InferOutput<typeof NoodleAuthorSchema>
 
 /**
  * Noodle entry — a seasonal/event logo we ran on the homepage.
