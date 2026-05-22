@@ -1,7 +1,7 @@
 import { join } from 'node:path'
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { Readable } from 'node:stream'
+import { Buffer } from 'node:buffer'
 import crypto from 'node:crypto'
 import { addTemplate, defineNuxtModule, useNuxt, createResolver } from 'nuxt/kit'
 import { BLUESKY_API } from '../shared/utils/constants'
@@ -41,8 +41,10 @@ async function fetchBlueskyAvatars(
           signal: AbortSignal.timeout(AVATAR_FETCH_TIMEOUT_MS),
         })
         if (!res.ok || !res.body) continue
-        // Web ReadableStream → Node Readable so writeFile streams it safely.
-        await writeFile(dest, Readable.fromWeb(res.body))
+        // Avatars are tiny — buffer the whole body so writeFile gets a
+        // type it definitely accepts (avoids Web/Node ReadableStream
+        // typing mismatches across runtimes).
+        await writeFile(dest, Buffer.from(await res.arrayBuffer()))
       }
       avatarMap.set(profile.handle, `/noodle-avatar/${hash}.png`)
     }
