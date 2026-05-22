@@ -31,7 +31,7 @@ function loadMore() {
 </script>
 
 <template>
-  <main class="w-full flex-1 overflow-x-hidden">
+  <main class="w-full flex-1 overflow-x-hidden px-4 sm:px-6">
     <section
       class="relative overflow-hidden border-b border-border-subtle py-10 sm:py-20 -mx-4 sm:-mx-6 px-4 sm:px-6 mb-10 sm:mb-16"
     >

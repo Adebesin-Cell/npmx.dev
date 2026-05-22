@@ -8,6 +8,16 @@ const slug = computed(() => String(route.params.slug ?? ''))
 const noodle = computed(() => findNoodle(slug.value))
 const logo = computed(() => (noodle.value ? resolveNoodleLogo(noodle.value.key) : undefined))
 
+/** Map noodle authors to the shape AuthorList expects. */
+const enrichedAuthors = computed(() =>
+  (noodle.value?.authors ?? []).map(a => ({
+    name: a.name,
+    blueskyHandle: a.blueskyHandle as never,
+    avatar: null,
+    profileUrl: a.blueskyHandle ? `https://bsky.app/profile/${a.blueskyHandle}` : null,
+  })),
+)
+
 useSeoMeta({
   title: () =>
     noodle.value
@@ -34,7 +44,7 @@ if (import.meta.server && !noodle.value) {
 </script>
 
 <template>
-  <main class="w-full overflow-x-hidden">
+  <main class="w-full overflow-x-hidden px-4 sm:px-6">
     <!-- HERO: the bowl, same look as /noodles landing -->
     <section
       class="relative overflow-hidden border-b border-border-subtle py-10 sm:py-20 px-4 sm:px-6"
@@ -67,6 +77,13 @@ if (import.meta.server && !noodle.value) {
     <article class="container max-w-3xl mx-auto pb-16 sm:pb-24 pt-10 sm:pt-16">
       <template v-if="noodle">
         <header class="mb-10 sm:mb-14">
+          <AuthorList
+            v-if="enrichedAuthors.length"
+            :authors="enrichedAuthors"
+            variant="expanded"
+            class="mb-6 sm:mb-8"
+          />
+
           <h1
             class="font-mono text-3xl sm:text-5xl font-medium tracking-tight mb-3 sm:mb-4 break-words"
           >
@@ -80,7 +97,7 @@ if (import.meta.server && !noodle.value) {
           </p>
 
           <dl
-            class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
+            class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 pt-6 border-t border-border-subtle text-xs font-mono m-0"
           >
             <div>
               <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
@@ -92,30 +109,6 @@ if (import.meta.server && !noodle.value) {
                   <span class="text-fg-subtle mx-1">—</span>
                   <DateTime :datetime="noodle.dateTo" year="numeric" month="short" day="numeric" />
                 </template>
-              </dd>
-            </div>
-            <div v-if="noodle.authors?.length">
-              <dt class="text-fg-subtle uppercase tracking-widest mb-1.5">
-                {{ $t('noodles.credits') }}
-              </dt>
-              <dd class="text-fg-muted">
-                <ul class="list-none p-0 m-0 flex flex-wrap gap-x-3 gap-y-1">
-                  <li
-                    v-for="author in noodle.authors"
-                    :key="author.name"
-                    class="flex items-baseline gap-1"
-                  >
-                    <span>{{ author.name }}</span>
-                    <LinkBase
-                      v-if="author.blueskyHandle"
-                      :to="`https://bsky.app/profile/${author.blueskyHandle}`"
-                      no-new-tab-icon
-                      class="text-fg-subtle hover:text-fg"
-                    >
-                      @{{ author.blueskyHandle }}
-                    </LinkBase>
-                  </li>
-                </ul>
               </dd>
             </div>
             <div v-if="noodle.prUrl">
