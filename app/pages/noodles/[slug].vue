@@ -83,6 +83,29 @@ function lensNext() {
   lensScrollTo((activeSlide.value + 1) % slideCount.value)
 }
 
+// Pagination dots: active dot always centered, neighbours fade out with distance.
+// Distance is measured the short way around the cycle so the strip reads as an infinite reel.
+const DOT_PITCH = 16
+const DOT_FADE_RADIUS = 4
+
+const dotStripStyle = computed(() => ({
+  transform: `translateX(calc(50% - ${activeSlide.value * DOT_PITCH + DOT_PITCH / 2}px))`,
+}))
+
+function dotOpacity(index: number) {
+  const n = slideCount.value
+  if (n === 0) return 0
+  const linear = Math.abs(index - activeSlide.value)
+  const distance = Math.min(linear, n - linear)
+  return Math.max(0, 1 - distance / DOT_FADE_RADIUS)
+}
+
+// Dots that are fully faded are taken out of pointer + AT reach so they
+// can't be clicked invisibly or trap focus.
+function isDotHidden(index: number) {
+  return dotOpacity(index) === 0
+}
+
 function onLensKeydown(event: KeyboardEvent) {
   if (!hasMultipleSlides.value) return
   switch (event.key) {
@@ -278,22 +301,31 @@ if (import.meta.server && !noodle.value) {
             </template>
           </div>
 
-          <ol
+          <div
             v-if="hasMultipleSlides"
-            class="flex justify-center gap-2 mt-6 list-none p-0 m-0"
+            class="relative mt-6 h-2 w-32 overflow-hidden"
             :aria-label="$t('noodles.carousel_dots')"
+            role="group"
           >
-            <li v-for="(_, index) in lensSlides" :key="index">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center gap-2 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out"
+              :style="dotStripStyle"
+            >
               <button
+                v-for="(_, index) in lensSlides"
+                :key="index"
                 type="button"
-                class="block w-2 h-2 rounded-full transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-                :class="index === activeSlide ? 'bg-fg' : 'bg-fg-subtle/40 hover:bg-fg-subtle'"
+                class="block w-2 h-2 shrink-0 rounded-full bg-fg cursor-pointer motion-safe:transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                :class="isDotHidden(index) ? 'pointer-events-none' : ''"
+                :style="{ opacity: dotOpacity(index) }"
+                :aria-hidden="isDotHidden(index) ? 'true' : undefined"
+                :tabindex="isDotHidden(index) ? -1 : 0"
                 :aria-label="$t('noodles.carousel_jump', { index: index + 1 })"
                 :aria-current="index === activeSlide ? 'true' : undefined"
                 @click="lensScrollTo(index)"
               />
-            </li>
-          </ol>
+            </div>
+          </div>
 
           <div v-if="hasMultipleSlides" class="sr-only" aria-live="polite" aria-atomic="true">
             {{ $t('noodles.lens_slide_position', { index: activeSlide + 1, total: slideCount }) }}
