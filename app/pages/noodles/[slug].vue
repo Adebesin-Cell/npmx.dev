@@ -308,7 +308,7 @@ if (import.meta.server && !noodle.value) {
             role="group"
           >
             <div
-              class="absolute inset-y-0 left-0 flex items-center gap-2 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out"
+              class="absolute inset-y-0 inset-is-0 flex items-center gap-2 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out"
               :style="dotStripStyle"
             >
               <button
