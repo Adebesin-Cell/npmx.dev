@@ -88,8 +88,10 @@ function lensNext() {
 const DOT_PITCH = 16
 const DOT_FADE_RADIUS = 4
 
+// margin-inline-start is logical, so the same formula centers the active dot
+// in both LTR and RTL — no direction detection needed.
 const dotStripStyle = computed(() => ({
-  transform: `translateX(calc(50% - ${activeSlide.value * DOT_PITCH + DOT_PITCH / 2}px))`,
+  marginInlineStart: `calc(50% - ${activeSlide.value * DOT_PITCH + DOT_PITCH / 2}px)`,
 }))
 
 function dotOpacity(index: number) {
@@ -303,12 +305,12 @@ if (import.meta.server && !noodle.value) {
 
           <div
             v-if="hasMultipleSlides"
-            class="relative mt-6 h-2 w-32 overflow-hidden"
+            class="mt-6 h-2 w-32 overflow-hidden flex items-center"
             :aria-label="$t('noodles.carousel_dots')"
             role="group"
           >
             <div
-              class="absolute inset-y-0 inset-is-0 flex items-center gap-2 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out"
+              class="flex items-center gap-2 shrink-0 motion-safe:transition-[margin] motion-safe:duration-300 motion-safe:ease-out"
               :style="dotStripStyle"
             >
               <button
