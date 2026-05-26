@@ -1,6 +1,21 @@
+<script setup lang="ts">
+defineProps<{
+  // Render the bare logo without the tooltip wrapper. Used on the /noodles
+  // archive + detail pages where the same content lives in the right panel.
+  noTooltip?: boolean
+}>()
+</script>
+
 <template>
-  <TooltipApp interactive :tooltipAttr="{ class: 'w-[calc(100%-2rem)]! max-w-sm!' }">
-    <template #content>
+  <component
+    :is="noTooltip ? 'div' : 'TooltipApp'"
+    v-bind="
+      noTooltip
+        ? {}
+        : { interactive: true, tooltipAttr: { class: 'w-[calc(100%-2rem)]! max-w-sm!' } }
+    "
+  >
+    <template v-if="!noTooltip" #content>
       <p class="text-sm font-medium text-fg mb-1">
         <span class="text-fg-subtle">
           // 27 May 2009 - nodejs Initial release
@@ -26,7 +41,7 @@
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       :alt="$t('alt_logo')"
-      class="mb-8 mx-auto w-72 h-auto sm:w-92 max-w-full"
+      class="mx-auto w-72 h-auto sm:w-92 max-w-full"
     >
       <path
         d="M269 198.684V86.2912L329 46.1509L389 86.2912V198.684L353 174.6V106.361L329 90.3053L305 106.361V174.6L269 198.684Z"
@@ -85,5 +100,5 @@
         stroke-linejoin="round"
       />
     </svg>
-  </TooltipApp>
+  </component>
 </template>

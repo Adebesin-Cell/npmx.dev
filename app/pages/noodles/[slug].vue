@@ -258,6 +258,7 @@ if (import.meta.server && !noodle.value) {
                     <component
                       v-if="slide.kind === 'logo'"
                       :is="slide.logo"
+                      no-tooltip
                       class="max-w-[80%] max-h-[80%]"
                     />
                     <img
@@ -275,7 +276,7 @@ if (import.meta.server && !noodle.value) {
                 </template>
               </div>
               <div v-else class="absolute inset-0 flex items-center justify-center p-6 sm:p-10">
-                <component :is="logo" v-if="logo" class="max-w-[80%] max-h-[80%]" />
+                <component :is="logo" v-if="logo" no-tooltip class="max-w-[80%] max-h-[80%]" />
                 <span
                   v-else
                   class="font-mono text-6xl sm:text-8xl text-fg-subtle select-none"
@@ -391,6 +392,20 @@ if (import.meta.server && !noodle.value) {
                 </dt>
                 <dd>
                   <AuthorList :authors="enrichedAuthors" variant="expanded" />
+                </dd>
+              </div>
+              <div v-if="noodle.references?.length" class="sm:col-span-2">
+                <dt class="text-fg-subtle uppercase tracking-widest mb-2">
+                  {{ $t('noodles.learn_more') }}
+                </dt>
+                <dd>
+                  <ul class="list-none p-0 m-0 flex flex-col gap-1.5">
+                    <li v-for="(ref, idx) in noodle.references" :key="idx">
+                      <LinkBase :to="ref.url" class="text-fg-muted">
+                        {{ ref.label ?? ref.url }}
+                      </LinkBase>
+                    </li>
+                  </ul>
                 </dd>
               </div>
             </dl>

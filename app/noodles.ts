@@ -5,6 +5,7 @@ import type { Noodle } from '#shared/schemas/noodle'
 
 const ALEX = { name: 'Alex Savelyev', blueskyHandle: 'alexdln.com' }
 const ALFON = { name: 'Alfon', blueskyHandle: 'alfon.dev' }
+const GRAPHIEROS = { name: 'Graphieros', blueskyHandle: 'graphieros.npmx.social' }
 
 const entries: Noodle[] = [
   {
@@ -20,6 +21,12 @@ const entries: Noodle[] = [
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2666',
     authors: [ALEX, ALFON],
     posterImage: '/extra/npmx-dark-press.png',
+    references: [
+      {
+        label: 'World Press Freedom Day',
+        url: 'https://en.wikipedia.org/wiki/World_Press_Freedom_Day',
+      },
+    ],
   },
   {
     key: 'kawaii',
@@ -30,7 +37,7 @@ const entries: Noodle[] = [
     tagline: false,
     occasion: "Our first noodle, and of course, in kawaii style. It's all about fun and joy.",
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2346',
-    authors: [ALEX, ALFON],
+    authors: [ALFON],
     posterImage: '/extra/npmx-cute.svg',
   },
   {
@@ -42,7 +49,7 @@ const entries: Noodle[] = [
     tagline: false,
     occasion: 'Today and always ./🏳️‍⚧️',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2349',
-    authors: [ALEX, ALFON],
+    authors: [ALFON],
     posterImage: '/extra/npmx-cute-transgender.svg',
   },
   {
@@ -56,7 +63,7 @@ const entries: Noodle[] = [
     occasion:
       'The first crewed flight beyond low Earth orbit since Apollo 17 in 1972. We watch and worry about them together with humanity.',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2421',
-    authors: [ALEX],
+    authors: [ALEX, ALFON],
     posterImage: '/extra/npmx-dark-artemis.svg',
   },
   {
@@ -67,7 +74,13 @@ const entries: Noodle[] = [
     timezone: 'auto',
     occasion: 'console.log("happy birthday, nodejs")',
     prUrl: 'https://github.com/npmx-dev/npmx.dev/pull/2778',
-    authors: [ALEX],
+    authors: [ALEX, ALFON, GRAPHIEROS],
+    references: [
+      {
+        label: 'Node.js v0.0.1 release',
+        url: 'https://github.com/nodejs/node-v0.x-archive/releases/tag/v0.0.1',
+      },
+    ],
   },
 ]
 

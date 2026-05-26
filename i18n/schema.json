@@ -724,6 +724,9 @@
         "credits": {
           "type": "string"
         },
+        "learn_more": {
+          "type": "string"
+        },
         "carousel_prev": {
           "type": "string"
         },
