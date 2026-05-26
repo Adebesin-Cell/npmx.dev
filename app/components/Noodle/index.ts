@@ -3,6 +3,7 @@ import { noodles } from '~/noodles'
 import NoodleArtemisLogo from './Artemis/Logo.vue'
 import NoodleKawaiiLogo from './Kawaii/Logo.vue'
 import NoodleKawaiiPrideLogo from './KawaiiPride/Logo.vue'
+import NoodleNodejsLogo from './Nodejs/Logo.vue'
 import NoodlePressLogo from './Press/Logo.vue'
 
 export type Noodle = {
@@ -20,6 +21,7 @@ const NOODLE_LOGOS: Record<string, Component> = {
   'kawaii': NoodleKawaiiLogo,
   'kawaii-pride': NoodleKawaiiPrideLogo,
   'artemis': NoodleArtemisLogo,
+  'nodejs': NoodleNodejsLogo,
 }
 
 export function resolveNoodleLogo(key: string): Component | undefined {

@@ -206,7 +206,7 @@ if (import.meta.server && !noodle.value) {
         aria-hidden="true"
       />
 
-      <nav class="relative max-w-6xl w-full mx-auto mb-10 sm:mb-14 lg:mb-16">
+      <nav class="relative max-w-6xl w-full mx-auto mb-10 sm:mb-14 lg:mb-16 flex justify-end">
         <NuxtLink
           to="/noodles"
           class="inline-flex items-center gap-2 text-sm font-mono text-fg-muted hover:text-fg transition-colors"

@@ -161,6 +161,7 @@ import {
   NoodleKawaiiLogo,
   NoodleKawaiiPrideLogo,
   NoodleListCard,
+  NoodleNodejsLogo,
   NoodlePressLogo,
   LinkBase,
   CallToAction,
@@ -384,6 +385,12 @@ describe('component accessibility audits', () => {
 
     it('should have no accessibility violations', async () => {
       const component = await mountSuspended(NoodlePressLogo)
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+
+    it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(NoodleNodejsLogo)
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })
