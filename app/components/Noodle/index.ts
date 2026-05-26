@@ -2,9 +2,9 @@ import type { Component } from 'vue'
 import { noodles } from '~/noodles'
 import NoodleArtemisLogo from './Artemis/Logo.vue'
 import NoodleKawaiiLogo from './Kawaii/Logo.vue'
-import NoodleKawaiiPrideLogo from './KawaiiPride/Logo.vue'
 import NoodleNodejsLogo from './Nodejs/Logo.vue'
 import NoodlePressLogo from './Press/Logo.vue'
+import NoodleTransgenderVisibilityLogo from './TransgenderVisibility/Logo.vue'
 
 export type Noodle = {
   key: string
@@ -19,7 +19,7 @@ export type Noodle = {
 const NOODLE_LOGOS: Record<string, Component> = {
   'press': NoodlePressLogo,
   'kawaii': NoodleKawaiiLogo,
-  'kawaii-pride': NoodleKawaiiPrideLogo,
+  'transgender-visibility-day': NoodleTransgenderVisibilityLogo,
   'artemis': NoodleArtemisLogo,
   'nodejs': NoodleNodejsLogo,
 }

@@ -34,7 +34,7 @@ const entries: Noodle[] = [
     posterImage: '/extra/npmx-cute.svg',
   },
   {
-    key: 'kawaii-pride',
+    key: 'transgender-visibility-day',
     title: 'Transgender Visibility Day',
     slug: 'transgender-visibility-day',
     date: '2026-03-31',

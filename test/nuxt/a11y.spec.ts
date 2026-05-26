@@ -159,7 +159,7 @@ import {
   LandingIntroHeader,
   NoodleArtemisLogo,
   NoodleKawaiiLogo,
-  NoodleKawaiiPrideLogo,
+  NoodleTransgenderVisibilityLogo,
   NoodleListCard,
   NoodleNodejsLogo,
   NoodlePressLogo,
@@ -378,7 +378,7 @@ describe('component accessibility audits', () => {
     })
 
     it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodleKawaiiPrideLogo)
+      const component = await mountSuspended(NoodleTransgenderVisibilityLogo)
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })
