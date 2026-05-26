@@ -42,6 +42,7 @@ defineProps<{
       xmlns="http://www.w3.org/2000/svg"
       :alt="$t('alt_logo')"
       class="mx-auto w-72 h-auto sm:w-92 max-w-full"
+      :class="{ 'mb-8': !noTooltip }"
     >
       <path
         d="M269 198.684V86.2912L329 46.1509L389 86.2912V198.684L353 174.6V106.361L329 90.3053L305 106.361V174.6L269 198.684Z"

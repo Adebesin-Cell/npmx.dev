@@ -66,12 +66,6 @@ function loadMore() {
           <h1 class="relative font-mono text-3xl sm:text-6xl font-medium z-10">
             {{ $t('noodles.title') }}
           </h1>
-          <img
-            src="/extra/npmx-sticker.png"
-            alt=""
-            aria-hidden="true"
-            class="absolute -top-2 sm:-top-6 -end-3 sm:-end-10 w-20 sm:w-40 rotate-12 pointer-events-none select-none z-20 drop-shadow-xl"
-          />
         </div>
       </div>
     </section>
