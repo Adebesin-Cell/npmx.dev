@@ -1,6 +1,5 @@
 // @unocss-include
 import type { CommandPaletteCommand, CommandPaletteView } from '~/types/command-palette'
-import { noodles } from '~/noodles'
 import {
   DISCORD_BUILDERS_URL,
   DISCORD_COMMUNITY_URL,
@@ -316,29 +315,14 @@ export function useCommandPaletteGlobalCommands() {
         group: 'npmx',
         label: t('noodles.title'),
         keywords: [t('noodles.latest'), t('noodles.what_is')],
-        iconClass: 'i-lucide:sparkles',
-        active: route.name === 'noodles',
-        activeLabel: activeLabel(route.name === 'noodles', t('command_palette.here')),
+        iconClass: 'i-lucide:soup',
+        active: route.name === 'noodles' || `${route.name ?? ''}`.startsWith('noodles-'),
+        activeLabel: activeLabel(
+          route.name === 'noodles' || `${route.name ?? ''}`.startsWith('noodles-'),
+          t('command_palette.here'),
+        ),
         to: { name: 'noodles' },
       },
-      ...noodles.map<CommandPaletteCommand>(noodle => {
-        const isHere =
-          route.name === 'noodles-slug' && route.params.slug?.toString() === noodle.slug
-        return {
-          id: `noodle:${noodle.key}`,
-          group: 'npmx',
-          label: `${t('noodles.title')}: ${noodle.title}`,
-          keywords: [
-            noodle.title,
-            t('noodles.title'),
-            ...(noodle.occasion ? [noodle.occasion] : []),
-          ],
-          iconClass: 'i-lucide:sparkles',
-          active: isHere,
-          activeLabel: activeLabel(isHere, t('command_palette.here')),
-          to: { name: 'noodles-slug', params: { slug: noodle.slug } },
-        }
-      }),
       {
         id: 'brand',
         group: 'npmx',
