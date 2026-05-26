@@ -36,7 +36,7 @@ const entries: Noodle[] = [
   {
     key: 'kawaii-pride',
     title: 'Transgender Visibility Day',
-    slug: 'kawaii-pride',
+    slug: 'transgender-visibility-day',
     date: '2026-03-31',
     timezone: 'auto',
     tagline: false,
