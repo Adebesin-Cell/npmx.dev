@@ -12,7 +12,7 @@ const NoodleReferenceSchema = object({
 
 // Required: key, title, slug, date. Everything else is optional and the
 // detail page only renders sections for fields that are filled in.
-export const NoodleSchema = object({
+const NoodleSchema = object({
   key: string(),
   title: string(),
   slug: string(),
