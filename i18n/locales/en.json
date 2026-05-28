@@ -243,7 +243,7 @@
     "learn_more": "Learn more",
     "carousel_prev": "Previous image",
     "carousel_next": "Next image",
-    "carousel_dots": "Process image navigation",
+    "carousel_dots": "Variant image navigation",
     "carousel_jump": "Go to image {index}",
     "lens_label": "{title} — image reel",
     "lens_slide": "image {index}",

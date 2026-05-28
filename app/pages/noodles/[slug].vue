@@ -13,13 +13,14 @@ const logo = computed(() => (noodle.value ? resolveNoodleLogo(noodle.value.key) 
 
 type LensSlide = { kind: 'logo'; logo: Component } | { kind: 'image'; src: string }
 
-const hasProcessImages = computed(() => (noodle.value?.processImages?.length ?? 0) > 0)
+const variants = computed(() => noodle.value?.variants ?? [])
+const hasVariants = computed(() => variants.value.length > 0)
 
 const lensSlides = computed<LensSlide[]>(() => {
-  if (!hasProcessImages.value) return []
+  if (!hasVariants.value) return []
   const slides: LensSlide[] = []
   if (logo.value) slides.push({ kind: 'logo', logo: logo.value })
-  for (const src of noodle.value?.processImages ?? []) {
+  for (const src of variants.value) {
     slides.push({ kind: 'image', src })
   }
   return slides
@@ -227,7 +228,7 @@ if (import.meta.server && !noodle.value) {
             >
               <!-- 3× copies + snap-back is the loop trick. See onLensScroll/snapBackIfNeeded. -->
               <div
-                v-if="hasProcessImages"
+                v-if="hasVariants"
                 ref="lensScroller"
                 tabindex="0"
                 role="region"

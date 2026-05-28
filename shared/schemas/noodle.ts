@@ -24,8 +24,8 @@ const NoodleSchema = object({
   tagline: optional(boolean()),
   occasion: optional(string()),
   description: optional(string()),
-  // Public paths to process / draft images, used by the lens carousel.
-  processImages: optional(array(string())),
+  // Public paths to variant images (draft / alternate takes), used by the lens carousel.
+  variants: optional(array(string())),
   prUrl: optional(string()),
   authors: optional(array(NoodleAuthorSchema)),
   // External links (Wikipedia, NASA mission page, etc.) shown in the detail right panel.
