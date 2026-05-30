@@ -1,5 +1,4 @@
 import type { Component } from 'vue'
-import { noodles } from '~/noodles'
 import NoodleArtemisLogo from './Artemis/Logo.vue'
 import NoodleKawaiiLogo from './Kawaii/Logo.vue'
 import NoodleNodejsLogo from './Nodejs/Logo.vue'
@@ -7,15 +6,42 @@ import NoodlePressLogo from './Press/Logo.vue'
 import NoodleTransgenderVisibilityLogo from './TransgenderVisibility/Logo.vue'
 
 export type Noodle = {
+  // Unique identifier for the noodle
   key: string
+  // Timezone for the noodle (default is auto, i.e. user's timezone)
   timezone?: string
-  date: string
-  dateTo?: string
+  // Date for the noodle (YYYY-MM-DD)
+  date?: `${number}-${number}-${number}`
+  // `Date to` for the noodle (YYYY-MM-DD)
+  dateTo?: `${number}-${number}-${number}`
+  // Logo for the noodle - could be any component. Relative parent - intro section
   logo: Component
+  // Show npmx tagline or not (default is true)
   tagline?: boolean
 }
 
-// Keyed by the entry's `key` in app/noodles.ts.
+// Permanent noodles - always shown on specific query param (e.g. ?kawaii)
+export const PERMANENT_NOODLES: Noodle[] = [
+  {
+    key: 'kawaii',
+    logo: NoodleKawaiiLogo,
+    tagline: false,
+  },
+]
+
+// Active noodles - shown based on date and timezone
+export const ACTIVE_NOODLES: Noodle[] = [
+  {
+    key: 'nodejs',
+    logo: NoodleNodejsLogo,
+    date: '2026-05-27',
+    timezone: 'auto',
+  },
+]
+
+// Logo registry for the /noodles archive, keyed by the entry's `key` in
+// app/noodles.ts. The homepage only renders PERMANENT_NOODLES + ACTIVE_NOODLES
+// above; the archive resolves any past noodle's logo through this map.
 const NOODLE_LOGOS: Record<string, Component> = {
   'press': NoodlePressLogo,
   'kawaii': NoodleKawaiiLogo,
@@ -27,20 +53,3 @@ const NOODLE_LOGOS: Record<string, Component> = {
 export function resolveNoodleLogo(key: string): Component | undefined {
   return NOODLE_LOGOS[key]
 }
-
-export const NOODLES: Noodle[] = noodles.map(entry => {
-  const logo = NOODLE_LOGOS[entry.key]
-  if (!logo) {
-    throw new Error(
-      `Missing logo registration for noodle key "${entry.key}". Add it to NOODLE_LOGOS in app/components/Noodle/index.ts.`,
-    )
-  }
-  return {
-    key: entry.key,
-    logo,
-    date: entry.date,
-    dateTo: entry.dateTo,
-    timezone: entry.timezone,
-    tagline: entry.tagline,
-  }
-})

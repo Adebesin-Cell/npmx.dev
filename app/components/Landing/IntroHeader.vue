@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { NOODLES, type Noodle } from '../Noodle'
+import { ACTIVE_NOODLES, PERMANENT_NOODLES, type Noodle } from '../Noodle'
 
 const { env } = useAppConfig().buildInfo
 
-const noodlesData = NOODLES.map(noodle => ({
+const activeNoodlesData = ACTIVE_NOODLES.map(noodle => ({
   key: noodle.key,
   date: noodle.date,
   dateTo: noodle.dateTo,
   timezone: noodle.timezone,
+  tagline: noodle.tagline,
+}))
+
+const permanentNoodlesData = PERMANENT_NOODLES.map(noodle => ({
+  key: noodle.key,
   tagline: noodle.tagline,
 }))
 
@@ -17,45 +22,62 @@ onPrehydrate(el => {
 
   if (!tagline || !defaultLogo) return
 
-  let noodles: Noodle[]
+  let permanentNoodles
   try {
-    noodles = JSON.parse(el.dataset.noodles as string) as Noodle[]
+    permanentNoodles = JSON.parse(el.dataset.permanentNoodles as string) as Noodle[]
+  } catch {
+    return
+  }
+  const activePermanentNoodle = permanentNoodles?.find(noodle =>
+    new URLSearchParams(window.location.search).has(noodle.key),
+  )
+
+  if (activePermanentNoodle) {
+    const permanentNoodleLogo = el.querySelector<HTMLElement>(
+      `#intro-header-noodle-${activePermanentNoodle.key}`,
+    )
+
+    if (!permanentNoodleLogo) return
+
+    permanentNoodleLogo.style.display = 'block'
+    defaultLogo.style.display = 'none'
+    if (activePermanentNoodle.tagline === false) {
+      tagline.style.display = 'none'
+    }
+    return
+  }
+
+  let activeNoodles
+  try {
+    activeNoodles = JSON.parse(el.dataset.activeNoodles as string) as Noodle[]
   } catch {
     return
   }
 
-  // A noodle is active iff today falls inside its date window.
-  const currentNoodles = noodles.filter(noodle => {
-    const todayDate = new Date()
-    const todayDateRaw = new Intl.DateTimeFormat('en-US', {
-      timeZone: noodle.timezone === 'auto' ? undefined : noodle.timezone,
+  const currentActiveNoodles = activeNoodles.filter(noodle => {
+    if (!noodle.date) return false
+
+    const today = new Intl.DateTimeFormat('en-CA', {
+      timeZone: noodle.timezone !== 'auto' ? noodle.timezone : undefined,
+      year: 'numeric',
       month: '2-digit',
       day: '2-digit',
-      year: 'numeric',
-    }).format(todayDate)
+    }).format(new Date())
 
-    const noodleDateFrom = new Date(noodle.date)
-    if (!noodle.dateTo) {
-      const noodleDateFromRaw = new Intl.DateTimeFormat('en-US', {
-        timeZone: noodle.timezone === 'auto' ? undefined : noodle.timezone,
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-      }).format(noodleDateFrom)
-      return todayDateRaw === noodleDateFromRaw
-    }
-    const noodleDateTo = new Date(noodle.dateTo)
-    return todayDate >= noodleDateFrom && todayDate <= noodleDateTo
+    if (!noodle.dateTo) return today === noodle.date
+    return today >= noodle.date && today <= noodle.dateTo
   })
 
-  if (!currentNoodles.length) return
+  if (!currentActiveNoodles.length) return
 
-  const roll = Math.floor(Math.random() * currentNoodles.length)
-  const selectedNoodle = currentNoodles[roll]
+  const roll = Math.floor(Math.random() * currentActiveNoodles.length)
+  const selectedNoodle = currentActiveNoodles[roll]
+
   if (!selectedNoodle) return
 
   const noodleLogo = el.querySelector<HTMLElement>(`#intro-header-noodle-${selectedNoodle.key}`)
-  if (!noodleLogo) return
+
+  if (!defaultLogo || !noodleLogo || !tagline) return
 
   defaultLogo.style.display = 'none'
   noodleLogo.style.display = 'block'
@@ -66,7 +88,10 @@ onPrehydrate(el => {
 </script>
 
 <template>
-  <div :data-noodles="JSON.stringify(noodlesData)">
+  <div
+    :data-active-noodles="JSON.stringify(activeNoodlesData)"
+    :data-permanent-noodles="JSON.stringify(permanentNoodlesData)"
+  >
     <h1 class="sr-only">
       {{ $t('alt_logo') }}
     </h1>
@@ -84,7 +109,15 @@ onPrehydrate(el => {
       </span>
     </div>
     <component
-      v-for="noodle in NOODLES"
+      v-for="noodle in PERMANENT_NOODLES"
+      :key="noodle.key"
+      :id="`intro-header-noodle-${noodle.key}`"
+      class="hidden"
+      aria-hidden="true"
+      :is="noodle.logo"
+    />
+    <component
+      v-for="noodle in ACTIVE_NOODLES"
       :key="noodle.key"
       :id="`intro-header-noodle-${noodle.key}`"
       class="hidden"
