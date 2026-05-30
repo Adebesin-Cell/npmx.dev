@@ -43,7 +43,6 @@ const config: KnipConfig = {
       ignoreFiles: [
         'app/components/Tooltip/Announce.vue',
         'app/components/UserCombobox.vue',
-        'app/components/ColorScheme/Img.vue',
         '**/*.unused.*',
       ],
     },
