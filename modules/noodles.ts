@@ -1,57 +1,8 @@
 import { join } from 'node:path'
 import { existsSync } from 'node:fs'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { Buffer } from 'node:buffer'
-import crypto from 'node:crypto'
+import { mkdir, readFile } from 'node:fs/promises'
 import { addTemplate, defineNuxtModule, useNuxt, createResolver } from 'nuxt/kit'
-import { BLUESKY_API } from '../shared/utils/constants'
-
-const PROFILE_FETCH_TIMEOUT_MS = 10_000
-const AVATAR_FETCH_TIMEOUT_MS = 15_000
-
-async function fetchBlueskyAvatars(
-  imagesDir: string,
-  handles: string[],
-): Promise<Map<string, string>> {
-  const avatarMap = new Map<string, string>()
-  if (handles.length === 0) return avatarMap
-
-  try {
-    const params = new URLSearchParams()
-    for (const handle of handles) params.append('actors', handle)
-
-    const response = await fetch(
-      `${BLUESKY_API}/xrpc/app.bsky.actor.getProfiles?${params.toString()}`,
-      { signal: AbortSignal.timeout(PROFILE_FETCH_TIMEOUT_MS) },
-    )
-    if (!response.ok) {
-      console.warn(`[noodles] Failed to fetch Bluesky profiles: ${response.status}`)
-      return avatarMap
-    }
-
-    const data = (await response.json()) as {
-      profiles: Array<{ handle: string; avatar?: string }>
-    }
-    for (const profile of data.profiles) {
-      if (!profile.avatar) continue
-      const hash = crypto.createHash('sha256').update(profile.avatar).digest('hex')
-      const dest = join(imagesDir, `${hash}.png`)
-      if (!existsSync(dest)) {
-        const res = await fetch(`${profile.avatar}@png`, {
-          signal: AbortSignal.timeout(AVATAR_FETCH_TIMEOUT_MS),
-        })
-        if (!res.ok || !res.body) continue
-        // Avatars are tiny; buffering sidesteps the Web/Node ReadableStream type mismatch.
-        await writeFile(dest, Buffer.from(await res.arrayBuffer()))
-      }
-      avatarMap.set(profile.handle, `/noodle-avatar/${hash}.png`)
-    }
-  } catch (error) {
-    console.warn(`[noodles] Failed to fetch Bluesky avatars:`, error)
-  }
-
-  return avatarMap
-}
+import { fetchBlueskyAvatars } from './utils/bluesky-avatars'
 
 // Parses the registry as text so we don't have to evaluate TS at build time.
 async function readHandlesFromRegistry(registryPath: string): Promise<string[]> {
@@ -61,7 +12,8 @@ async function readHandlesFromRegistry(registryPath: string): Promise<string[]> 
   const re = /blueskyHandle\s*:\s*['"]([^'"]+)['"]/g
   let match: RegExpExecArray | null
   while ((match = re.exec(source)) !== null) {
-    handles.add(match[1]!)
+    const handle = match[1]
+    if (handle) handles.add(handle)
   }
   return [...handles]
 }
@@ -81,7 +33,10 @@ export default defineNuxtModule({
 
     const handles = await readHandlesFromRegistry(registryPath)
     const avatarMap = resolveAvatars
-      ? await fetchBlueskyAvatars(imagesDir, handles)
+      ? await fetchBlueskyAvatars(imagesDir, handles, {
+          publicPathPrefix: '/noodle-avatar',
+          logLabel: 'noodles',
+        })
       : new Map<string, string>()
 
     addTemplate({
