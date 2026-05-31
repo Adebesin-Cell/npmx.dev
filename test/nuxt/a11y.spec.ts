@@ -144,6 +144,7 @@ import {
   AppMark,
   AboutLogoImg,
   AboutLogoList,
+  AboutGovernanceList,
   AuthorAvatar,
   AuthorList,
   BackButton,
@@ -158,7 +159,7 @@ import {
   ButtonBase,
   LandingIntroHeader,
   NoodleKawaiiLogo,
-  NoodlePressLogo,
+  NoodleNodejsLogo,
   LinkBase,
   CallToAction,
   ChangelogCard,
@@ -374,7 +375,7 @@ describe('component accessibility audits', () => {
     })
 
     it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodlePressLogo)
+      const component = await mountSuspended(NoodleNodejsLogo)
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })
@@ -508,6 +509,37 @@ describe('component accessibility audits', () => {
                   },
                 },
               ],
+            },
+          ],
+        },
+      })
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+  })
+
+  describe('AboutGovernanceList', () => {
+    it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(AboutGovernanceList, {
+        props: {
+          members: [
+            {
+              id: 1,
+              login: 'steward1',
+              avatar_url: 'https://github.com/steward1.png',
+              html_url: 'https://github.com/steward1',
+              contributions: 100,
+              role: 'steward',
+              sponsors_url: 'https://github.com/sponsors/steward1',
+            },
+            {
+              id: 3,
+              login: 'contributor1',
+              avatar_url: 'https://github.com/contributor1.png',
+              html_url: 'https://github.com/contributor1',
+              contributions: 100,
+              role: 'contributor',
+              sponsors_url: 'https://github.com/sponsors/contributor1',
             },
           ],
         },
@@ -923,7 +955,11 @@ describe('component accessibility audits', () => {
             'versions': {
               '18.2.0': {
                 version: '18.2.0',
-                hasProvenance: false,
+                trustStatus: {
+                  provenance: false,
+                  trustedPublisher: false,
+                  stagedPublish: false,
+                },
                 tags: [],
               },
             },
