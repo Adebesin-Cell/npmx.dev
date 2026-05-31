@@ -13,14 +13,14 @@ export function useMarkdown(options: MaybeRefOrGetter<UseMarkdownOptions>) {
 // Each step strips one badge shape. Bounded quantifiers ({0,N}) guard against
 // ReDoS, and patterns are compiled once at module scope so reactive callers
 // don't pay re-instantiation cost on every render.
-const STRIPPABLE_MARKDOWN = [
+const STRIPPABLE_MARKDOWN = Object.freeze([
   // Image atom: ![alt](url) OR reference-style ![alt][ref]
   /!\[[^\]]{0,500}\](?:\([^)]{0,2000}\)|\[[^\]]{0,500}\])/g,
   // Empty link wrapper left behind after image removal: [](url) OR [][ref]
   /\[\s*\](?:\([^)]{0,2000}\)?|\[[^\]]{0,500}\])/g,
   // Reference link definition line: [ref]: url "optional title"
   /^[ \t]*\[[^\]]{1,500}\]:[ \t]+\S{1,2000}(?:[ \t]+["'(].*?["')])?[ \t]*$/gm,
-]
+])
 
 // Strip markdown image badges from text.
 // Each pass removes image atoms, empty link wrappers, and reference defs.
