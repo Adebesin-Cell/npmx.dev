@@ -110,7 +110,7 @@ const numberFormatter = useNumberFormatter()
           <dt class="sr-only">{{ $t('package.card.license') }}</dt>
           <dd>{{ result.package.license }}</dd>
         </div>
-        <div v-if="result.downloads?.weekly" class="flex items-center gap-1.5 sm:ms-auto">
+        <div v-if="result.downloads?.weekly != null" class="flex items-center gap-1.5 sm:ms-auto">
           <dt class="sr-only">{{ $t('package.card.weekly_downloads') }}</dt>
           <dd class="flex items-center gap-1.5">
             <span class="i-lucide:chart-line w-3.5 h-3.5" aria-hidden="true" />
