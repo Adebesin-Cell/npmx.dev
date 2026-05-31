@@ -10,24 +10,29 @@ export function useMarkdown(options: MaybeRefOrGetter<UseMarkdownOptions>) {
   return computed(() => parseMarkdown(toValue(options)))
 }
 
-// Single alternation matches any of:
-//  - image atom: ![alt](url) OR ![alt][ref]
-//  - empty link wrapper left behind after image removal: [](url) / [][ref]
-//  - reference link definition line: [ref]: url "optional title"
-// Bounded quantifiers ({0,N}) guard against ReDoS. Compiled once at module
-// scope so reactive callers don't pay re-instantiation cost on every render.
-const STRIPPABLE_MARKDOWN =
-  /!\[[^\]]{0,500}\](?:\([^)]{0,2000}\)|\[[^\]]{0,500}\])|\[\s*\](?:\([^)]{0,2000}\)?|\[[^\]]{0,500}\])|^[ \t]*\[[^\]]{1,500}\]:[ \t]+\S{1,2000}(?:[ \t]+["'(].*?["')])?[ \t]*$/gm
+// Each step strips one badge shape. Bounded quantifiers ({0,N}) guard against
+// ReDoS, and patterns are compiled once at module scope so reactive callers
+// don't pay re-instantiation cost on every render.
+const STRIPPABLE_MARKDOWN = [
+  // Image atom: ![alt](url) OR reference-style ![alt][ref]
+  /!\[[^\]]{0,500}\](?:\([^)]{0,2000}\)|\[[^\]]{0,500}\])/g,
+  // Empty link wrapper left behind after image removal: [](url) OR [][ref]
+  /\[\s*\](?:\([^)]{0,2000}\)?|\[[^\]]{0,500}\])/g,
+  // Reference link definition line: [ref]: url "optional title"
+  /^[ \t]*\[[^\]]{1,500}\]:[ \t]+\S{1,2000}(?:[ \t]+["'(].*?["')])?[ \t]*$/gm,
+]
 
 // Strip markdown image badges from text.
-// Each pass removes image atoms, empty link wrappers, and reference defs in a
-// single scan. Re-run to a fixed point so nested shapes like
-// `[![…][ref]][ref]` collapse without per-shape rules.
+// Each pass removes image atoms, empty link wrappers, and reference defs.
+// Re-run to a fixed point so nested shapes like `[![…][ref]][ref]` collapse
+// without per-shape rules.
 function stripMarkdownImages(text: string): string {
   let previous: string
   do {
     previous = text
-    text = text.replace(STRIPPABLE_MARKDOWN, '')
+    for (const pattern of STRIPPABLE_MARKDOWN) {
+      text = text.replace(pattern, '')
+    }
   } while (text !== previous)
   return text.trim()
 }
