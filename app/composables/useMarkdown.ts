@@ -10,9 +10,11 @@ export function useMarkdown(options: MaybeRefOrGetter<UseMarkdownOptions>) {
   return computed(() => parseMarkdown(toValue(options)))
 }
 
-// Each step strips one badge shape. Bounded quantifiers ({0,N}) guard against
-// ReDoS, and patterns are compiled once at module scope so reactive callers
-// don't pay re-instantiation cost on every render.
+/**
+ * Each step strips one badge shape. Bounded quantifiers ({0,N}) guard against
+ * ReDoS, and patterns are compiled once at module scope so reactive callers
+ * don't pay re-instantiation cost on every render.
+ */
 const STRIPPABLE_MARKDOWN = Object.freeze([
   // Image atom: ![alt](url) OR reference-style ![alt][ref]
   /!\[[^\]]{0,500}\](?:\([^)]{0,2000}\)|\[[^\]]{0,500}\])/g,
@@ -22,10 +24,12 @@ const STRIPPABLE_MARKDOWN = Object.freeze([
   /^[ \t]*\[[^\]]{1,500}\]:[ \t]+\S{1,2000}(?:[ \t]+["'(].*?["')])?[ \t]*$/gm,
 ])
 
-// Strip markdown image badges from text.
-// Each pass removes image atoms, empty link wrappers, and reference defs.
-// Re-run to a fixed point so nested shapes like `[![…][ref]][ref]` collapse
-// without per-shape rules.
+/**
+ * Strip markdown image badges from text.
+ * Each pass removes image atoms, empty link wrappers, and reference defs.
+ * Re-run to a fixed point so nested shapes like `[![…][ref]][ref]` collapse
+ * without per-shape rules.
+ */
 function stripMarkdownImages(text: string): string {
   let previous: string
   do {
