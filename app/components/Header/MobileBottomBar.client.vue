@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { isOpen, activeView, toggle, close, back } = useMobileNav()
-const { open: openCommandPalette } = useCommandPalette()
 const colorMode = useColorMode()
 
 const contextLabel = computed(() => {
@@ -37,9 +36,11 @@ watch(isOpen, open => {
   if (open) hidden.value = false
 })
 
-function handleSearchClick() {
+async function handleSearchClick() {
   if (isOpen.value) close()
-  nextTick(() => openCommandPalette())
+  // Navigate to the homepage, which has the autofocused package search input.
+  // The header search box is hidden on mobile, so this is the search entry point.
+  await navigateTo('/')
 }
 
 function handleThemeClick() {

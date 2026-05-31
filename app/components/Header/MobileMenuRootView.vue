@@ -79,9 +79,9 @@ const { user: atprotoUser } = useAtproto()
       </button>
     </div>
 
-    <!-- Command palette -->
-    <!-- Hidden on mobile: duplicate of the MobileBottomBar command palette button (always visible) -->
-    <div class="hidden sm:block px-2 py-2">
+    <!-- Command palette: the bottom bar search button now opens package search,
+         so this is the canonical command-palette entry point on mobile. -->
+    <div class="px-2 py-2">
       <span class="px-3 py-2 block font-mono text-xs text-fg-subtle uppercase tracking-wider">
         {{ $t('command_palette.title') }}
       </span>
