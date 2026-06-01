@@ -63,9 +63,7 @@ export default defineNuxtModule({
     const resolveAvatars = !nuxt.options._prepare
 
     const handles = await readHandlesFromRegistry(registryPath)
-    const avatarMap = resolveAvatars
-      ? await fetchAvatarUrls(handles)
-      : new Map<string, string>()
+    const avatarMap = resolveAvatars ? await fetchAvatarUrls(handles) : new Map<string, string>()
 
     addTemplate({
       filename: 'noodles/avatars.ts',
