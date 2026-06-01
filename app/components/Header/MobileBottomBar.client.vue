@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const { isOpen, activeView, toggle, close, back } = useMobileNav()
 const colorMode = useColorMode()
+const route = useRoute()
+
+// The search button navigates home to focus the search input, so it's
+// redundant on the homepage itself — hide it there.
+const isHomepage = computed(() => route.name === 'index')
 
 const contextLabel = computed(() => {
   if (!isOpen.value) return ''
@@ -80,6 +85,7 @@ function handleThemeClick() {
       <div v-if="!contextLabel" class="flex-1" />
 
       <ButtonBase
+        v-if="!isHomepage"
         type="button"
         :aria-label="$t('nav.tap_to_search')"
         classicon="i-lucide:search"
