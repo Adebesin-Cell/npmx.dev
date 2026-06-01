@@ -1675,6 +1675,9 @@
             "license": {
               "type": "string"
             },
+            "version": {
+              "type": "string"
+            },
             "select": {
               "type": "string"
             },
@@ -3634,7 +3637,13 @@
             "title": {
               "type": "string"
             },
-            "governance": {
+            "core": {
+              "type": "string"
+            },
+            "maintainers": {
+              "type": "string"
+            },
+            "role_core": {
               "type": "string"
             },
             "role_steward": {

@@ -3,6 +3,7 @@ import NoodleArtemisLogo from './Artemis/Logo.vue'
 import NoodleKawaiiLogo from './Kawaii/Logo.vue'
 import NoodleNodejsLogo from './Nodejs/Logo.vue'
 import NoodlePressLogo from './Press/Logo.vue'
+import NoodlePride1Logo from './Pride1/Logo.vue'
 import NoodleTransgenderVisibilityLogo from './TransgenderVisibility/Logo.vue'
 
 export type Noodle = {
@@ -32,9 +33,10 @@ export const PERMANENT_NOODLES: Noodle[] = [
 // Active noodles - shown based on date and timezone
 export const ACTIVE_NOODLES: Noodle[] = [
   {
-    key: 'nodejs',
-    logo: NoodleNodejsLogo,
-    date: '2026-05-27',
+    key: 'pride-1',
+    logo: NoodlePride1Logo,
+    date: '2026-06-01',
+    dateTo: '2026-06-30',
     timezone: 'auto',
   },
 ]
