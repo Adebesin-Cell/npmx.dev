@@ -14,9 +14,62 @@ import {
   type ResolvedAuthor,
 } from '../shared/schemas/blog'
 import { isProduction } from '../config/env'
-import { fetchBlueskyAvatars } from './utils/bluesky-avatars'
-import { glob, mkdir } from 'node:fs/promises'
+import { BLUESKY_API } from '../shared/utils/constants'
+import { glob, mkdir, writeFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
+import crypto from 'node:crypto'
+
+/**
+ * Fetches Bluesky avatars for a set of authors at build time.
+ * Returns a map of handle → avatar URL.
+ */
+async function fetchBlueskyAvatars(
+  imagesDir: string,
+  handles: string[],
+): Promise<Map<string, string>> {
+  const avatarMap = new Map<string, string>()
+  if (handles.length === 0) return avatarMap
+
+  try {
+    const params = new URLSearchParams()
+    for (const handle of handles) {
+      params.append('actors', handle)
+    }
+
+    const response = await fetch(
+      `${BLUESKY_API}/xrpc/app.bsky.actor.getProfiles?${params.toString()}`,
+    )
+
+    if (!response.ok) {
+      console.warn(`[blog] Failed to fetch Bluesky profiles: ${response.status}`)
+      return avatarMap
+    }
+
+    const data = (await response.json()) as { profiles: Array<{ handle: string; avatar?: string }> }
+
+    for (const profile of data.profiles) {
+      if (profile.avatar) {
+        const hash = crypto.createHash('sha256').update(profile.avatar).digest('hex')
+        const dest = join(imagesDir, `${hash}.png`)
+
+        if (!existsSync(dest)) {
+          const res = await fetch(`${profile.avatar}@png`)
+          if (!res.ok || !res.body) {
+            console.warn(`[blog] Failed to fetch Bluesky avatar: ${profile.avatar}@png`)
+            continue
+          }
+          await writeFile(join(imagesDir, `${hash}.png`), res.body)
+        }
+
+        avatarMap.set(profile.handle, `/blog/avatar/${hash}.png`)
+      }
+    }
+  } catch (error) {
+    console.warn(`[blog] Failed to fetch Bluesky avatars:`, error)
+  }
+
+  return avatarMap
+}
 
 /**
  * Resolves authors with their Bluesky avatars and profile URLs.
@@ -76,10 +129,7 @@ async function loadBlogPosts(
 
   // Batch-fetch all Bluesky avatars in a single request when avatar resolution is enabled.
   const avatarMap = resolveAvatars
-    ? await fetchBlueskyAvatars(imagesDir, [...allHandles], {
-        publicPathPrefix: '/blog/avatar',
-        logLabel: 'blog',
-      })
+    ? await fetchBlueskyAvatars(imagesDir, [...allHandles])
     : new Map<string, string>()
 
   // Second pass: validate with raw schema, then enrich authors with avatars

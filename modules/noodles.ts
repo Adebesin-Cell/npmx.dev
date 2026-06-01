@@ -1,8 +1,44 @@
 import { join } from 'node:path'
 import { existsSync } from 'node:fs'
-import { mkdir, readFile } from 'node:fs/promises'
+import { readFile } from 'node:fs/promises'
 import { addTemplate, defineNuxtModule, useNuxt, createResolver } from 'nuxt/kit'
-import { fetchBlueskyAvatars } from './utils/bluesky-avatars'
+import { BLUESKY_API } from '../shared/utils/constants'
+
+const PROFILE_FETCH_TIMEOUT_MS = 10_000
+
+// Resolves each Bluesky handle to its avatar URL at build time. Unlike the blog
+// — which downloads and caches avatars locally because they're embedded in the
+// OG image — noodle avatars only appear in the page DOM, so the remote Bluesky
+// CDN URL is enough (and is allowed by the CSP's img-src).
+async function fetchAvatarUrls(handles: string[]): Promise<Map<string, string>> {
+  const avatarMap = new Map<string, string>()
+  if (handles.length === 0) return avatarMap
+
+  try {
+    const params = new URLSearchParams()
+    for (const handle of handles) params.append('actors', handle)
+
+    const response = await fetch(
+      `${BLUESKY_API}/xrpc/app.bsky.actor.getProfiles?${params.toString()}`,
+      { signal: AbortSignal.timeout(PROFILE_FETCH_TIMEOUT_MS) },
+    )
+    if (!response.ok) {
+      console.warn(`[noodles] Failed to fetch Bluesky profiles: ${response.status}`)
+      return avatarMap
+    }
+
+    const data = (await response.json()) as {
+      profiles: Array<{ handle: string; avatar?: string }>
+    }
+    for (const profile of data.profiles) {
+      if (profile.avatar) avatarMap.set(profile.handle, profile.avatar)
+    }
+  } catch (error) {
+    console.warn(`[noodles] Failed to fetch Bluesky avatars:`, error)
+  }
+
+  return avatarMap
+}
 
 // Parses the registry as text so we don't have to evaluate TS at build time.
 async function readHandlesFromRegistry(registryPath: string): Promise<string[]> {
@@ -24,19 +60,11 @@ export default defineNuxtModule({
     const nuxt = useNuxt()
     const resolver = createResolver(import.meta.url)
     const registryPath = resolver.resolve('../app/noodles.ts')
-    const imagesDir = resolver.resolve('../public/noodle-avatar')
     const resolveAvatars = !nuxt.options._prepare
-
-    if (resolveAvatars && !existsSync(imagesDir)) {
-      await mkdir(imagesDir, { recursive: true })
-    }
 
     const handles = await readHandlesFromRegistry(registryPath)
     const avatarMap = resolveAvatars
-      ? await fetchBlueskyAvatars(imagesDir, handles, {
-          publicPathPrefix: '/noodle-avatar',
-          logLabel: 'noodles',
-        })
+      ? await fetchAvatarUrls(handles)
       : new Map<string, string>()
 
     addTemplate({
