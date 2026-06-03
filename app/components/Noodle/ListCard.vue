@@ -16,7 +16,7 @@ const logo = computed(() => resolveNoodleLogo(props.noodle.key))
   >
     <span class="sr-only">{{ noodle.title }}</span>
     <div class="aspect-[4/3] flex items-center justify-center bg-bg p-8 overflow-hidden">
-      <component :is="logo" v-if="logo" no-tooltip class="max-w-full max-h-full" />
+      <component :is="logo" v-if="logo" no-tooltip class="max-w-full! max-h-full!" />
       <span v-else class="i-lucide:sparkles w-12 h-12 text-fg-subtle" aria-hidden="true" />
     </div>
     <div class="absolute top-3 inset-ie-3 text-fg-subtle group-hover:text-fg transition-colors">

@@ -75,7 +75,6 @@ function loadMore() {
       </header>
       <ul
         v-if="noodles.length > 0"
-        role="list"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0 m-0"
       >
         <li v-for="noodle in visibleNoodles" :key="noodle.key">
