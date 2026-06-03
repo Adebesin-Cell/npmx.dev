@@ -23,11 +23,6 @@ defineOgImage(
   { alt: () => `${$t('noodles.title')} — npmx` },
 )
 
-const colorMode = useColorMode()
-const moonSrc = computed(() =>
-  colorMode.value === 'light' ? '/extra/moon-light.png' : '/extra/moon-dark.png',
-)
-
 const PAGE_SIZE = 10
 const visibleCount = shallowRef(PAGE_SIZE)
 const visibleNoodles = computed(() => noodles.slice(0, visibleCount.value))
@@ -56,11 +51,13 @@ function loadMore() {
             class="absolute inset-0 rounded-full overflow-hidden bg-bg-subtle border-[10px] sm:border-[14px] border-border [box-shadow:inset_0_0_50px_rgb(0_0_0/0.28),inset_0_2px_2px_rgb(255_255_255/0.9),0_20px_50px_-12px_rgb(0_0_0/0.3)] dark:[box-shadow:inset_0_0_60px_rgb(0_0_0/0.6),0_20px_50px_-10px_rgb(0_0_0/0.5)]"
             aria-hidden="true"
           >
-            <img
-              :src="moonSrc"
-              alt=""
-              aria-hidden="true"
+            <ColorSchemeImg
+              width="314"
+              height="100"
               class="absolute bottom-0 inset-is-1/2 -translate-x-1/2 w-[88%] pointer-events-none select-none mix-blend-darken dark:mix-blend-lighten"
+              dark-src="/extra/moon-dark.png"
+              light-src="/extra/moon-light.png"
+              alt=""
             />
           </div>
           <h1 class="relative font-mono text-3xl sm:text-6xl font-medium z-10">
