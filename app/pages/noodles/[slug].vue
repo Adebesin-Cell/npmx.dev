@@ -2,7 +2,6 @@
 import type { AtIdentifierString } from '@atproto/lex'
 import { findNoodle } from '~/noodles'
 import { resolveNoodleLogo } from '~/components/Noodle'
-import { resolveNoodleAvatar } from '#noodles/avatars'
 
 const route = useRoute()
 const slug = computed(() => String(route.params.slug ?? ''))
@@ -14,10 +13,11 @@ const enrichedAuthors = computed(() =>
   (noodle.value?.authors ?? []).map(a => ({
     name: a.name,
     blueskyHandle: a.blueskyHandle as AtIdentifierString | undefined,
-    avatar: resolveNoodleAvatar(a.blueskyHandle),
     profileUrl: a.blueskyHandle ? `https://bsky.app/profile/${a.blueskyHandle}` : null,
   })),
 )
+
+const { resolvedAuthors } = useBlueskyAuthorProfiles(enrichedAuthors.value)
 
 useSeoMeta({
   title: () =>
@@ -141,12 +141,12 @@ if (import.meta.server && !noodle.value) {
                   </LinkBase>
                 </dd>
               </div>
-              <div v-if="enrichedAuthors.length" class="sm:col-span-2">
+              <div v-if="resolvedAuthors.length" class="sm:col-span-2">
                 <dt class="text-fg-subtle uppercase tracking-widest mb-3">
                   {{ $t('noodles.credits') }}
                 </dt>
                 <dd>
-                  <AuthorList :authors="enrichedAuthors" variant="expanded" />
+                  <AuthorList :authors="resolvedAuthors" variant="expanded" />
                 </dd>
               </div>
               <div v-if="noodle.references?.length" class="sm:col-span-2">
