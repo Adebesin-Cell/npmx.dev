@@ -162,7 +162,7 @@ useSeoMeta({
   ogDescription: () => noodle.value?.occasion,
 })
 
-if (noodle.value?.posterImage) {
+if (noodle.value) {
   defineOgImage(
     'Noodle.takumi',
     {
