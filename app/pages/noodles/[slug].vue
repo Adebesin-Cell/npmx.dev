@@ -44,10 +44,10 @@ if (noodle.value) {
   defineOgImage(
     'Page.takumi',
     {
-      title: () => noodle.value?.title ?? $t('noodles.missing.title'),
-      description: () => noodle.value?.occasion ?? $t('noodles.title'),
+      title: () => $t('noodles.missing.title'),
+      description: () => $t('noodles.title'),
     },
-    { alt: () => `${noodle.value?.title ?? $t('noodles.missing.title')} — npmx` },
+    { alt: () => `${$t('noodles.missing.title')} — npmx` },
   )
 }
 
@@ -174,7 +174,7 @@ if (import.meta.server && !noodle.value) {
               {{ $t('noodles.missing.title') }}
             </h1>
             <p class="text-fg-muted text-base sm:text-lg leading-relaxed">
-              {{ $t('noodles.missing.body', { slug: slug }) }}
+              {{ $t('noodles.missing.body', { slug }) }}
             </p>
           </template>
         </article>
