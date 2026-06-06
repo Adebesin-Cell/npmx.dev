@@ -335,7 +335,7 @@ useShortcuts({
       <!-- Mobile: Search button (expands search) -->
       <ButtonBase
         type="button"
-        class="sm:hidden ms-auto"
+        class="sm:hidden ms-auto py-2.5!"
         :aria-label="$t('nav.tap_to_search')"
         :aria-expanded="showMobileMenu"
         @click="expandMobileSearch"
@@ -346,7 +346,7 @@ useShortcuts({
       <!-- Mobile: Menu button (always visible, click to open menu) -->
       <ButtonBase
         type="button"
-        class="sm:hidden"
+        class="sm:hidden py-2.5!"
         :aria-label="$t('nav.open_menu')"
         :aria-expanded="showMobileMenu"
         @click="showMobileMenu = !showMobileMenu"
