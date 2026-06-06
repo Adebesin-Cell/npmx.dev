@@ -165,6 +165,7 @@ import {
   NoodleNodejsLogo,
   NoodlePressLogo,
   NoodlePride1Logo,
+  NoodlePride2Logo,
   NoodleLens,
   NoodlePride3Logo,
   NoodleTetrisLogo,
@@ -413,11 +414,7 @@ describe('component accessibility audits', () => {
     })
 
     it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(NoodleLens, {
-        props: {
-          logo: NoodleKawaiiLogo,
-        },
-      })
+      const component = await mountSuspended(NoodlePride2Logo)
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })
@@ -430,6 +427,16 @@ describe('component accessibility audits', () => {
 
     it('should have no accessibility violations', async () => {
       const component = await mountSuspended(NoodleTetrisLogo)
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+
+    it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(NoodleLens, {
+        props: {
+          logo: NoodleKawaiiLogo,
+        },
+      })
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })
