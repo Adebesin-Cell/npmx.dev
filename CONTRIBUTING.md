@@ -1057,7 +1057,7 @@ The two are wired up independently, so shipping a noodle to the homepage **and**
 
 ### 1. Add the logo component
 
-Create `app/components/Noodle/<Name>/Logo.vue`. 
+Create `app/components/Noodle/<Name>/Logo.vue`.
 It's recommended to add a tooltip with event information to each noodle. If the poster is an image, add it to the `public/extra` directory. If the image differs between light and dark modes - prefer `ColorSchemeImg` component for poster
 
 ```vue
@@ -1075,6 +1075,7 @@ It's recommended to add a tooltip with event information to each noodle. If the 
   </TooltipApp>
 </template>
 ```
+
 ### 2. Register the logo and show it on the homepage
 
 In `app/components/Noodle/index.ts`:
