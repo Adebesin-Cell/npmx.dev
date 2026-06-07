@@ -1107,6 +1107,9 @@ const NOODLE_LOGOS: Record<string, Component> = {
 ```
 
 > [!IMPORTANT]
+> The `date` and `dateTo` keys are inclusive, meaning they specify the start (at 00:00) and end (at 23:59) dates. If the dates overlap, a noodle will be randomly selected on each visit.
+
+> [!IMPORTANT]
 > The `key` here must exactly match the `key` of the archive entry you add in the next step — that is how the archive looks up the logo.
 
 ### 3. Add the archive entry
