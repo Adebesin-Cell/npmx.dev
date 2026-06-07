@@ -96,7 +96,6 @@
     "settings": "ustawienia",
     "compare": "porównaj",
     "back": "wstecz",
-    "menu": "Menu",
     "mobile_menu": "Menu nawigacji",
     "open_menu": "Otwórz menu",
     "links": "Linki",
@@ -126,6 +125,9 @@
       "repost_count": "{count} udostępnień | {count} udostępnienie | {count} udostępnienia | {count} udostępnień | {count} udostępnień",
       "more_replies": "jeszcze {count} odpowiedź… | jeszcze {count} odpowiedzi… | jeszcze {count} odpowiedzi…"
     }
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "ustawienia",
@@ -517,7 +519,8 @@
         "general_description": "Oś Y przedstawia ilość pobrań. Oś X przedstawia zakres dat, od {start_date} do {end_date}, z jednostką czasu {granularity}. {estimation_notice} {package_analysis}. {watermark}",
         "facet_bar_general_description": "Poziomy wykres słupkowy dla: {packages}, porównuje {facet} ({description}). {facet_analysis} {watermark}.",
         "facet_bar_analysis": "{package_name} ma wartość {value}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "Pobrania tygodniowe",

@@ -192,7 +192,6 @@
     "settings": "設定",
     "compare": "比較",
     "back": "返回",
-    "menu": "選單",
     "mobile_menu": "導覽選單",
     "open_menu": "開啟選單",
     "links": "連結",
@@ -223,6 +222,9 @@
       "repost_count": "{count} 次轉發 | {count} 次轉發",
       "more_replies": "還有 {count} 則回覆⋯⋯ | 還有 {count} 則回覆⋯⋯"
     }
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "設定",
@@ -661,7 +663,8 @@
         "general_description": "Y 軸代表下載次數。X 軸代表日期範圍，從 {start_date} 至 {end_date}，以 {granularity} 為時間單位。 {estimation_notice} {packages_analysis}. {watermark}.",
         "facet_bar_general_description": "水平長條圖: {package} 的 {facet} 對比({description}). {facet_analysis} {watermark}.",
         "facet_bar_analysis": "{package_name} 值為 {value}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "每週下載量",

@@ -99,7 +99,6 @@
     "settings": "pengaturan",
     "compare": "bandingkan",
     "back": "kembali",
-    "menu": "Menu",
     "mobile_menu": "Menu navigasi",
     "open_menu": "Buka menu",
     "links": "Tautan",
@@ -130,6 +129,9 @@
       "repost_count": "{count} repost | {count} repost",
       "more_replies": "{count} balasan lagi... | {count} balasan lagi..."
     }
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "pengaturan",
@@ -565,7 +567,8 @@
         "general_description": "Sumbu Y melambangkan jumlah unduhan. Sumbu X melambangkan jangka waktu, mulai dari {start_date} hingga {end_date}, dalam kurun waktu {granularity}. {estimation_notice} {packages_analysis}. {watermark}.",
         "facet_bar_general_description": "Grafik batang horizontal untuk: {packages}, membandingkan {facet} ({description}). {facet_analysis} {watermark}.",
         "facet_bar_analysis": "{package_name} memiliki nilai {value}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "Unduhan Mingguan",

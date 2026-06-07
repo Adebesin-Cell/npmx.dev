@@ -82,7 +82,6 @@
     "settings": "सेटिंग्ज",
     "compare": "तुलना करा",
     "back": "मागे",
-    "menu": "मेनू",
     "mobile_menu": "नेव्हिगेशन मेनू",
     "open_menu": "मेनू उघडा",
     "links": "लिंक",
@@ -113,6 +112,9 @@
       "repost_count": "{count} पुनर्पोस्ट | {count} पुनर्पोस्ट्स",
       "more_replies": "{count} आणखी उत्तर... | {count} आणखी उत्तरे..."
     }
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "सेटिंग्ज",
@@ -526,7 +528,8 @@
         "general_description": "Y अक्ष डाउनलोड्सची संख्या दर्शवतो. X अक्ष {start_date} ते {end_date} पर्यंतची दिनांक श्रेणी दर्शवतो, ज्यात {granularity} कालावधी आहे.{estimation_notice} {packages_analysis}. {watermark}.",
         "facet_bar_general_description": "या पॅकेजांसाठी आडवा बार चार्ट: {packages}, {facet} ची तुलना ({description}). {facet_analysis} {watermark}.",
         "facet_bar_analysis": "{package_name} ची किंमत {value} आहे."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "साप्ताहिक डाउनलोड्स",

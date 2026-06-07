@@ -99,7 +99,6 @@
     "settings": "podešavanja",
     "compare": "poređenje",
     "back": "nazad",
-    "menu": "Meni",
     "mobile_menu": "Meni za navigaciju",
     "open_menu": "Otvorite meni",
     "links": "Linkovi",
@@ -130,6 +129,9 @@
       "repost_count": "{count} prosleđivanje | {count} prosleđivanja | {count} prosleđivanja",
       "more_replies": "{count} još odgovor... | {count} još odgovora... | {count} još odgovora..."
     }
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "podešavanja",
@@ -562,7 +564,8 @@
         "general_description": "Y osa predstavlja broj preuzimanja. X osa predstavlja opseg datuma, od {start_date} do {end_date}, sa vremenskim periodom {granularity}.{estimation_notice} {packages_analysis}. {watermark}.",
         "facet_bar_general_description": "Horizontalni stubičasti grafikon za: {packages}, poređenje {facet} ({description}). {facet_analysis} {watermark}.",
         "facet_bar_analysis": "{package_name} ima vrednost {value}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "Nedeljna preuzimanja",

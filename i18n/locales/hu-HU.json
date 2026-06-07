@@ -88,7 +88,6 @@
     "settings": "beállítások",
     "compare": "összehasonlítás",
     "back": "vissza",
-    "menu": "Menü",
     "mobile_menu": "Navigációs menü",
     "open_menu": "Menü megnyitása",
     "links": "Linkek",
@@ -97,6 +96,9 @@
   "blog": {
     "author": {},
     "atproto": {}
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "beállítások",
@@ -464,7 +466,8 @@
         "compare": "Csomag letöltési összehasonlítás vonaldiagram: {packages}.",
         "single_package": "A(z) {package} csomag letöltési vonaldiagramja.",
         "general_description": "Az Y tengely a letöltések számát ábrázolja. Az X tengely a dátumtartományt ábrázolja, {start_date} -től {end_date} -ig, {granularity} időszakkal.{estimation_notice} {packages_analysis}. {watermark}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "Heti letöltések",

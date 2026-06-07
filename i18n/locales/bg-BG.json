@@ -88,7 +88,6 @@
     "settings": "настройки",
     "compare": "сравняване",
     "back": "назад",
-    "menu": "Меню",
     "mobile_menu": "Навигационно меню",
     "open_menu": "Отваряне на меню",
     "links": "Връзки",
@@ -97,6 +96,9 @@
   "blog": {
     "author": {},
     "atproto": {}
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "настройки",
@@ -464,7 +466,8 @@
         "compare": "Линейна диаграма за сравнение на изтегляния на пакети за: {packages}.",
         "single_package": "Линейна диаграма на изтегляния за пакета {package}.",
         "general_description": "Оста Y представлява броя на изтеглянията. Оста X представлява диапазона от дати, от {start_date} до {end_date}, с {granularity} времеви период.{estimation_notice} {packages_analysis}. {watermark}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "Седмични изтегляния",

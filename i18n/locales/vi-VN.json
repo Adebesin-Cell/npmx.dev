@@ -99,7 +99,6 @@
     "settings": "cài đặt",
     "compare": "so sánh",
     "back": "quay lại",
-    "menu": "Bảng chọn",
     "mobile_menu": "Bảng điều hướng",
     "open_menu": "Mở bảng chọn",
     "links": "Liên kết",
@@ -130,6 +129,9 @@
       "repost_count": "{count} lượt đăng lại | {count} lượt đăng lại",
       "more_replies": "Thêm {count} phản hồi... | Thêm {count} phản hồi..."
     }
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "cài đặt",
@@ -562,7 +564,8 @@
         "general_description": "Trục Y biểu thị số lượt tải. Trục X biểu thị khoảng ngày, từ {start_date} đến {end_date}, với độ chi tiết {granularity}.{estimation_notice} {packages_analysis}. {watermark}.",
         "facet_bar_general_description": "Biểu đồ cột ngang cho: {packages}, so sánh {facet} ({description}). {facet_analysis} {watermark}.",
         "facet_bar_analysis": "{package_name} có giá trị {value}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "Lượt tải hàng tuần",

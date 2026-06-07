@@ -96,7 +96,6 @@
     "settings": "tənzimləmələr",
     "compare": "müqayisə",
     "back": "geri",
-    "menu": "Menyu",
     "mobile_menu": "Naviqasiya menyusu",
     "open_menu": "Menyunu aç",
     "links": "Keçidlər",
@@ -126,6 +125,9 @@
       "repost_count": "{count} yenidən paylaşım",
       "more_replies": "daha {count} cavab... | daha {count} cavab..."
     }
+  },
+  "noodles": {
+    "missing": {}
   },
   "settings": {
     "title": "tənzimləmələr",
@@ -503,7 +505,8 @@
         "compare": "Paket endirmə müqayisəsi xətt diaqramı: {packages}.",
         "single_package": "{package} paketi üçün endirmə xətt diaqramı.",
         "general_description": "Y oxu endirmələrin sayını təmsil edir. X oxu tarix aralığını təmsil edir, {start_date}-dən {end_date}-ə, {granularity} zaman dövrü ilə.{estimation_notice} {packages_analysis}. {watermark}."
-      }
+      },
+      "embedding": {}
     },
     "downloads": {
       "title": "Həftəlik Endirmələr",
