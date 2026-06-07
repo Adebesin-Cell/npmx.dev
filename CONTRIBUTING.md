@@ -1057,7 +1057,8 @@ The two are wired up independently, so shipping a noodle to the homepage **and**
 
 ### 1. Add the logo component
 
-Create `app/components/Noodle/<Name>/Logo.vue`. Wrap the artwork in `TooltipApp` so hovering reveals the occasion, and reference poster art from `public/extra/`:
+Create `app/components/Noodle/<Name>/Logo.vue`. 
+It's recommended to add a tooltip with event information to each noodle. If the poster is an image, add it to the `public/extra` directory. If the image differs between light and dark modes - prefer `ColorSchemeImg` component for poster
 
 ```vue
 <template>
