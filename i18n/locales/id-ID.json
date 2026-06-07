@@ -99,6 +99,7 @@
     "settings": "pengaturan",
     "compare": "bandingkan",
     "back": "kembali",
+    "menu": "Menu",
     "mobile_menu": "Menu navigasi",
     "open_menu": "Buka menu",
     "links": "Tautan",
@@ -281,6 +282,7 @@
       "size": "Ukuran instalasi meningkat sebesar {percent} ({size} lebih besar)",
       "deps": "{count} lebih banyak dependensi"
     },
+    "size_decrease": {},
     "replacement": {
       "title": "Mungkin Anda tidak butuh dependensi ini.",
       "native": "Paket ini dapat diganti dengan {replacement}, tersedia sejak Node {nodeVersion}.",
@@ -458,7 +460,11 @@
       "current_tags": "Tag Saat Ini",
       "no_match_filter": "Tidak ada versi yang cocok dengan {filter}"
     },
-    "timeline": {},
+    "timeline": {
+      "chart": {
+        "copy_alt": {}
+      }
+    },
     "dependencies": {
       "title": "Dependensi ({count})",
       "list_label": "Dependensi paket",
@@ -660,6 +666,9 @@
       "button": "Unduh",
       "tarball": "Unduh Tarball sebagai .tar.gz"
     }
+  },
+  "leaderboard": {
+    "likes": {}
   },
   "connector": {
     "modal": {
@@ -1237,8 +1246,6 @@
     "file_changes": "Perubahan Berkas",
     "files_count": "{count} file",
     "lines_hidden": "{count} baris disembunyikan",
-    "file_too_large": "File terlalu besar untuk dibandingkan",
-    "file_size_warning": "{size} melebihi batas 250KB untuk perbandingan",
     "compare_versions": "diff",
     "compare_versions_title": "Bandingkan dengan versi terbaru",
     "comparing_versions_label": "Membandingkan versi...",
@@ -1538,5 +1545,8 @@
       "message": "Aksesibilitas penting bagi kami, dan kami ingin Anda ikut mendukung visi ini. Saat menggunakan media yang disebutkan, pastikan kontras dengan latar cukup, dan jangan gunakan ukuran kurang dari 24px. Jika Anda membutuhkan sumber daya lain atau informasi tambahan tentang proyek ini, silakan hubungi kami di {link}.",
       "discord_link_text": "chat.npmx.dev"
     }
+  },
+  "changelog": {
+    "error": {}
   }
 }

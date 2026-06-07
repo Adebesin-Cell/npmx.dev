@@ -1415,8 +1415,6 @@
     "file_changes": "Зміни файлів",
     "files_count": "{count} файл | {count} файли | {count} файлів",
     "lines_hidden": "{count} рядок приховано | {count} рядки приховано | {count} рядків приховано",
-    "file_too_large": "Файл завеликий для порівняння",
-    "file_size_warning": "{size} перевищує ліміт 250 КБ для порівняння",
     "compare_versions": "зміни",
     "compare_versions_title": "Порівняти з останньою версією",
     "comparing_versions_label": "Порівняння версій...",

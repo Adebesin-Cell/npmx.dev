@@ -86,6 +86,14 @@ export function useGlobalNavLinks() {
           external: false,
           iconClass: 'i-lucide:palette',
         },
+        {
+          name: 'Noodles',
+          label: $t('noodles.title'),
+          to: { name: 'noodles' },
+          type: 'link',
+          external: false,
+          iconClass: 'i-lucide:sparkles',
+        },
       ],
     },
     {

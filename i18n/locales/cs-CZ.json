@@ -192,6 +192,7 @@
     "settings": "nastavení",
     "compare": "porovnat",
     "back": "zpět",
+    "menu": "Menu",
     "mobile_menu": "Navigační menu",
     "open_menu": "Otevřít menu",
     "links": "Odkazy",
@@ -379,6 +380,7 @@
       "size": "Velikost instalace se zvýšila o {percent} (větší o {size})",
       "deps": "{count} další závislostí"
     },
+    "size_decrease": {},
     "replacement": {
       "title": "Možná tuto závislost nepotřebujete.",
       "native": "Tento balíček lze nahradit {replacement}, dostupné od Node {nodeVersion}.",
@@ -556,7 +558,11 @@
       "current_tags": "Aktuální značky",
       "no_match_filter": "Žádné verze neodpovídají {filter}"
     },
-    "timeline": {},
+    "timeline": {
+      "chart": {
+        "copy_alt": {}
+      }
+    },
     "dependencies": {
       "title": "Závislosti ({count})",
       "list_label": "Závislosti balíčku",
@@ -758,6 +764,9 @@
       "button": "Stáhnout",
       "tarball": "Stáhnout Tarball jako .tar.gz"
     }
+  },
+  "leaderboard": {
+    "likes": {}
   },
   "connector": {
     "modal": {
@@ -1339,8 +1348,6 @@
     "file_changes": "Změny souborů",
     "files_count": "{count} souborů",
     "lines_hidden": "{count} skrytých řádků",
-    "file_too_large": "Soubor je k porovnání příliš velký",
-    "file_size_warning": "{size} překračuje limit 250KB pro porovnání",
     "compare_versions": "porovnat",
     "compare_versions_title": "Porovnat s nejnovější verzí",
     "comparing_versions_label": "Porovnání verzí...",
@@ -1641,5 +1648,8 @@
       "discord_link_text": "chat.npmx.dev"
     }
   },
-  "alt_logo_kawaii": "Roztomilá, zaoblená a barevná verze loga npmx."
+  "alt_logo_kawaii": "Roztomilá, zaoblená a barevná verze loga npmx.",
+  "changelog": {
+    "error": {}
+  }
 }

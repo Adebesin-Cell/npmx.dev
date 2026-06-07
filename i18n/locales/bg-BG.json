@@ -88,6 +88,7 @@
     "settings": "настройки",
     "compare": "сравняване",
     "back": "назад",
+    "menu": "Меню",
     "mobile_menu": "Навигационно меню",
     "open_menu": "Отваряне на меню",
     "links": "Връзки",
@@ -214,6 +215,7 @@
       "size": "Размерът при инсталация се е увеличил с {percent} ({size} по-голям)",
       "deps": "{count} повече зависимости"
     },
+    "size_decrease": {},
     "replacement": {
       "title": "Може да не се нуждаете от тази зависимост.",
       "native": "Това може да бъде заменено с {replacement}, налично от Node {nodeVersion}.",
@@ -372,7 +374,11 @@
         "general_description": "Стълбовидна диаграма, показваща изтеглянията по версии за {versions_count} {semver_grouping_mode} версии на пакета {package_name}, {date_range_label} от версия {first_version} до версия {last_version}. Най-изтегляната версия е {max_downloaded_version} с {max_version_downloads} изтегляния. {per_version_analysis}. {watermark}."
       }
     },
-    "timeline": {},
+    "timeline": {
+      "chart": {
+        "copy_alt": {}
+      }
+    },
     "dependencies": {
       "title": "Зависимост ({count}) | Зависимости ({count})",
       "list_label": "Зависимости на пакета",
@@ -554,6 +560,9 @@
       "mb": "{size} MB"
     },
     "download": {}
+  },
+  "leaderboard": {
+    "likes": {}
   },
   "connector": {
     "modal": {
@@ -1112,8 +1121,6 @@
     "file_changes": "Промени в файловете",
     "files_count": "{count} файла",
     "lines_hidden": "{count} реда скрити",
-    "file_too_large": "Файлът е твърде голям за сравнение",
-    "file_size_warning": "{size} надвишава лимита от 250KB за сравнение",
     "compare_versions": "diff",
     "version_invalid_url_format": {},
     "summary": "Резюме",
@@ -1276,5 +1283,8 @@
     "customize": {},
     "typography": {},
     "guidelines": {}
+  },
+  "changelog": {
+    "error": {}
   }
 }

@@ -1420,8 +1420,6 @@
     "file_changes": "ফাইল পরিবর্তন",
     "files_count": "{count}টি ফাইল | {count}টি ফাইল",
     "lines_hidden": "{count}টি লাইন লুকানো | {count}টি লাইন লুকানো",
-    "file_too_large": "তুলনার জন্য ফাইলটি খুব বড়",
-    "file_size_warning": "{size} তুলনার 250KB সীমা অতিক্রম করেছে",
     "compare_versions": "ডিফ",
     "compare_versions_title": "সর্বশেষ সংস্করণের সাথে তুলনা করুন",
     "comparing_versions_label": "সংস্করণ তুলনা করা হচ্ছে...",

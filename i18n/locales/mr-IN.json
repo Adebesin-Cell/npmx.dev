@@ -82,6 +82,7 @@
     "settings": "सेटिंग्ज",
     "compare": "तुलना करा",
     "back": "मागे",
+    "menu": "मेनू",
     "mobile_menu": "नेव्हिगेशन मेनू",
     "open_menu": "मेनू उघडा",
     "links": "लिंक",
@@ -250,6 +251,7 @@
       "size": "इंस्टॉल आकार {percent} ने वाढला ({size} ने मोठा)",
       "deps": "{count} अधिक निर्भरता"
     },
+    "size_decrease": {},
     "replacement": {
       "title": "कदाचित तुम्हाला या निर्भरतेची गरज नसेल.",
       "native": "हे {replacement} सह बदलले जाऊ शकते, Node {nodeVersion} पासून उपलब्ध आहे.",
@@ -427,7 +429,11 @@
       "current_tags": "सध्याचे टॅग्स",
       "no_match_filter": "{filter} शी जुळणारी कोणतीही आवृत्ती नाही"
     },
-    "timeline": {},
+    "timeline": {
+      "chart": {
+        "copy_alt": {}
+      }
+    },
     "dependencies": {
       "title": "{count} निर्भरता | {count} निर्भरता",
       "list_label": "पॅकेज निर्भरता",
@@ -620,6 +626,9 @@
       "button": "डाउनलोड",
       "tarball": ".tar.gz स्वरूपात टारबॉल डाउनलोड करा"
     }
+  },
+  "leaderboard": {
+    "likes": {}
   },
   "connector": {
     "modal": {
@@ -1190,8 +1199,6 @@
     "file_changes": "फाइल बदल",
     "files_count": "{count} फाइल | {count} फाइल्स",
     "lines_hidden": "{count} ओळ लपवली | {count} ओळी लपवल्या",
-    "file_too_large": "फाइल तुलना करण्यासाठी खूप मोठी आहे",
-    "file_size_warning": "तुलनेसाठीची 250KB मर्यादा {size} ने ओलांडली आहे",
     "compare_versions": "फरक",
     "compare_versions_title": "नवीनतम आवृत्तीशी तुलना करा",
     "comparing_versions_label": "आवृत्त्यांची तुलना करत आहे...",
@@ -1422,5 +1429,8 @@
     "customize": {},
     "typography": {},
     "guidelines": {}
+  },
+  "changelog": {
+    "error": {}
   }
 }

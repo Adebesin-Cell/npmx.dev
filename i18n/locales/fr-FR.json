@@ -697,6 +697,12 @@
         "general_description": "L’axe Y représente le nombre de téléchargements. L’axe X représente la plage de dates, de {start_date} à {end_date}, avec une période de temps {granularity}.{estimation_notice} {packages_analysis}. {watermark}.",
         "facet_bar_general_description": "Graphique en barres horizontales pour : {packages}, comparant {facet} ({description}). {facet_analysis} {watermark}.",
         "facet_bar_analysis": "{package_name} a une valeur de {value}."
+      },
+      "embedding": {
+        "chart": "Intégrer ce graphique",
+        "copy_url": "Copiez cette URL pour intégrer le graphique à votre site web",
+        "preview": "Aperçu",
+        "tip": "Par défaut, si startDate et endDate ne sont pas renseignés, la période couvre les 12 derniers mois."
       }
     },
     "downloads": {
@@ -1406,8 +1412,6 @@
     "file_changes": "Modifications de fichiers",
     "files_count": "{count} fichiers",
     "lines_hidden": "{count} lignes masquées",
-    "file_too_large": "Fichier trop volumineux pour être comparé",
-    "file_size_warning": "{size} dépasse la limite de 250 Ko pour la comparaison",
     "compare_versions": "diff",
     "compare_versions_title": "Comparer avec la dernière version",
     "comparing_versions_label": "Comparaison des versions...",

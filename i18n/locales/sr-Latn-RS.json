@@ -99,6 +99,7 @@
     "settings": "podešavanja",
     "compare": "poređenje",
     "back": "nazad",
+    "menu": "Meni",
     "mobile_menu": "Meni za navigaciju",
     "open_menu": "Otvorite meni",
     "links": "Linkovi",
@@ -281,6 +282,7 @@
       "size": "Veličina instalacije povećana za {percent} ({size} veća)",
       "deps": "{count} više zavisnosti"
     },
+    "size_decrease": {},
     "replacement": {
       "title": "Možda vam ova zavisnost ne treba.",
       "native": "Ovo se može zameniti sa {replacement}, dostupno od Node verzije {nodeVersion}.",
@@ -458,7 +460,11 @@
       "current_tags": "Trenutne oznake",
       "no_match_filter": "Nijedna verzija ne odgovara filteru {filter}"
     },
-    "timeline": {},
+    "timeline": {
+      "chart": {
+        "copy_alt": {}
+      }
+    },
     "dependencies": {
       "title": "Zavisnost ({count}) | Zavisnosti ({count})",
       "list_label": "Zavisnosti paketa",
@@ -657,6 +663,9 @@
       "button": "Preuzmite",
       "tarball": "Preuzmite Tarball kao .tar.gz"
     }
+  },
+  "leaderboard": {
+    "likes": {}
   },
   "connector": {
     "modal": {
@@ -1233,8 +1242,6 @@
     "file_changes": "Izmene datoteka",
     "files_count": "{count} datoteka | {count} datoteke | {count} datoteka",
     "lines_hidden": "{count} linija sakrivena | {count} linije sakrivene | {count} linija sakriveno",
-    "file_too_large": "Datoteka je prevelika za poređenje",
-    "file_size_warning": "{size} premašuje ograničenje od 250KB za poređenje",
     "compare_versions": "razlika",
     "compare_versions_title": "Uporedite sa najnovijom verzijom",
     "comparing_versions_label": "Poređenje verzija...",
@@ -1534,5 +1541,8 @@
       "message": "Pristupačnost nam je važna, i voleli bismo da nas pratite u ovoj viziji. Kada koristite pomenute medije, osigurajte dovoljan kontrast u odnosu na pozadinu i nemojte ići manje od 24px. Ako su vam potrebni bilo kakvi drugi resursi ili dodatne informacije o projektu, slobodno nas kontaktirajte na {link}.",
       "discord_link_text": "chat.npmx.dev"
     }
+  },
+  "changelog": {
+    "error": {}
   }
 }
