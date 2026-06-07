@@ -1075,9 +1075,6 @@ It's recommended to add a tooltip with event information to each noodle. If the 
   </TooltipApp>
 </template>
 ```
-
-Drop the image(s) the logo points at into `public/extra/` (SVG preferred; PNG is fine).
-
 ### 2. Register the logo and show it on the homepage
 
 In `app/components/Noodle/index.ts`:
