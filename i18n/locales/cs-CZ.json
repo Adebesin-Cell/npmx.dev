@@ -204,7 +204,6 @@
     "settings": "nastavení",
     "compare": "porovnat",
     "back": "zpět",
-    "menu": "Menu",
     "mobile_menu": "Navigační menu",
     "open_menu": "Otevřít menu",
     "links": "Odkazy",
@@ -316,6 +315,7 @@
       "slate": "Břidlice",
       "black": "Černá"
     },
+    "foreground_themes": {},
     "keyboard_shortcuts_enabled": "Povolit klávesové zkratky",
     "keyboard_shortcuts_enabled_description": "Klávesové zkratky lze zakázat, pokud se střetávají s jinými zkratkami prohlížeče nebo systému",
     "enable_code_ligatures": "Zapnout ligatury v kódu",
@@ -1263,6 +1263,25 @@
         "description": "Zjistěte nejnovější informace o npmx.",
         "cta": "Sledovat na Bluesky"
       }
+    }
+  },
+  "sponsors_page": {
+    "what_we_do": {},
+    "what_support_means": {},
+    "what_this_means_for_you": {
+      "cards": {
+        "people": {},
+        "visitors": {},
+        "stars": {},
+        "community": {},
+        "adoption": {},
+        "default_source": {}
+      }
+    },
+    "tiers": {
+      "silver": {},
+      "gold": {},
+      "platinum": {}
     }
   },
   "account_menu": {

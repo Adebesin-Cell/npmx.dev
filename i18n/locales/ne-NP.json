@@ -207,7 +207,6 @@
     "settings": "सेटिङ्स",
     "compare": "तुलना",
     "back": "पछाडि",
-    "menu": "मेनु",
     "mobile_menu": "नेभिगेसन मेनु",
     "open_menu": "मेनु खोल्नुहोस्",
     "links": "लिङ्कहरू",
@@ -319,6 +318,7 @@
       "slate": "स्लेट",
       "black": "कालो"
     },
+    "foreground_themes": {},
     "keyboard_shortcuts_enabled": "किबोर्ड सर्टकटहरू सक्षम गर्नुहोस्",
     "keyboard_shortcuts_enabled_description": "अन्य ब्राउजर वा सिस्टम सर्टकटहरूसँग बाझिएमा किबोर्ड सर्टकटहरू निष्क्रिय गर्न सकिन्छ",
     "enable_code_ligatures": "कोडमा लिगेचरहरू सक्षम गर्नुहोस्",
