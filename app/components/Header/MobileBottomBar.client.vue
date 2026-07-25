@@ -13,34 +13,6 @@ const contextLabel = computed(() => {
   return ''
 })
 
-const hidden = shallowRef(false)
-const SCROLL_THRESHOLD = 24
-
-if (typeof window !== 'undefined') {
-  let lastY = window.scrollY
-  const onScroll = () => {
-    if (isOpen.value) {
-      hidden.value = false
-      lastY = window.scrollY
-      return
-    }
-    const y = window.scrollY
-    if (y < SCROLL_THRESHOLD) {
-      hidden.value = false
-    } else if (y > lastY) {
-      hidden.value = true
-    } else if (y < lastY) {
-      hidden.value = false
-    }
-    lastY = y
-  }
-  useEventListener(window, 'scroll', onScroll, { passive: true })
-}
-
-watch(isOpen, open => {
-  if (open) hidden.value = false
-})
-
 async function handleSearchClick() {
   if (isOpen.value) close()
   // Navigate to the homepage, which has the autofocused package search input.
@@ -56,8 +28,7 @@ function handleThemeClick() {
 <template>
   <Teleport to="body">
     <div
-      class="sm:hidden fixed inset-x-0 bottom-0 z-[80] bg-bg border-t border-border flex items-center gap-2 px-3 h-14 pb-[env(safe-area-inset-bottom)] transition-transform duration-200 ease-out motion-reduce:transition-none"
-      :class="hidden ? 'translate-y-full' : 'translate-y-0'"
+      class="sm:hidden fixed inset-x-0 bottom-0 z-[80] bg-bg border-t border-border flex items-center gap-2 px-3 h-14 pb-[env(safe-area-inset-bottom)]"
     >
       <NuxtLink
         v-if="!contextLabel"
