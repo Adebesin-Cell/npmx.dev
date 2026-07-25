@@ -92,7 +92,7 @@ export function useGlobalNavLinks() {
           to: { name: 'noodles' },
           type: 'link',
           external: false,
-          iconClass: 'i-lucide:sparkles',
+          iconClass: 'i-lucide:soup',
         },
       ],
     },
