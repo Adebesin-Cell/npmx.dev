@@ -1,10 +1,9 @@
 <script setup lang="ts">
 const { isOpen, activeView, toggle, close, back } = useMobileNav()
+const { open: openSearch, close: closeSearch } = useMobileSearch()
 const colorMode = useColorMode()
 const route = useRoute()
 
-// The search button navigates home to focus the search input, so it's
-// redundant on the homepage itself — hide it there.
 const isHomepage = computed(() => route.name === 'index')
 
 const contextLabel = computed(() => {
@@ -13,11 +12,14 @@ const contextLabel = computed(() => {
   return ''
 })
 
-async function handleSearchClick() {
+function handleSearchClick() {
   if (isOpen.value) close()
-  // Navigate to the homepage, which has the autofocused package search input.
-  // The header search box is hidden on mobile, so this is the search entry point.
-  await navigateTo('/')
+  openSearch()
+}
+
+function handleMenuClick() {
+  closeSearch()
+  toggle()
 }
 
 function handleThemeClick() {
@@ -78,7 +80,7 @@ function handleThemeClick() {
         :aria-expanded="isOpen"
         :aria-controls="isOpen ? 'mobile-menu-sheet' : undefined"
         :classicon="isOpen ? 'i-lucide:x' : 'i-lucide:menu'"
-        @click="toggle"
+        @click="handleMenuClick"
       />
     </div>
   </Teleport>

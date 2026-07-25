@@ -43,9 +43,11 @@ const SKIPPED_COMPONENTS: Record<string, string> = {
   'Header/OrgsDropdown.vue': 'Requires connector context and API calls',
   'Header/PackagesDropdown.vue': 'Requires connector context and API calls',
   'Header/MobileBottomBar.client.vue':
-    'Fixed bar using Teleport + scroll listeners — requires full app context',
+    'Fixed bar using Teleport — requires full app context',
   'Header/MobileMenuSheet.client.vue':
     'Full-screen sheet with Teleport, focus trap, and scroll lock — requires full app context',
+  'Header/MobileSearchSheet.client.vue':
+    'Search sheet with Teleport, global-search composable, and scroll lock — requires full app context',
   'Header/MobileMenuRootView.vue':
     'Rendered inside MobileMenuSheet; depends on connector/atproto composables',
   'Header/MobileMenuDocsView.vue':

@@ -167,6 +167,7 @@ if (!isBlogPostRoute.value) {
 
     <HeaderMobileBottomBar />
     <HeaderMobileMenuSheet :links="mobileLinks" />
+    <HeaderMobileSearchSheet />
   </div>
 </template>
 
