@@ -333,7 +333,7 @@ export function useAlgoliaSearch() {
         filters: `objectID:${checks.checkPackage}`,
         length: 1,
         analyticsTags: ['npmx.dev'],
-        attributesToRetrieve: EXISTENCE_CHECK_ATTRS,
+        attributesToRetrieve: ATTRIBUTES_TO_RETRIEVE,
         attributesToHighlight: [],
       })
     }
@@ -369,7 +369,17 @@ export function useAlgoliaSearch() {
     let packageExists: boolean | null = null
     if (packageQueryIndex >= 0) {
       const pkgResponse = results[packageQueryIndex] as SearchResponse<AlgoliaHit> | undefined
-      packageExists = (pkgResponse?.nbHits ?? 0) > 0
+      const [exactHit] = pkgResponse?.hits ?? []
+      const isExactHit = exactHit?.name === checks?.checkPackage
+
+      packageExists = isExactHit
+
+      if (exactHit && isExactHit) {
+        searchResult.objects = [
+          hitToSearchResult(exactHit),
+          ...searchResult.objects.filter(result => result.package.name !== exactHit.name),
+        ]
+      }
     }
 
     return { search: searchResult, orgExists, userExists, packageExists }
