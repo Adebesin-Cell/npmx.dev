@@ -249,7 +249,12 @@
     "attending": "Attending",
     "hosted_by": "Hosted by",
     "register": "Register",
-    "back": "All events"
+    "back": "All events",
+    "missing": {
+      "label": "no such event",
+      "title": "This event isn't on the calendar.",
+      "body": "We couldn't find an event at \"{slug}\". It may have been moved, or it never happened. Head back to all events to see what's on."
+    }
   },
   "blog": {
     "title": "Blog",

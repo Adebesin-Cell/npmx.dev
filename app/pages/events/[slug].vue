@@ -2,14 +2,24 @@
 import { formatEventDateRange } from '~/utils/events/format'
 
 const route = useRoute()
-const { findBySlug, relatedTo, locale } = useEvents()
-
 const slug = computed(() => String(route.params.slug))
+
+const { findBySlug, relatedTo, locale } = useEvents()
+await useFetch('/api/events', { key: 'events', default: () => [] })
+
 const event = computed(() => findBySlug(slug.value))
 
-if (!event.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Event not found', fatal: true })
+if (import.meta.server && !event.value) {
+  const reqEvent = useRequestEvent()
+  if (reqEvent) setResponseStatus(reqEvent, 404)
 }
+
+onMounted(() => {
+  if (!event.value) {
+    const reqEvent = useRequestEvent()
+    if (reqEvent) setResponseStatus(reqEvent, 404)
+  }
+})
 
 const related = computed(() => relatedTo(slug.value))
 const dateLabel = computed(() =>
@@ -32,15 +42,15 @@ const mapUrl = computed(() => {
 })
 
 useSeoMeta({
-  title: () => `${event.value?.name} - npmx`,
-  ogTitle: () => `${event.value?.name} - npmx`,
-  description: () => event.value?.description,
+  title: () => `${event.value?.name ?? $t('events.missing.title')} - npmx`,
+  ogTitle: () => `${event.value?.name ?? $t('events.missing.title')} - npmx`,
+  description: () => event.value?.description ?? $t('events.missing.body', { slug: slug.value }),
   ogDescription: () => event.value?.description,
 })
 </script>
 
 <template>
-  <main v-if="event" class="container flex-1 py-12 sm:py-16">
+  <main v-if="event" class="container flex-1 py-12 sm:py-16 w-full">
     <NuxtLink
       :to="{ name: 'events' }"
       class="inline-flex items-center gap-1 font-mono text-sm text-fg-muted hover:text-fg"
@@ -189,6 +199,24 @@ useSeoMeta({
           {{ $t('events.register') }}
         </LinkBase>
       </aside>
+    </div>
+  </main>
+
+  <main v-else class="container flex-1 py-12 sm:py-16 w-full">
+    <div class="max-w-xl mx-auto text-center">
+      <p class="font-mono text-xs tracking-widest uppercase text-fg-subtle mb-3">
+        404 — {{ $t('events.missing.label') }}
+      </p>
+      <h1 class="font-mono text-3xl sm:text-4xl font-medium tracking-tight mb-4">
+        {{ $t('events.missing.title') }}
+      </h1>
+      <p class="text-fg-muted text-base sm:text-lg leading-relaxed mb-8">
+        {{ $t('events.missing.body', { slug }) }}
+      </p>
+      <LinkBase :to="{ name: 'events' }" variant="button-primary" class="justify-center">
+        <span class="i-lucide:arrow-left rtl-flip w-4 h-4" aria-hidden="true" />
+        {{ $t('events.back') }}
+      </LinkBase>
     </div>
   </main>
 </template>

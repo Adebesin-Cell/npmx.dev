@@ -1,11 +1,14 @@
 import type { EventDetail, EventKind, EventSummary } from '~/types/events'
 import { isPastEvent } from '~/utils/events/format'
-import { SEED_EVENTS } from '~/utils/events/seed.data'
 
 export function useEvents() {
   const { locale } = useI18n()
+  const { data, pending, error } = useFetch<EventDetail[]>('/api/events', {
+    key: 'events',
+    default: () => [],
+  })
 
-  const all = computed<EventDetail[]>(() => SEED_EVENTS)
+  const all = computed<EventDetail[]>(() => data.value ?? [])
 
   const upcoming = computed(() =>
     all.value.filter(e => !isPastEvent(e)).sort((a, b) => a.startsAt.localeCompare(b.startsAt)),
@@ -31,5 +34,5 @@ export function useEvents() {
     return all.value.filter(e => e.slug !== slug && e.kind === current.kind).slice(0, limit)
   }
 
-  return { all, upcoming, past, kinds, findBySlug, relatedTo, locale }
+  return { all, pending, error, upcoming, past, kinds, findBySlug, relatedTo, locale }
 }
