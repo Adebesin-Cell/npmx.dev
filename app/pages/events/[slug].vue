@@ -1,27 +1,32 @@
 <script setup lang="ts">
+import type { EventDetail } from '~/types/events'
 import { formatEventDateRange } from '~/utils/events/format'
 
 const route = useRoute()
+const { locale } = useI18n()
 const slug = computed(() => String(route.params.slug))
 
-const { findBySlug, relatedTo, locale } = useEvents()
-await useFetch('/api/events', { key: 'events', default: () => [] })
+const { data: events } = await useFetch<EventDetail[]>('/api/events', {
+  key: 'events',
+  default: () => [],
+})
 
-const event = computed(() => findBySlug(slug.value))
+const event = computed(() => events.value.find(e => e.slug === slug.value))
 
-if (import.meta.server && !event.value) {
+const related = computed(() => {
+  const current = event.value
+  if (!current) return []
+  return events.value.filter(e => e.slug !== current.slug && e.kind === current.kind).slice(0, 3)
+})
+
+function flag404() {
   const reqEvent = useRequestEvent()
   if (reqEvent) setResponseStatus(reqEvent, 404)
 }
-
+if (import.meta.server && !event.value) flag404()
 onMounted(() => {
-  if (!event.value) {
-    const reqEvent = useRequestEvent()
-    if (reqEvent) setResponseStatus(reqEvent, 404)
-  }
+  if (!event.value) flag404()
 })
-
-const related = computed(() => relatedTo(slug.value))
 const dateLabel = computed(() =>
   event.value ? formatEventDateRange(event.value.startsAt, event.value.endsAt, locale.value) : '',
 )
