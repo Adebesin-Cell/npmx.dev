@@ -32,9 +32,9 @@ describe('isPastEvent', () => {
   const now = new Date('2026-07-31T00:00:00Z')
 
   it('is past when the end date is before now', () => {
-    expect(isPastEvent({ startsAt: '2026-07-26T14:00:00Z', endsAt: '2026-07-26T20:00:00Z' }, now)).toBe(
-      true,
-    )
+    expect(
+      isPastEvent({ startsAt: '2026-07-26T14:00:00Z', endsAt: '2026-07-26T20:00:00Z' }, now),
+    ).toBe(true)
   })
 
   it('is upcoming when the start date is after now', () => {

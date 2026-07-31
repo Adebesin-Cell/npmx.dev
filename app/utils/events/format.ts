@@ -34,7 +34,10 @@ export function formatEventDateRange(startsAt: string, endsAt?: string, locale =
   return `${full(start)} – ${full(end)}`
 }
 
-export function isPastEvent(event: { startsAt: string; endsAt?: string }, now = new Date()): boolean {
+export function isPastEvent(
+  event: { startsAt: string; endsAt?: string },
+  now = new Date(),
+): boolean {
   const reference = event.endsAt ? new Date(event.endsAt) : new Date(event.startsAt)
   return reference.getTime() < now.getTime()
 }

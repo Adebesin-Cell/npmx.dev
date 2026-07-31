@@ -35,13 +35,12 @@ const modeLabel = computed(() => {
   if (event.value?.mode === 'hybrid') return $t('events.mode.hybrid')
   return $t('events.mode.in_person')
 })
-const locationLabel = computed(
-  () => event.value?.location?.name || event.value?.location?.locality,
-)
+const locationLabel = computed(() => event.value?.location?.name || event.value?.location?.locality)
 const mapUrl = computed(() => {
   const loc = event.value?.location
   if (!loc) return undefined
-  if (loc.lat && loc.lon) return `https://www.openstreetmap.org/?mlat=${loc.lat}&mlon=${loc.lon}#map=13/${loc.lat}/${loc.lon}`
+  if (loc.lat && loc.lon)
+    return `https://www.openstreetmap.org/?mlat=${loc.lat}&mlon=${loc.lon}#map=13/${loc.lat}/${loc.lon}`
   const q = encodeURIComponent([loc.name, loc.locality, loc.country].filter(Boolean).join(', '))
   return `https://www.openstreetmap.org/search?query=${q}`
 })
@@ -68,7 +67,9 @@ useSeoMeta({
       <div class="min-w-0">
         <h1 class="font-mono text-2xl text-fg">{{ event.name }}</h1>
 
-        <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-sm text-fg-muted">
+        <div
+          class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-sm text-fg-muted"
+        >
           <span class="inline-flex items-center gap-1">
             <span class="i-lucide:calendar w-4 h-4" aria-hidden="true" />
             {{ dateLabel }}
@@ -106,7 +107,9 @@ useSeoMeta({
         </section>
 
         <section v-if="locationLabel" class="mt-10">
-          <h2 class="font-mono text-fg-muted uppercase text-sm mb-3">{{ $t('events.location') }}</h2>
+          <h2 class="font-mono text-fg-muted uppercase text-sm mb-3">
+            {{ $t('events.location') }}
+          </h2>
           <LinkBase
             :to="mapUrl"
             variant="link"
@@ -147,15 +150,15 @@ useSeoMeta({
           <span class="font-mono text-xs px-2 py-1 rounded-md border border-border text-fg-muted">
             {{ modeLabel }}
           </span>
-          <span
-            class="font-mono text-xs px-2 py-1 rounded-md border border-border text-fg-muted"
-          >
+          <span class="font-mono text-xs px-2 py-1 rounded-md border border-border text-fg-muted">
             {{ $t(`events.kind.${event.kind}`) }}
           </span>
         </div>
 
         <div v-if="event.attendeeCount">
-          <h2 class="font-mono text-fg-muted uppercase text-sm mb-3">{{ $t('events.attending') }}</h2>
+          <h2 class="font-mono text-fg-muted uppercase text-sm mb-3">
+            {{ $t('events.attending') }}
+          </h2>
           <div class="flex flex-wrap gap-1.5">
             <template v-for="a in event.attendees" :key="a.handle || a.name">
               <img
@@ -184,7 +187,9 @@ useSeoMeta({
         </div>
 
         <div v-if="event.hosts.length">
-          <h2 class="font-mono text-fg-muted uppercase text-sm mb-2">{{ $t('events.hosted_by') }}</h2>
+          <h2 class="font-mono text-fg-muted uppercase text-sm mb-2">
+            {{ $t('events.hosted_by') }}
+          </h2>
           <ul class="flex flex-col gap-1 font-mono text-sm">
             <li v-for="host in event.hosts" :key="host.name">
               <LinkBase v-if="host.uri" :to="host.uri" variant="link" class="text-fg">
