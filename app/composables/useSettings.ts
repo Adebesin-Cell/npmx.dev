@@ -1,7 +1,12 @@
 import type { RemovableRef } from '@vueuse/core'
 import type { LocaleObject } from '@nuxtjs/i18n'
 import { useLocalStorage, useMounted } from '@vueuse/core'
-import { ACCENT_COLORS, type AccentColorId, BACKGROUND_THEMES, FOREGROUND_THEMES } from '#shared/utils/constants'
+import {
+  ACCENT_COLORS,
+  type AccentColorId,
+  BACKGROUND_THEMES,
+  FOREGROUND_THEMES,
+} from '#shared/utils/constants'
 import { normalizeSearchParam } from '#shared/utils/url'
 
 type BackgroundThemeId = keyof typeof BACKGROUND_THEMES
