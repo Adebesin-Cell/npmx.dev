@@ -236,3 +236,21 @@ useSeoMeta({
     </div>
   </main>
 </template>
+
+<style scoped>
+:deep(.prose a) {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--fg-subtle);
+  transition:
+    text-decoration-color 0.2s,
+    color 0.2s;
+}
+
+:deep(.prose a:hover),
+:deep(.prose a:focus-visible) {
+  text-decoration-color: var(--fg);
+  color: var(--fg);
+}
+</style>
