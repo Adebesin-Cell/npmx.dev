@@ -1,3 +1,4 @@
+import { marked } from 'marked'
 import type { EventDetail, EventKind, EventLink, EventMode, EventStatus } from '~/types/events'
 
 const NPMX_PDS_HOST = 'https://npmx.social'
@@ -40,6 +41,36 @@ function tokenTail(value: string | undefined, fallback: string): string {
   return tail || fallback
 }
 
+function stripGuildNote(raw?: string): string | undefined {
+  if (!raw) return undefined
+  const text = raw.trim()
+  if (!text.startsWith('>')) return text || undefined
+  const split = text.indexOf('\n\n')
+  return (split === -1 ? '' : text.slice(split + 2)).trim() || undefined
+}
+
+function toPlainText(md?: string): string | undefined {
+  if (!md) return undefined
+  const text = md
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/(\*\*|__)(.+?)\1/g, '$2')
+    .replace(/[*_`]/g, '')
+    .trim()
+  return text || undefined
+}
+
+function renderMarkdown(md?: string): string | undefined {
+  if (!md) return undefined
+  const html = marked.parse(md, { async: false, breaks: true }) as string
+  return (
+    html
+      .replace(/<script[\s\S]*?<\/script>/gi, '')
+      .replace(/\son\w+="[^"]*"/gi, '')
+      .replace(/javascript:/gi, '')
+      .trim() || undefined
+  )
+}
+
 function blobUrl(did: string, ref?: RawBlobRef): string | undefined {
   const cid = ref?.ref?.$link
   if (!cid) return undefined
@@ -51,11 +82,13 @@ function mapEvent(did: string, value: RawEvent): EventDetail {
   const links: EventLink[] = uris.map(u => ({ uri: u.uri, name: u.name }))
   const registerUrl = uris.find(u => u.uri.includes('guild.host'))?.uri
   const cover = blobUrl(did, value.media?.find(m => m.role === 'thumbnail')?.content)
+  const rawDescription = stripGuildNote(value.description)
 
   return {
     slug: slugify(value.name),
     name: value.name,
-    description: value.description,
+    description: toPlainText(rawDescription),
+    descriptionHtml: renderMarkdown(rawDescription),
     kind: 'meetup' as EventKind,
     mode: tokenTail(value.mode, 'inperson') as EventMode,
     status: tokenTail(value.status, 'scheduled') as EventStatus,

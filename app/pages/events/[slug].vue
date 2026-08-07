@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { EventDetail } from '~/types/events'
-import { formatEventDateRange } from '~/utils/events/format'
+import { formatEventDateRange, isPastEvent } from '~/utils/events/format'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -12,6 +12,7 @@ const { data: events } = await useFetch<EventDetail[]>('/api/events', {
 })
 
 const event = computed(() => events.value.find(e => e.slug === slug.value))
+const isPast = computed(() => (event.value ? isPastEvent(event.value) : false))
 
 const related = computed(() => {
   const current = event.value
@@ -79,7 +80,12 @@ useSeoMeta({
           </span>
         </div>
 
-        <p v-if="event.description" class="mt-4 text-fg-subtle leading-relaxed">
+        <div
+          v-if="event.descriptionHtml"
+          class="mt-4 text-fg-subtle leading-relaxed [&_a]:text-accent [&_a]:underline [&_p]:mt-3 first:[&_p]:mt-0"
+          v-html="event.descriptionHtml"
+        />
+        <p v-else-if="event.description" class="mt-4 text-fg-subtle leading-relaxed">
           {{ event.description }}
         </p>
 
@@ -196,7 +202,7 @@ useSeoMeta({
         </div>
 
         <LinkBase
-          v-if="event.registerUrl"
+          v-if="event.registerUrl && !isPast"
           :to="event.registerUrl"
           variant="button-primary"
           class="justify-center"

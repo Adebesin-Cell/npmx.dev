@@ -67,6 +67,7 @@ export interface EventSummary {
 }
 
 export interface EventDetail extends EventSummary {
+  descriptionHtml?: string
   hosts: EventHost[]
   scheduleImage?: string
   schedule?: Array<{ time: string; label: string }>
