@@ -93,7 +93,10 @@ function renderMarkdown(md?: string): string | undefined {
       .replace(/<script[\s\S]*?<\/script>/gi, '')
       .replace(/\son\w+="[^"]*"/gi, '')
       .replace(/javascript:/gi, '')
-      .replace(/<a href="(https?:\/\/[^"]+)">/g, '<a href="$1" target="_blank" rel="noopener noreferrer">')
+      .replace(
+        /<a href="(https?:\/\/[^"]+)">/g,
+        '<a href="$1" target="_blank" rel="noopener noreferrer">',
+      )
       .trim() || undefined
   )
 }
