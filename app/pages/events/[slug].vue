@@ -82,7 +82,7 @@ useSeoMeta({
 
         <div
           v-if="event.descriptionHtml"
-          class="mt-4 text-fg-subtle leading-relaxed [&_a]:text-accent [&_a]:underline [&_p]:mt-3 first:[&_p]:mt-0"
+          class="mt-4 prose dark:prose-invert max-w-none"
           v-html="event.descriptionHtml"
         />
         <p v-else-if="event.description" class="mt-4 text-fg-subtle leading-relaxed">
