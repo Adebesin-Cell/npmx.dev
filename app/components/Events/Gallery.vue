@@ -116,7 +116,9 @@ onUnmounted(() => {
               :key="img.url"
               type="button"
               class="h-14 w-20 flex-shrink-0 overflow-hidden rounded border-2 transition-colors"
-              :class="i === index ? 'border-accent' : 'border-transparent opacity-70 hover:opacity-100'"
+              :class="
+                i === index ? 'border-accent' : 'border-transparent opacity-70 hover:opacity-100'
+              "
               @click="index = i"
             >
               <img :src="img.url" :alt="img.alt || ''" class="h-full w-full object-cover" />

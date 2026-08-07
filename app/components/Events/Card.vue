@@ -45,7 +45,9 @@ const overflow = computed(() => Math.max(0, event.attendeeCount - shownAttendees
 
     <div class="flex flex-col gap-3 p-4">
       <div class="flex items-start justify-between gap-3">
-        <h3 class="font-mono text-fg text-lg leading-tight group-hover:text-accent transition-colors">
+        <h3
+          class="font-mono text-fg text-lg leading-tight group-hover:text-accent transition-colors"
+        >
           {{ event.name }}
         </h3>
       </div>
